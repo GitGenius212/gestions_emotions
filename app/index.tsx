@@ -1,5 +1,5 @@
-import { Text, View } from "react-native";
-
+import { StyleSheet, Text, View } from "react-native";
+import styles from "./styles.css";
 export default function Index() {
   return (
     <View
@@ -9,7 +9,12 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Welcome</Text>
+      <Text 
+      style={[styles.primary, styles.accent, {fontSize: 50}, {fontWeight: 'bold'}]}>
+        Welcome</Text>
     </View>
   );
-}
+} 
+
+
+
