@@ -5,6 +5,8 @@ export default function Index() {
   return (
     <View style={{flex: 1, backgroundColor: "#CAF0F8"}}>
 
+
+  {/*Section de la date*/}
   <View style={{
     flex: 1,
     flexDirection: "row",
@@ -28,6 +30,7 @@ export default function Index() {
         <Text style={{
           fontSize: 24,
           fontWeight: "bold",
+          marginTop: 10,
         }}>Date</Text>
 
         <Text style={{
