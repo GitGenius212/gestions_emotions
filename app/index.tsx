@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import styles from "./styles.css";
+import styles from "./styles";
 export default function Index() {
   return (
     <View
@@ -10,7 +10,7 @@ export default function Index() {
       }}
     >
       <Text 
-      style={[styles.primary, styles.accent, {fontSize: 50}, {fontWeight: 'bold'}]}>
+      style={[styles.primary, {fontSize: 50}, {fontWeight: 'bold'}]}>
         Welcome</Text>
     </View>
   );
