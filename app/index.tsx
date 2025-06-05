@@ -40,7 +40,7 @@ export default function Index() {
 
 
             <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Penséé #1</Text>
-            <View style={{flex: 1, backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
+            <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
               <TextArea placeholder='Élément déclencheur' 
               onPress={() => console.log("TextInput Pressed")}
@@ -135,7 +135,7 @@ export default function Index() {
                 
             </View>
 
-            <View style={{ flex: 1, backgroundColor: "#ffffff", borderRadius: 10, padding:20 }}>
+            <View style={{backgroundColor: "#ffffff", borderRadius: 10, padding:20 }}>
 
                 <TextArea 
                 placeholder='Contre-Pensée négative'
@@ -226,7 +226,7 @@ export default function Index() {
 
             </View>
           
-        </View>
+      </View>
 
         {/*Section des solutions*/}
         <View 
