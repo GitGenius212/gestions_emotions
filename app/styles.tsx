@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
   h1 : {
     fontSize: 24,
     fontWeight: "bold",
-    marginTop: 10,
     color:'#03045E', 
     marginBottom: 10,
   }
