@@ -10,10 +10,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 10,
     marginBottom: 15,
-   
-  
-  
-    // add other styles here
   },
+   
+  h1 : {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginTop: 10,
+    color:'#03045E', 
+    marginBottom: 10,
+  }
+  
 });
 export default styles;

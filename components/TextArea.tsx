@@ -23,9 +23,9 @@ const TextArea = ({placeholder, onPress, icons}: Props) => {
     >
       <Image source={icons} style={{
         width:20, 
-        height:20, 
+        height:20,
         position: 'absolute',
-        top:12, 
+        top:11, 
         left: 8,
         
         }} resizeMode='contain' />

@@ -85,7 +85,25 @@ export default function Index() {
           
         </View>
 
-        
+        {/*Section des solutions*/}
+        <View 
+        style={{
+          paddingHorizontal: 20,
+          paddingVertical: 10,
+          backgroundColor:'beige'
+        }}
+        >
+          <Text style={styles.h1}>
+          Solutions</Text>
+
+        <TextArea 
+                placeholder='Solutions'
+                onPress={() => console.log("TextInput Pressed")}
+                icons={icons.solution}
+                />
+
+        </View>
+
 
     </View>
   );
