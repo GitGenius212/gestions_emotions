@@ -16,7 +16,7 @@ const TextArea = ({placeholder, onPress, icons}: Props) => {
         borderRadius:10, 
         borderWidth: 1,
         borderColor: '#CCCCCC',
-        marginBottom:30
+        marginBottom:20
         
         
     }}

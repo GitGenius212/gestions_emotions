@@ -300,7 +300,7 @@ export default function Index() {
         <View 
         style={{
           paddingHorizontal: 20,
-          paddingVertical: 10,
+          paddingVertical: 15,
            
           backgroundColor:'beige'
         }}
@@ -309,13 +309,21 @@ export default function Index() {
             {compass} Solutions
           </Text>
 
-        <TextArea 
+          <TextArea 
                 placeholder='Solutions'
                 onPress={() => console.log("TextInput Pressed")}
                 icons={icons.solution}
-                />
+          />
 
-                
+
+          <TouchableHighlight 
+            onPress={() => console.log('Button Pressed')}
+            underlayColor='#912937'
+            style={styles.button}>
+              <View>
+                <Text style={styles.button_text}>Ajouter</Text>
+              </View>
+            </TouchableHighlight>      
 
         </View>
 
