@@ -2,7 +2,7 @@ import TextArea from "@/components/TextArea";
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, TouchableHighlight, View } from "react-native";
 
 import CustomCheckbox from "@/components/CustomCheckbox";
 import styles from "./styles";
@@ -11,7 +11,78 @@ const compass = <FontAwesome name="compass" size={24}/>
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
 export default function Index() {
-  const [isSelected, setIsSelected] = useState(false);
+
+  //Selection des émotions aux débuts, avant
+  const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(false);
+  React.useEffect(() => {
+  console.log('::Peur_avant::', isSelected_peur_avant);
+  }, [isSelected_peur_avant]);
+
+  const [isSelected_honte_avant, setIsSelected_honte_avant] = useState(false);
+  React.useEffect(() => {
+  console.log('::Honte_avant::', isSelected_honte_avant);
+  }, [isSelected_honte_avant]);
+
+  const [isSelected_colère_avant, setIsSelected_colère_avant] = useState(false);
+  React.useEffect(() => {
+  console.log('::Colère_avant::', isSelected_colère_avant);
+  }, [isSelected_colère_avant]);
+
+  const [isSelected_joie_avant, setIsSelected_joie_avant] = useState(false);
+  React.useEffect(() => {
+  console.log('::Joie_avant::', isSelected_joie_avant);
+  }, [isSelected_joie_avant]);
+
+  const [isSelected_tristesse_avant, setIsSelected_tristesse_avant] = useState(false);
+  React.useEffect(() => {
+  console.log('::Tristesse_avant::', isSelected_tristesse_avant);
+  }, [isSelected_tristesse_avant]);
+
+  const [isSelected_frustration_avant, setIsSelected_frustration_avant] = useState(false);
+  React.useEffect(() => {
+  console.log('::Frustration_avant::', isSelected_frustration_avant);
+  }, [isSelected_frustration_avant]);
+
+  const [isSelected_dégoût_avant, setIsSelected_dégoût_avant] = useState(false);
+  React.useEffect(() => {
+  console.log('::Dégoût_avant::', isSelected_dégoût_avant);
+  }, [isSelected_dégoût_avant]);
+
+  //Selection des émotions à la fin, après
+  const [isSelected_peur_après, setIsSelected_peur_après] = useState(false);
+  React.useEffect(() => {
+  console.log('::Peur_après::', isSelected_peur_après);
+  }, [isSelected_peur_après]);
+
+  const [isSelected_honte_après, setIsSelected_honte_après] = useState(false);
+  React.useEffect(() => {
+  console.log('::Honte_après::', isSelected_honte_après);
+  }, [isSelected_honte_après]);
+
+  const [isSelected_colère_après, setIsSelected_colère_après] = useState(false);
+  React.useEffect(() => {
+  console.log('::Colère_après::', isSelected_colère_après);
+  }, [isSelected_colère_après]);
+
+  const [isSelected_joie_après, setIsSelected_joie_après] = useState(false);
+  React.useEffect(() => {
+  console.log('::Joie_après::', isSelected_joie_après);
+  }, [isSelected_joie_après]);
+
+  const [isSelected_tristesse_après, setIsSelected_tristesse_après] = useState(false);
+  React.useEffect(() => {
+  console.log('::Tristesse_après::', isSelected_tristesse_après);
+  }, [isSelected_tristesse_après]);
+
+  const [isSelected_frustration_après, setIsSelected_frustration_après] = useState(false);
+  React.useEffect(() => {
+  console.log('::Frustration_après::', isSelected_frustration_après);
+  }, [isSelected_frustration_après]);
+
+  const [isSelected_dégoût_après, setIsSelected_dégoût_après] = useState(false);
+  React.useEffect(() => {
+  console.log('::Dégoût_après::', isSelected_dégoût_après);
+  }, [isSelected_dégoût_après]);
 
   return (
     <ScrollView style={{flex:1, backgroundColor:'white'}} showsVerticalScrollIndicator={false}>
@@ -56,10 +127,9 @@ export default function Index() {
                 <Text style={styles.h1}>{tachometer} Émotions </Text>
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_peur_avant} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_peur_avant(!isSelected_peur_avant)
                     }
                   }
                     text="Peur"
@@ -67,10 +137,9 @@ export default function Index() {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_honte_avant} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_honte_avant(!isSelected_honte_avant)
                     }
                   }
                     text="Honte"
@@ -78,10 +147,9 @@ export default function Index() {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_colère_avant} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_colère_avant(!isSelected_colère_avant)
                     }
                   }
                     text="Colère"
@@ -89,10 +157,9 @@ export default function Index() {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_joie_avant} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_joie_avant(!isSelected_joie_avant)
                     }
                   }
                     text="Joie"
@@ -100,10 +167,9 @@ export default function Index() {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_tristesse_avant} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_tristesse_avant(!isSelected_tristesse_avant)
                     }
                   }
                     text="Tristessse"
@@ -111,10 +177,9 @@ export default function Index() {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_frustration_avant} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_frustration_avant(!isSelected_frustration_avant)
                     }
                   }
                     text="Frutration"
@@ -123,10 +188,9 @@ export default function Index() {
 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_dégoût_avant} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_dégoût_avant(!isSelected_dégoût_avant)
                     }
                   }
                     text="Dégoût"
@@ -135,7 +199,7 @@ export default function Index() {
                 
             </View>
 
-            <View style={{backgroundColor: "#ffffff", borderRadius: 10, padding:20 }}>
+            <View style={{backgroundColor: "#ffffff", borderRadius: 10, padding:20, marginBottom:20 }}>
 
                 <TextArea 
                 placeholder='Contre-Pensée négative'
@@ -143,14 +207,13 @@ export default function Index() {
                 icons={icons.pensee_negative}
                 />
 
-                <Text style={styles.h1}>{tachometer} Émotions </Text>
+                <Text style={[styles.h1, {fontSize:22}]}>{tachometer} Après ma contre-pensée : </Text>
 
                 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_peur_après} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_peur_après(!isSelected_peur_après)
                     }
                   }
                     text="Peur"
@@ -158,10 +221,9 @@ export default function Index() {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_honte_après} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_honte_après(!isSelected_honte_après)
                     }
                   }
                     text="Honte"
@@ -169,10 +231,9 @@ export default function Index() {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_colère_après} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_colère_après(!isSelected_colère_après)
                     }
                   }
                     text="Colère"
@@ -180,10 +241,9 @@ export default function Index() {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_joie_après} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_joie_après(!isSelected_joie_après)
                     }
                   }
                     text="Joie"
@@ -191,10 +251,9 @@ export default function Index() {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_tristesse_après} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_tristesse_après(!isSelected_tristesse_après)
                     }
                   }
                     text="Tristessse"
@@ -202,10 +261,9 @@ export default function Index() {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_frustration_après} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_frustration_après(!isSelected_frustration_après)
                     }
                   }
                     text="Frutration"
@@ -214,10 +272,9 @@ export default function Index() {
 
 
                 <CustomCheckbox 
-                  checked={isSelected} 
+                  checked={isSelected_dégoût_après} 
                   onPress={ () => { 
-                      setIsSelected(!isSelected)
-                      console.log('::LocalChecked::', isSelected);
+                      setIsSelected_dégoût_après(!isSelected_dégoût_après)
                     }
                   }
                     text="Dégoût"
@@ -225,6 +282,17 @@ export default function Index() {
                 /> 
 
             </View>
+
+            <TouchableHighlight 
+            onPress={() => console.log('Button Pressed')}
+            underlayColor='#912937'
+            style={styles.button}>
+              <View>
+                <Text style={styles.button_text}>Ajouter</Text>
+              </View>
+            </TouchableHighlight>
+
+            
           
       </View>
 

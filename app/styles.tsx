@@ -17,6 +17,20 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color:'#03045E', 
     marginBottom: 10,
+  }, 
+  button : {
+    backgroundColor: "#C84630", 
+    borderRadius:10, 
+    width: 150, 
+    paddingVertical: 15, 
+    paddingHorizontal: 32
+
+  }, 
+  
+  button_text : {
+    color:'white', 
+    textAlign:'center', 
+    fontSize:16
   }
   
 });

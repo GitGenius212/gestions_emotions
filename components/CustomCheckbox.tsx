@@ -15,6 +15,7 @@ export default function CustomCheckbox({ checked, onPress, size = 24, text } : a
         borderWidth: 1,
         borderColor: "black",
         borderRadius: 10,
+        opacity:0.6, 
         alignItems: "center",
         justifyContent: "center",
       }}
@@ -32,7 +33,7 @@ export default function CustomCheckbox({ checked, onPress, size = 24, text } : a
     </TouchableOpacity>
     <Text
       style={{
-        fontSize:16, 
+        fontSize:18, 
         marginLeft:10
       }}
     >{text}</Text>
