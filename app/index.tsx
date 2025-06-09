@@ -2,13 +2,56 @@ import TextArea from "@/components/TextArea";
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { ScrollView, Text, TouchableHighlight, View } from "react-native";
+import { FlatList, ScrollView, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 import CustomCheckbox from "@/components/CustomCheckbox";
 import styles from "./styles";
 
 const compass = <FontAwesome name="compass" size={24}/>
 const tachometer = <FontAwesome name="tachometer" size={24}/>
+
+
+
+
+type SolutionData = { 
+  id: string;
+  description: string;
+};
+
+const DATA: SolutionData[] = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    description: 'Sois Conscient de tes émotions et de leurs déclencheurs.',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    description: "Note tes pensées négatives et les émotions qu'elles suscitent.",
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    description: 'Identifie les émotions que tu ressens.',
+  },
+    {
+    id: '4587125k-3da1-471f-bd96-14g4gb8',
+    description: 'Écris une contre-pensée pour chaque pensée négative. essens.',
+  }, 
+  
+];
+
+type SolutionProps = {
+  item: SolutionData;
+  onPress: () => void;
+  backgroundColor: string;
+  textColor: string;
+};
+
+const Solution = ({item, onPress, backgroundColor, textColor}: SolutionProps) => (
+  <TouchableOpacity onPress={onPress} style={[styles.solution_list, {backgroundColor}]}>
+    <Text style={[styles.description_solution, {color: textColor}]}>{item.description}</Text>
+  </TouchableOpacity>
+);
+
+//Test FlatList
 
 export default function Index() {
 
@@ -83,6 +126,26 @@ export default function Index() {
   React.useEffect(() => {
   console.log('::Dégoût_après::', isSelected_dégoût_après);
   }, [isSelected_dégoût_après]);
+
+
+  //Test RenderItem for FlatList
+  const [selectedId_soltion, setSelectedId_soltion] = useState<string>();
+
+  const renderItem = ({item}: {item: SolutionData}) => {
+    const backgroundColor = item.id === selectedId_soltion ? '#898989' : '#D4A0A7';
+    const color = item.id === selectedId_soltion ? 'white' : '#C84630';
+
+    return (
+      <Solution
+        item={item}
+        onPress={() => setSelectedId_soltion(item.id)}
+        backgroundColor={backgroundColor}
+        textColor={color}
+      />
+    );
+  };
+  //Test RenderItem for FlatList
+
 
   return (
     <ScrollView style={{flex:1, backgroundColor:'white'}} showsVerticalScrollIndicator={false}>
@@ -323,7 +386,19 @@ export default function Index() {
               <View>
                 <Text style={styles.button_text}>Ajouter</Text>
               </View>
-            </TouchableHighlight>      
+            </TouchableHighlight>  
+
+            <FlatList
+            style={{
+              marginVertical:20,
+              borderRadius: 20
+            }}
+
+          data={DATA}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          extraData={selectedId_soltion}
+        />    
 
         </View>
 

@@ -31,7 +31,15 @@ const styles = StyleSheet.create({
     color:'white', 
     textAlign:'center', 
     fontSize:16
-  }
+  }, 
+
+  solution_list: {
+    padding: 10,
+    
+  },
+  description_solution: {
+    fontSize: 20,
+  },
   
 });
 export default styles;
