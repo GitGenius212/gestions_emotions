@@ -2,10 +2,13 @@ import TextArea from "@/components/TextArea";
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { FlatList, ScrollView, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
+import { FlatList, LogBox, ScrollView, Text, TouchableHighlight, TouchableOpacity, View } from "react-native";
 
 import CustomCheckbox from "@/components/CustomCheckbox";
 import styles from "./styles";
+
+
+
 
 const compass = <FontAwesome name="compass" size={24}/>
 const tachometer = <FontAwesome name="tachometer" size={24}/>
@@ -14,25 +17,25 @@ const tachometer = <FontAwesome name="tachometer" size={24}/>
 
 
 type SolutionData = { 
-  id: string;
+  id: number;
   description: string;
 };
 
 const DATA: SolutionData[] = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    id: 1,
     description: 'Sois Conscient de tes émotions et de leurs déclencheurs.',
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    id: 2,
     description: "Note tes pensées négatives et les émotions qu'elles suscitent.",
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    id: 3,
     description: 'Identifie les émotions que tu ressens.',
   },
     {
-    id: '4587125k-3da1-471f-bd96-14g4gb8',
+    id: 4,
     description: 'Écris une contre-pensée pour chaque pensée négative. essens.',
   }, 
   
@@ -54,6 +57,10 @@ const Solution = ({item, onPress, backgroundColor, textColor}: SolutionProps) =>
 //Test FlatList
 
 export default function Index() {
+
+  React.useEffect(() => {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+}, [])
 
   //Selection des émotions aux débuts, avant
   const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(false);
@@ -129,16 +136,30 @@ export default function Index() {
 
 
   //Test RenderItem for FlatList
-  const [selectedId_soltion, setSelectedId_soltion] = useState<string>();
+  const [selectedId_solution, setSelectedId_solution] = useState<number>();
 
   const renderItem = ({item}: {item: SolutionData}) => {
-    const backgroundColor = item.id === selectedId_soltion ? '#898989' : '#D4A0A7';
-    const color = item.id === selectedId_soltion ? 'white' : '#C84630';
+    
+    let backgroundColor = '';
+    let color = '';
+    if (item.id % 2 === 0) {
+      backgroundColor = '#e3e3e3';
+      color = '#C84630';
+    }  else {
+      backgroundColor = '#D4A0A7';
+      color = '#C84630';
+    }
+
+    if(item.id == selectedId_solution) {
+      backgroundColor = '#898989';
+      color = 'white';
+    }
+    
 
     return (
       <Solution
         item={item}
-        onPress={() => setSelectedId_soltion(item.id)}
+        onPress={() => setSelectedId_solution(item.id)}
         backgroundColor={backgroundColor}
         textColor={color}
       />
@@ -390,14 +411,15 @@ export default function Index() {
 
             <FlatList
             style={{
-              marginVertical:20,
+              marginTop: 20, 
+              marginBottom: 50, 
               borderRadius: 20
             }}
 
           data={DATA}
           renderItem={renderItem}
-          keyExtractor={item => item.id}
-          extraData={selectedId_soltion}
+          keyExtractor={item => item.id.toString()}
+          extraData={selectedId_solution}
         />    
 
         </View>
