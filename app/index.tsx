@@ -41,18 +41,24 @@ const DATA: SolutionData[] = [
   
 ];
 
+
+
 type SolutionProps = {
   item: SolutionData;
   onPress: () => void;
   backgroundColor: string;
   textColor: string;
+  removeItem : (id:number) => void;
 };
 
-const Solution = ({item, onPress, backgroundColor, textColor}: SolutionProps) => (
+
+const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: SolutionProps) => (
   <TouchableOpacity onPress={onPress} style={[styles.solution_list, {backgroundColor}]}>
     <Text style={[styles.description_solution, {color: textColor}]}>{item.description}</Text>
+    <Text onPress={() =>  removeItem(item.id)} style={[{ color: 'red' }, styles.close_button]}>X</Text>
   </TouchableOpacity>
-);
+  );
+
 
 //Test FlatList
 
@@ -138,6 +144,19 @@ export default function Index() {
   //Test RenderItem for FlatList
   const [selectedId_solution, setSelectedId_solution] = useState<number>();
 
+  const [solutions, setSolutions] = useState(DATA);
+  React.useEffect(() => {
+  console.log('::Item supprimé::', solutions);
+  }, [solutions]);
+  
+
+  
+  const removeItem = (id: number) => {
+    
+    setSolutions(solutions.filter(item => item.id !== id));
+    console.log('Button removeItem pressed');
+  };
+
   const renderItem = ({item}: {item: SolutionData}) => {
     
     let backgroundColor = '';
@@ -154,18 +173,31 @@ export default function Index() {
       backgroundColor = '#898989';
       color = 'white';
     }
+
+    
     
 
     return (
       <Solution
         item={item}
-        onPress={() => setSelectedId_solution(item.id)}
+        onPress={() => {
+            if (selectedId_solution === item.id) {
+        setSelectedId_solution(undefined);
+      } else {
+        setSelectedId_solution(item.id);
+      }
+          }
+        }
         backgroundColor={backgroundColor}
         textColor={color}
+        removeItem={removeItem}
       />
     );
   };
-  //Test RenderItem for FlatList
+  
+
+  
+
 
 
   return (
@@ -416,7 +448,7 @@ export default function Index() {
               borderRadius: 20
             }}
 
-          data={DATA}
+          data={solutions}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()}
           extraData={selectedId_solution}

@@ -34,12 +34,23 @@ const styles = StyleSheet.create({
   }, 
 
   solution_list: {
-    padding: 10,
-    
+    flexDirection:'row',  
+    justifyContent:'space-between'
   },
   description_solution: {
     fontSize: 20,
+    paddingLeft: 10, 
+    paddingVertical: 10,  
+    width: '80%'
   },
+
+  close_button : {  
+    fontSize: 24, 
+    lineHeight:100, 
+    paddingHorizontal: 16, 
+    
+
+  }
   
 });
 export default styles;
