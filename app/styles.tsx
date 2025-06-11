@@ -38,14 +38,14 @@ const styles = StyleSheet.create({
     justifyContent:'space-between'
   },
   description_solution: {
-    fontSize: 20,
-    paddingLeft: 10, 
-    paddingVertical: 10,  
+    fontSize: 18,
+    paddingLeft: 15, 
+    paddingVertical: 15,  
     width: '80%'
   },
 
   close_button : {  
-    fontSize: 24, 
+    fontSize: 20, 
     lineHeight:100, 
     paddingHorizontal: 16, 
     
