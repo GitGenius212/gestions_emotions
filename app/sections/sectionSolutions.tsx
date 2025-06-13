@@ -5,42 +5,13 @@ import { FlatList, Text, TouchableHighlight, TouchableOpacity, View } from 'reac
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
+import { solutions_datas } from '../AccèsAuxDonnées/DataBidon';
+import { SolutionData } from '../Domaine/Classes/SolutionData';
 
 
 
 const compass = <FontAwesome name="compass" size={24}/>
 
-
-type SolutionData = { 
-  id: number;
-  description: string;
-  createdAt: Date;
-};
-
-const DATA: SolutionData[] = [
-  {
-    id: 1,
-    description: 'Sois Conscient de tes émotions et de leurs déclencheurs.',
-    createdAt: new Date("2025-06-12T16:59:00.667Z"),
-
-  },
-  {
-    id: 2,
-    description: "Note tes pensées négatives et les émotions qu'elles suscitent.",
-    createdAt: new Date("2025-06-12T07:59:00.667Z"),
-  },
-  {
-    id: 3,
-    description: 'Identifie les émotions que tu ressens.',
-    createdAt: new Date("2025-06-12T08:59:00.667Z"),
-  },
-    {
-    id: 4,
-    description: 'Écris une contre-pensée pour chaque pensée négative. essens.',
-    createdAt: new Date("2025-06-13T09:59:09.667Z"),
-  }, 
-  
-];
 
 
 
@@ -58,8 +29,12 @@ const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: Solut
   <View style={styles.description_solution}>
     <Text style={{opacity:0.4}}>{item.createdAt.toDateString()} - {item.createdAt.toLocaleTimeString()}</Text>
     <Text style={[{color: textColor}, styles.description_solution_text]}>{item.description}</Text>
-    </View>
-    <Text onPress={() =>  removeItem(item.id)} style={[{ color: 'red' }, styles.close_button]}>X</Text>
+  </View>
+
+  <View>
+      <Text onPress={() =>  removeItem(item.id)} style={[{ color: 'white' }, styles.close_button]}>X</Text>
+  </View>
+    
   </TouchableOpacity>
   );
 
@@ -68,7 +43,7 @@ const SectionSolutions = () => {
 
     const [selectedId_solution, setSelectedId_solution] = useState<number>();
     
-      const [solutions, setSolutions] = useState(DATA);
+      const [solutions, setSolutions] = useState(solutions_datas);
       React.useEffect(() => {
       console.log('::Item supprimé::', solutions);
       }, [solutions]);
