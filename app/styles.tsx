@@ -44,9 +44,9 @@ const styles = StyleSheet.create({
   },
 
   close_button : {  
-    fontSize: 20, 
-    lineHeight:100, 
+    fontSize: 20,  
     paddingHorizontal: 16, 
+    backgroundColor:'rgba(252, 8, 41, 0.8)', 
     
 
   }, 
