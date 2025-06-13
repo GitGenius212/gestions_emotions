@@ -5,7 +5,7 @@ import { FlatList, Text, TouchableHighlight, TouchableOpacity, View } from 'reac
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
-import { solutions_datas } from '../AccèsAuxDonnées/DataBidon';
+import { removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidon';
 import { SolutionData } from '../Domaine/Classes/SolutionData';
 
 
@@ -54,6 +54,7 @@ const SectionSolutions = () => {
         
         setSolutions(solutions.filter(item => item.id !== id));
         console.log('Button removeItem pressed');
+        removeSolution(id);
       };
     
       const renderItem = ({item}: {item: SolutionData}) => {

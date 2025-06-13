@@ -25,3 +25,8 @@ export const solutions_datas: SolutionData[] = [
   }, 
   
 ];
+
+export function removeSolution(id: number) {
+  console.log(id-1);
+    solutions_datas.splice(id-1, 1)
+}
