@@ -44,9 +44,7 @@ const SectionSolutions = () => {
     const [selectedId_solution, setSelectedId_solution] = useState<number>();
     
       const [solutions, setSolutions] = useState(solutions_datas);
-      React.useEffect(() => {
-      console.log('::Item supprimé::', solutions);
-      }, [solutions]);
+      
       
     
       
@@ -131,7 +129,7 @@ const SectionSolutions = () => {
                     borderRadius: 20
                   }}
 
-                data={solutions}
+                data={solutions_datas}
                 renderItem={renderItem}
                 keyExtractor={item => item.id.toString()}
                 extraData={selectedId_solution}

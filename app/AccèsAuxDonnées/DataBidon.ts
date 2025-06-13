@@ -27,6 +27,27 @@ export const solutions_datas: SolutionData[] = [
 ];
 
 export function removeSolution(id: number) {
-  console.log(id-1);
-    solutions_datas.splice(id-1, 1)
+  //Déclaration de variables
+  let trouve = false;
+
+  //Traitements
+  for (let i=0; i< solutions_datas.length; i++) {
+    if(solutions_datas[i].id == id) {
+        trouve = true;
+        //remove the solution
+        solutions_datas.splice(i, 1);
+        console.log(solutions_datas)
+        //Stop the loop
+        break;
+
+    } 
+    
+  }
+
+  if(!trouve) {
+      console.error(`The solution with this id ${id} not found`)
+    }
+  
+  
 }
+
