@@ -48,8 +48,11 @@ type SolutionProps = {
 
 
 const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: SolutionProps) => (
-  <TouchableOpacity onPress={onPress} style={[styles.solution_list, {backgroundColor}]}>
-    <Text style={[styles.description_solution, {color: textColor}]}>{item.description}</Text>
+  <TouchableOpacity onPress={onPress} style={[styles.item_solutoin, {backgroundColor}]}>
+  <View style={styles.description_solution}>
+    <Text style={{opacity:0.4}}>20025-05-09:20:00:00</Text>
+    <Text style={[{color: textColor}, styles.description_solution_text]}>{item.description}</Text>
+    </View>
     <Text onPress={() =>  removeItem(item.id)} style={[{ color: 'red' }, styles.close_button]}>X</Text>
   </TouchableOpacity>
   );

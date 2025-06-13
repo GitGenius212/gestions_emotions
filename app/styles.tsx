@@ -33,12 +33,11 @@ const styles = StyleSheet.create({
     fontSize:16
   }, 
 
-  solution_list: {
+  item_solutoin: {
     flexDirection:'row',  
     justifyContent:'space-between'
   },
   description_solution: {
-    fontSize: 18,
     paddingLeft: 15, 
     paddingVertical: 15,  
     width: '80%'
@@ -50,6 +49,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, 
     
 
+  }, 
+
+  description_solution_text : {
+    fontSize : 18
   }
   
 });
