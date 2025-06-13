@@ -1,8 +1,8 @@
-import { View, Text, TouchableHighlight, TouchableOpacity, FlatList } from 'react-native'
-import React, {useState} from 'react'
-import { FontAwesome } from '@expo/vector-icons';
-import styles from '../styles';
 import { icons } from '@/constants/icons';
+import { FontAwesome } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { FlatList, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
 
@@ -14,24 +14,30 @@ const compass = <FontAwesome name="compass" size={24}/>
 type SolutionData = { 
   id: number;
   description: string;
+  createdAt: Date;
 };
 
 const DATA: SolutionData[] = [
   {
     id: 1,
     description: 'Sois Conscient de tes émotions et de leurs déclencheurs.',
+    createdAt: new Date("2025-06-12T16:59:00.667Z"),
+
   },
   {
     id: 2,
     description: "Note tes pensées négatives et les émotions qu'elles suscitent.",
+    createdAt: new Date("2025-06-12T07:59:00.667Z"),
   },
   {
     id: 3,
     description: 'Identifie les émotions que tu ressens.',
+    createdAt: new Date("2025-06-12T08:59:00.667Z"),
   },
     {
     id: 4,
     description: 'Écris une contre-pensée pour chaque pensée négative. essens.',
+    createdAt: new Date("2025-06-13T09:59:09.667Z"),
   }, 
   
 ];
@@ -50,7 +56,7 @@ type SolutionProps = {
 const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: SolutionProps) => (
   <TouchableOpacity onPress={onPress} style={[styles.item_solutoin, {backgroundColor}]}>
   <View style={styles.description_solution}>
-    <Text style={{opacity:0.4}}>20025-05-09:20:00:00</Text>
+    <Text style={{opacity:0.4}}>{item.createdAt.toDateString()} - {item.createdAt.toLocaleTimeString()}</Text>
     <Text style={[{color: textColor}, styles.description_solution_text]}>{item.description}</Text>
     </View>
     <Text onPress={() =>  removeItem(item.id)} style={[{ color: 'red' }, styles.close_button]}>X</Text>
