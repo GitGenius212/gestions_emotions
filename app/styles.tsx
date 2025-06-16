@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   description_solution: {
     paddingLeft: 15, 
     paddingVertical: 15,  
-    width: '80%'
+    width: '84%'
   },
 
   close_button : {  
