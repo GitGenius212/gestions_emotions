@@ -14,75 +14,47 @@ const SectionPensees = () => {
 
     //Selection des émotions aux débuts, avant
       const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(false);
-      React.useEffect(() => {
-      console.log('::Peur_avant::', isSelected_peur_avant);
-      }, [isSelected_peur_avant]);
+      
     
       const [isSelected_honte_avant, setIsSelected_honte_avant] = useState(false);
-      React.useEffect(() => {
-      console.log('::Honte_avant::', isSelected_honte_avant);
-      }, [isSelected_honte_avant]);
+      
     
       const [isSelected_colère_avant, setIsSelected_colère_avant] = useState(false);
-      React.useEffect(() => {
-      console.log('::Colère_avant::', isSelected_colère_avant);
-      }, [isSelected_colère_avant]);
+      
     
       const [isSelected_joie_avant, setIsSelected_joie_avant] = useState(false);
-      React.useEffect(() => {
-      console.log('::Joie_avant::', isSelected_joie_avant);
-      }, [isSelected_joie_avant]);
+      
     
       const [isSelected_tristesse_avant, setIsSelected_tristesse_avant] = useState(false);
-      React.useEffect(() => {
-      console.log('::Tristesse_avant::', isSelected_tristesse_avant);
-      }, [isSelected_tristesse_avant]);
+      
     
       const [isSelected_frustration_avant, setIsSelected_frustration_avant] = useState(false);
-      React.useEffect(() => {
-      console.log('::Frustration_avant::', isSelected_frustration_avant);
-      }, [isSelected_frustration_avant]);
+      
     
       const [isSelected_dégoût_avant, setIsSelected_dégoût_avant] = useState(false);
-      React.useEffect(() => {
-      console.log('::Dégoût_avant::', isSelected_dégoût_avant);
-      }, [isSelected_dégoût_avant]);
+      
     
       //Selection des émotions à la fin, après
       const [isSelected_peur_après, setIsSelected_peur_après] = useState(false);
-      React.useEffect(() => {
-      console.log('::Peur_après::', isSelected_peur_après);
-      }, [isSelected_peur_après]);
+      
     
       const [isSelected_honte_après, setIsSelected_honte_après] = useState(false);
-      React.useEffect(() => {
-      console.log('::Honte_après::', isSelected_honte_après);
-      }, [isSelected_honte_après]);
+      
     
       const [isSelected_colère_après, setIsSelected_colère_après] = useState(false);
-      React.useEffect(() => {
-      console.log('::Colère_après::', isSelected_colère_après);
-      }, [isSelected_colère_après]);
+      
     
       const [isSelected_joie_après, setIsSelected_joie_après] = useState(false);
-      React.useEffect(() => {
-      console.log('::Joie_après::', isSelected_joie_après);
-      }, [isSelected_joie_après]);
+      
     
       const [isSelected_tristesse_après, setIsSelected_tristesse_après] = useState(false);
-      React.useEffect(() => {
-      console.log('::Tristesse_après::', isSelected_tristesse_après);
-      }, [isSelected_tristesse_après]);
+      
     
       const [isSelected_frustration_après, setIsSelected_frustration_après] = useState(false);
-      React.useEffect(() => {
-      console.log('::Frustration_après::', isSelected_frustration_après);
-      }, [isSelected_frustration_après]);
+      
     
       const [isSelected_dégoût_après, setIsSelected_dégoût_après] = useState(false);
-      React.useEffect(() => {
-      console.log('::Dégoût_après::', isSelected_dégoût_après);
-      }, [isSelected_dégoût_après]);
+      
 
   return (
     <View style={{flex: 1, backgroundColor:"#94DDBC", padding:15}}>
