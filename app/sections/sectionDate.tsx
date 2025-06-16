@@ -1,8 +1,11 @@
 import { View, Text } from 'react-native'
-import React from 'react'
+import React, { PropsWithChildren } from 'react'
 import styles from '../styles'
 
-const sectionDate = () => {
+export const CustomText = ({ children }: PropsWithChildren) => <Text style={[styles.aujourdhui]}>{children}</Text>;
+
+
+ const SectionDate = () => {
   return (
     <View style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 30,paddingTop: 25,}}>
     
@@ -14,7 +17,7 @@ const sectionDate = () => {
 
             <Text style={{fontSize: 18, marginBottom: 10,}}>2025-06-05</Text>
 
-            <Text style={[styles.aujourdhui]}>Aujourd'hui</Text>
+            <CustomText>Aujourd'hui</CustomText>
 
         </View>
 
@@ -23,4 +26,4 @@ const sectionDate = () => {
   )
 }
 
-export default sectionDate
+export default SectionDate
