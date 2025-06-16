@@ -1,3 +1,4 @@
+import { PenseeData } from "../Domaine/Classes/PenseeData";
 import { SolutionData } from "../Domaine/Classes/SolutionData";
 
 
@@ -51,11 +52,11 @@ export function removeSolution(id: number) {
   
 }
 
-export const pensee_datas = [
+export const pensée_datas : PenseeData[] = [
   {
     element_declencheur: "La sécurité m'a dit de venir",
-    date: "2025-06-12T05:11:37.962Z",
-    description: "J'ai peur qu'il me fait du mal",
+    date: new Date("2025-06-12T05:11:37.962Z"),
+    interpretation: "J'ai peur qu'il me fait du mal",
     "emotions_avant": [
       "Peur"
     ],
@@ -67,8 +68,8 @@ export const pensee_datas = [
   },
   {
     element_declencheur: "Ma tante m'a dit si la chemise me va bien",
-    date: "2025-06-12T10:12:54.992Z",
-    description: "OOOOOOOHHHHH ! Elle est meilleur que moi",
+    date: new Date("2025-06-12T10:12:54.992Z"),
+    interpretation: "OOOOOOOHHHHH ! Elle est meilleur que moi",
     emotions_avant: [
       "Peur",
       "Colère"
@@ -81,8 +82,8 @@ export const pensee_datas = [
   },
   {
     element_declencheur: "Une femme me mendiait",
-    date: "2025-06-12T03:19:40.187Z",
-    description: "Elle est meilleur que dans la confiance en soi. J'ai peur de la blesser en lui disant non",
+    date: new Date("2025-06-12T03:19:40.187Z"),
+    interpretation: "Elle est meilleur que dans la confiance en soi. J'ai peur de la blesser en lui disant non",
     emotions_avant: [
       "Peur"
     ],
@@ -94,8 +95,8 @@ export const pensee_datas = [
   },
   {
     element_declencheur: "Je regarde le gars pour le voir parler",
-    date: "2025-06-12T03:11:56.404Z",
-    description: "OOOHHHH ! Nous sommes en compétition. ",
+    date: new Date("2025-06-12T03:11:56.404Z"),
+    interpretation: "OOOHHHH ! Nous sommes en compétition. ",
     emotions_avant: [
       "Peur",
       "Colère"

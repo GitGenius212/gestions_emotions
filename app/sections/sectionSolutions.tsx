@@ -107,6 +107,7 @@ const SectionSolutions = () => {
             </Text>
 
             <TextArea 
+                  description=''
                   placeholder='Solutions'
                   onPress={() => console.log("TextInput Pressed")}
                   icons={icons.solution}

@@ -5,12 +5,13 @@ import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
 
 import TextArea from "@/components/TextArea";
-import CustomCheckbox from "@/components/CustomCheckbox"
+import CustomCheckbox from "@/components/CustomCheckbox";
 
 
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
 const SectionPensees = () => {
+
 
     //Selection des émotions aux débuts, avant
       const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(false);
@@ -64,11 +65,13 @@ const SectionPensees = () => {
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
               <TextArea placeholder='Élément déclencheur' 
+              description=''
               onPress={() => console.log("TextInput Pressed")}
                 icons={icons.element_dec}/>
 
                 <TextArea 
                 placeholder='Pensée négative'
+                description=''
                 onPress={() => console.log("TextInput Pressed")}
                 icons={icons.pensee_negative}
                 />
@@ -153,6 +156,7 @@ const SectionPensees = () => {
 
                 <TextArea 
                 placeholder='Contre-Pensée négative'
+                description=''
                 onPress={() => console.log("TextInput Pressed")}
                 icons={icons.pensee_negative}
                 />

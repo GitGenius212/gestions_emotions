@@ -5,9 +5,10 @@ interface Props {
   placeholder: string;
   onPress?: () => void;
   icons?: any;
+  description: string
 }
 
-const TextArea = ({placeholder, onPress, icons}: Props) => {
+const TextArea = ({placeholder, onPress, icons, description}: Props) => {
   return (
     <View 
     style={{
@@ -31,7 +32,7 @@ const TextArea = ({placeholder, onPress, icons}: Props) => {
         }} resizeMode='contain' />
       <TextInput 
         onPress={onPress}
-        value=''
+        value={description}
         placeholder={placeholder}
         placeholderTextColor='#757575'
         onChangeText={(text) => console.log(text)}
