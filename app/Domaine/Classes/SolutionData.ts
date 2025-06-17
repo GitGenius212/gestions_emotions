@@ -1,5 +1,5 @@
 export type SolutionData = { 
-  id: number;
+  id?: number;
   description: string;
   createdAt: Date;
 };

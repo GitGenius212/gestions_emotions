@@ -23,7 +23,7 @@ export const solutions_datas: SolutionData[] = [
     id: 4,
     description: 'Écris une contre-pensée pour chaque pensée négative. Ressens.',
     createdAt: new Date("2025-06-13T09:59:09.667Z"),
-  }, 
+  } 
   
 ];
 
@@ -37,7 +37,7 @@ export function removeSolution(id: number) {
         trouve = true;
         //remove the solution
         solutions_datas.splice(i, 1);
-        console.log(solutions_datas)
+        //console.log(solutions_datas)
         //Stop the loop
         break;
 
@@ -50,6 +50,13 @@ export function removeSolution(id: number) {
     }
   
   
+}
+
+export function addSolution(solution: SolutionData) {
+  
+  solution.id = (solutions_datas.length > 0) ? (solutions_datas.length + 1) : 1;
+  solutions_datas.unshift(solution);
+
 }
 
 export const pensée_datas : PenseeData[] = [

@@ -32,7 +32,7 @@ const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: Solut
   </View>
 
   <View>
-      <Text onPress={() =>  removeItem(item.id)} style={[{ color: 'white' }, styles.close_button]}>X</Text>
+      <Text onPress={() =>  removeItem(item.id ?? 0)} style={[{ color: 'white' }, styles.close_button]}>X</Text>
   </View>
     
   </TouchableOpacity>
@@ -59,18 +59,21 @@ const SectionSolutions = () => {
         
         let backgroundColor = '';
         let color = '';
-        if (item.id % 2 === 0) {
-          backgroundColor = '#e3e3e3';
-          color = '#C84630';
-        }  else {
-          backgroundColor = '#D4A0A7';
-          color = '#C84630';
+        if(item.id != null) {
+            if (item.id % 2 === 0) {
+            backgroundColor = '#e3e3e3';
+            color = '#C84630';
+          }  else {
+            backgroundColor = '#D4A0A7';
+            color = '#C84630';
+          }
+      
+          if(item.id == selectedId_solution) {
+            backgroundColor = '#898989';
+            color = 'white';
+          }
         }
-    
-        if(item.id == selectedId_solution) {
-          backgroundColor = '#898989';
-          color = 'white';
-        }
+        
     
         
         
@@ -132,7 +135,7 @@ const SectionSolutions = () => {
 
                 data={solutions_datas}
                 renderItem={renderItem}
-                keyExtractor={item => item.id.toString()}
+                keyExtractor={item => item.id != null ? item.id.toString() : ''}
                 extraData={selectedId_solution}
               />    
 
