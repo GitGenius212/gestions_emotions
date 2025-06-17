@@ -30,7 +30,7 @@ export const solutions_datas: SolutionData[] = [
 export function removeSolution(id: number) {
   //Déclaration de variables
   let trouve = false;
-
+  
   //Traitements
   for (let i=0; i< solutions_datas.length; i++) {
     if(solutions_datas[i].id == id) {
@@ -44,10 +44,10 @@ export function removeSolution(id: number) {
     } 
     
   }
-
   if(!trouve) {
-      console.error(`The solution with this id ${id} not found`)
-    }
+      throw new Error(`The solution with this id ${id} not found`);
+  }
+  
   
   
 }

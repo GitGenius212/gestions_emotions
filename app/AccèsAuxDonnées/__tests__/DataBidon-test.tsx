@@ -6,7 +6,7 @@ describe('SolutionData', () => {
             //Set up
             const new_solution =   {
                 description: "Sois toi-même ! Ils doivent t'accepter tel que tu es ",
-                createdAt: new Date("2025-06-17T11:00:09.667Z"),
+                createdAt: new Date(),
 
             }
 
@@ -14,10 +14,10 @@ describe('SolutionData', () => {
                 {
                     id: 5, 
                     description: "Sois toi-même ! Ils doivent t'accepter tel que tu es ",
-                    createdAt: new Date("2025-06-17T11:00:09.667Z"),
+                    createdAt: new Date(),
 
                 }, 
-                
+
                 {
                     id: 1,
                     description: 'Sois Conscient de tes émotions et de leurs déclencheurs.',
@@ -60,6 +60,17 @@ describe('SolutionData', () => {
 
         //Check
         expect(solutions_datas).toStrictEqual(expected_list_solutions);
+    });
+
+    test('given a user, when he removes a solution of id not found, then he obtain a specific error message thrown', () => {
+        //Set up
+
+        //Action
+        function removeSolution_NOT_FOUND() {
+            removeSolution(0);
+        }
+        //Check
+        expect(removeSolution_NOT_FOUND).toThrow(new Error("The solution with this id 0 not found"));
     });
 
 
