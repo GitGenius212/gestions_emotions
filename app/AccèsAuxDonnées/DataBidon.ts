@@ -21,7 +21,7 @@ export const solutions_datas: SolutionData[] = [
   },
     {
     id: 4,
-    description: 'Écris une contre-pensée pour chaque pensée négative. essens.',
+    description: 'Écris une contre-pensée pour chaque pensée négative. Ressens.',
     createdAt: new Date("2025-06-13T09:59:09.667Z"),
   }, 
   
