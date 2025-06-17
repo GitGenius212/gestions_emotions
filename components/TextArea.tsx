@@ -5,10 +5,11 @@ interface Props {
   placeholder: string;
   onPress?: () => void;
   icons?: any;
-  description: string
+  description: string;
+  onChangeDescription : any;
 }
 
-const TextArea = ({placeholder, onPress, icons, description}: Props) => {
+const TextArea = ({placeholder, onPress, icons, description, onChangeDescription}: Props) => {
   return (
     <View 
     style={{
@@ -35,7 +36,7 @@ const TextArea = ({placeholder, onPress, icons, description}: Props) => {
         value={description}
         placeholder={placeholder}
         placeholderTextColor='#757575'
-        onChangeText={(text) => console.log(text)}
+        onChangeText={onChangeDescription}
         multiline
         numberOfLines={4}
         style={{
