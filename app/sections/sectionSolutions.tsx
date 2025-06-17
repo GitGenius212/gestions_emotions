@@ -40,10 +40,14 @@ const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: Solut
 
 const SectionSolutions = () => {
     
+    const solution_default : SolutionData = {
+      description: '',
+      createdAt: new Date()
+    }
 
     const [selectedId_solution, setSelectedId_solution] = useState<number>();
-    
-      const [solutions, setSolutions] = useState(solutions_datas);
+      const [newSolution, setNewSolution] = React.useState(solution_default);
+    const [solutions, setSolutions] = useState(solutions_datas);
       
       
     
@@ -110,7 +114,8 @@ const SectionSolutions = () => {
             </Text>
 
             <TextArea 
-                  description=''
+                  description={newSolution.description}
+                  onChangeDescription={setNewSolution}
                   placeholder='Solutions'
                   onPress={() => console.log("TextInput Pressed")}
                   icons={icons.solution}

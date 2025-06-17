@@ -66,12 +66,14 @@ const SectionPensees = () => {
 
               <TextArea placeholder='Élément déclencheur' 
               description=''
+              onChangeDescription=''
               onPress={() => console.log("TextInput Pressed")}
                 icons={icons.element_dec}/>
 
                 <TextArea 
                 placeholder='Pensée négative'
                 description=''
+                onChangeDescription=''
                 onPress={() => console.log("TextInput Pressed")}
                 icons={icons.pensee_negative}
                 />
@@ -157,6 +159,7 @@ const SectionPensees = () => {
                 <TextArea 
                 placeholder='Contre-Pensée négative'
                 description=''
+                onChangeDescription=''
                 onPress={() => console.log("TextInput Pressed")}
                 icons={icons.pensee_negative}
                 />
