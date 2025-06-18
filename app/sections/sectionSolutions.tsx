@@ -25,7 +25,7 @@ type SolutionProps = {
 
 
 const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: SolutionProps) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item_solutoin, {backgroundColor}]}>
+  <TouchableOpacity onPress={onPress} style={[styles.item_solution, {backgroundColor}]}>
   <View style={styles.description_solution}>
     <Text style={{opacity:0.4}}>{item.createdAt?.toDateString()} - {item.createdAt?.toLocaleTimeString()}</Text>
     <Text style={[{color: textColor}, styles.description_solution_text]}>{item.description}</Text>
@@ -62,7 +62,14 @@ const SectionSolutions = () => {
           description
         }
         //Add this new solution to the list
-        console.log("Solution added successfully", addSolution(newSolution));
+        let solution_added = addSolution(newSolution);
+        console.log("Solution added successfully", solution_added);
+
+        //Update the solutions list
+        const new_list = solutions.toSpliced(0, 0, solution_added);
+        setSolutions(new_list);
+
+        
       }
     
       const renderItem = ({item}: {item: SolutionData}) => {
@@ -144,7 +151,7 @@ const SectionSolutions = () => {
                     borderRadius: 20
                   }}
 
-                data={solutions_datas}
+                data={solutions}
                 renderItem={renderItem}
                 keyExtractor={item => item.id != null ? item.id.toString() : ''}
                 extraData={selectedId_solution}

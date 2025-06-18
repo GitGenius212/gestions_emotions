@@ -57,7 +57,6 @@ export function addSolution(solution: SolutionData) : SolutionData{
   //Mise à jour
   solution.id = (solutions_datas.length > 0) ? (solutions_datas.length + 1) : 1;
   solution.createdAt = new Date();
-  console.log(solution);
   solutions_datas.unshift(solution);
 
   //Sorties/Affichage

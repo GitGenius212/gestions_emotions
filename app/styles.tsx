@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     fontSize:16
   }, 
 
-  item_solutoin: {
+  item_solution: {
     flexDirection:'row',  
     justifyContent:'space-between'
   },
