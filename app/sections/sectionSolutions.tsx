@@ -147,7 +147,7 @@ const SectionSolutions = () => {
               <FlatList
                   style={{
                     marginTop: 20, 
-                    marginBottom: 50, 
+                    marginBottom: (solutions.length < 3) ? 330 : 50, 
                     borderRadius: 20
                   }}
 
