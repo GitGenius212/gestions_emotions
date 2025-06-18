@@ -49,6 +49,18 @@ describe('SolutionData', () => {
             expect(solutions_datas).toStrictEqual(expected_list_solutions);
     });
 
+    test('given an existed solution with the id 1, when the user add a new solution with the id 1, then he obtains the list without this solution', () => {
+        //Set up
+        const new_solution =   {
+            id: 1, 
+            description: "Sois toi-même ! Ils doivent t'accepter tel que tu es "
+
+        }
+        //Action
+
+        //Check
+    });
+
     test('given a user, when he removes a solution of id #1, then he obtain the rest of the list', () => {
         //Set up
 

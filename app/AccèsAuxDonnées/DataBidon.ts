@@ -27,6 +27,11 @@ export const solutions_datas: SolutionData[] = [
   
 ];
 
+function findSolutionById(id:number) : SolutionData {
+  let solution : SolutionData = {description:''};
+  return solution;
+}
+
 export function removeSolution(id: number) {
   //Déclaration de variables
   let trouve = false;
@@ -57,6 +62,10 @@ export function addSolution(solution: SolutionData) : SolutionData{
   //Mise à jour
   solution.id = (solutions_datas.length > 0) ? (solutions_datas.length + 1) : 1;
   solution.createdAt = new Date();
+
+  //If the id already exists
+    //Don't add this solution
+
   solutions_datas.unshift(solution);
 
   //Sorties/Affichage
