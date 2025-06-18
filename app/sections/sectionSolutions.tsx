@@ -5,7 +5,7 @@ import { FlatList, Text, TouchableHighlight, TouchableOpacity, View } from 'reac
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
-import { removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidon';
+import { addSolution, removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidon';
 import { SolutionData } from '../Domaine/Classes/SolutionData';
 
 
@@ -27,7 +27,7 @@ type SolutionProps = {
 const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: SolutionProps) => (
   <TouchableOpacity onPress={onPress} style={[styles.item_solutoin, {backgroundColor}]}>
   <View style={styles.description_solution}>
-    <Text style={{opacity:0.4}}>{item.createdAt.toDateString()} - {item.createdAt.toLocaleTimeString()}</Text>
+    <Text style={{opacity:0.4}}>{item.createdAt?.toDateString()} - {item.createdAt?.toLocaleTimeString()}</Text>
     <Text style={[{color: textColor}, styles.description_solution_text]}>{item.description}</Text>
   </View>
 
@@ -40,13 +40,10 @@ const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: Solut
 
 const SectionSolutions = () => {
     
-    const solution_default : SolutionData = {
-      description: '',
-      createdAt: new Date()
-    }
+    
 
     const [selectedId_solution, setSelectedId_solution] = useState<number>();
-      const [newSolution, setNewSolution] = React.useState(solution_default);
+      const [descriptionSolution, setDescriptionSolution] = React.useState('');
     const [solutions, setSolutions] = useState(solutions_datas);
       
       
@@ -58,6 +55,15 @@ const SectionSolutions = () => {
         console.log('Button removeItem pressed');
         removeSolution(id);
       };
+
+      const addItem = (description: string) => {
+        //Create an object SolutionData with this description
+        let newSolution : SolutionData = {
+          description
+        }
+        //Add this new solution to the list
+        console.log("Solution added successfully", addSolution(newSolution));
+      }
     
       const renderItem = ({item}: {item: SolutionData}) => {
         
@@ -114,8 +120,8 @@ const SectionSolutions = () => {
             </Text>
 
             <TextArea 
-                  description={newSolution.description}
-                  onChangeDescription={setNewSolution}
+                  description={descriptionSolution}
+                  onChangeDescription={setDescriptionSolution}
                   placeholder='Solutions'
                   onPress={() => console.log("TextInput Pressed")}
                   icons={icons.solution}
@@ -123,7 +129,7 @@ const SectionSolutions = () => {
 
 
             <TouchableHighlight 
-              onPress={() => console.log('Button Pressed')}
+              onPress={() => addItem(descriptionSolution)}
               underlayColor='#912937'
               style={styles.button}>
                 <View>

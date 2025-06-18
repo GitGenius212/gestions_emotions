@@ -5,8 +5,7 @@ describe('SolutionData', () => {
     test('given a user, when he add a new solution, then he obtains the list of all the solutions including it', () => {
             //Set up
             const new_solution =   {
-                description: "Sois toi-même ! Ils doivent t'accepter tel que tu es ",
-                createdAt: new Date(),
+                description: "Sois toi-même ! Ils doivent t'accepter tel que tu es "
 
             }
 
