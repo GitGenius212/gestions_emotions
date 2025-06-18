@@ -43,11 +43,11 @@ const SectionSolutions = () => {
     
 
     const [selectedId_solution, setSelectedId_solution] = useState<number>();
-      const [descriptionSolution, setDescriptionSolution] = React.useState('');
+    const [descriptionSolution, setDescriptionSolution] = React.useState('');
     const [solutions, setSolutions] = useState(solutions_datas);
       
-      
-    
+    //Independant statements
+    const statements: number = (solutions.length === 0) ? 330 : (solutions.length === 1) ? 240: (solutions.length === 2) ? 165: (solutions.length === 3) ? 100: 50;
       
       const removeItem = (id: number) => {
         
@@ -147,7 +147,8 @@ const SectionSolutions = () => {
               <FlatList
                   style={{
                     marginTop: 20, 
-                    marginBottom: (solutions.length < 3) ? 330 : 50, 
+                    flex:0, 
+                    marginBottom:statements, 
                     borderRadius: 20
                   }}
 
