@@ -64,10 +64,15 @@ const SectionSolutions = () => {
         //Add this new solution to the list
         let solution_added = addSolution(newSolution);
         console.log("Solution added successfully", solution_added);
-
+        
         //Update the solutions list
-        const new_list = solutions.toSpliced(0, 0, solution_added);
-        setSolutions(new_list);
+        if(solutions[0] === solution_added) {
+          const new_list = solutions.toSpliced(0, 1, solution_added);
+          setSolutions(new_list);
+        } else {
+          const new_list = solutions.toSpliced(0, 0, solution_added);
+          setSolutions(new_list);
+        }
 
         
       }
