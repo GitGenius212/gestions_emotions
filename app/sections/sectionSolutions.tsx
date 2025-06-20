@@ -52,6 +52,8 @@ const SectionSolutions = () => {
       const removeItem = (id: number) => {
         
         setSolutions(solutions.filter(item => item.id !== id));
+        if(id == selectedId_solution) setSelectedId_solution(undefined);
+        
         removeSolution(id);
         
       };
