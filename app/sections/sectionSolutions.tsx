@@ -52,8 +52,8 @@ const SectionSolutions = () => {
       const removeItem = (id: number) => {
         
         setSolutions(solutions.filter(item => item.id !== id));
-        console.log('Button removeItem pressed');
         removeSolution(id);
+        
       };
 
       const addItem = (description: string) => {
@@ -63,17 +63,21 @@ const SectionSolutions = () => {
         }
         //Add this new solution to the list
         let solution_added = addSolution(newSolution);
-        console.log("Solution added successfully", solution_added);
+
         
         //Update the solutions list
         if(solutions[0] === solution_added) {
           const new_list = solutions.toSpliced(0, 1, solution_added);
           setSolutions(new_list);
+           
         } else {
           const new_list = solutions.toSpliced(0, 0, solution_added);
           setSolutions(new_list);
+          
+          
         }
-
+        
+        
         
       }
     
@@ -159,7 +163,7 @@ const SectionSolutions = () => {
 
                 data={solutions}
                 renderItem={renderItem}
-                keyExtractor={item => item.id != null ? item.id.toString() : ''}
+                keyExtractor={item => item.id != null ? item.id.toString() : (solutions.length + 1 ).toString()}
                 extraData={selectedId_solution}
               />    
 

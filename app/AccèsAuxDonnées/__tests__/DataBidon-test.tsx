@@ -18,23 +18,23 @@ describe('SolutionData', () => {
                 }, 
 
                 {
-                    id: 1,
+                    id: 4,
                     description: 'Sois Conscient de tes émotions et de leurs déclencheurs.',
                     createdAt: new Date("2025-06-12T16:59:00.667Z"),
 
                 },
                 {
-                    id: 2,
+                    id: 3,
                     description: "Note tes pensées négatives et les émotions qu'elles suscitent.",
                     createdAt: new Date("2025-06-12T07:59:00.667Z"),
                 },
                 {
-                    id: 3,
+                    id: 2,
                     description: 'Identifie les émotions que tu ressens.',
                     createdAt: new Date("2025-06-12T08:59:00.667Z"),
                 },
                     {
-                    id: 4,
+                    id: 1,
                     description: 'Écris une contre-pensée pour chaque pensée négative. Ressens.',
                     createdAt: new Date("2025-06-13T09:59:09.667Z"),
                 }
@@ -57,8 +57,11 @@ describe('SolutionData', () => {
 
         }
         //Action
-
+        function addSolution_CONFLICT() {
+           addSolution(new_solution);
+        }
         //Check
+        expect(addSolution_CONFLICT).toThrow(new Error("The solution with this id 1 already exists"));
     });
 
     test('given a user, when he removes a solution of id #1, then he obtain the rest of the list', () => {
