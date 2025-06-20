@@ -15,7 +15,9 @@ export default function Index() {
 }, [])
 
   return (
-    <ScrollView style={{flex:1, backgroundColor:'white'}} showsVerticalScrollIndicator={false}>
+    <ScrollView 
+    keyboardShouldPersistTaps='always'
+    style={{flex:1, backgroundColor:'white'}} showsVerticalScrollIndicator={false}>
 
 
       {/*Section de la date*/}
