@@ -1,7 +1,7 @@
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
-import { FlatList, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { FlatList, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
@@ -28,7 +28,7 @@ const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: Solut
   <TouchableOpacity onPress={onPress} style={[styles.item_solution, {backgroundColor}]}>
   <View style={styles.description_solution}>
     <Text style={{opacity:0.4}}>{item.createdAt?.toDateString()} - {item.createdAt?.toLocaleTimeString()}</Text>
-    <Text style={[{color: textColor}, styles.description_solution_text]}>{item.description}</Text>
+    <TextInput multiline  style={[{color: textColor}, styles.description_solution_text]}>{item.description}</TextInput>
   </View>
 
   <View>

@@ -39,8 +39,9 @@ const styles = StyleSheet.create({
   },
   description_solution: {
     paddingLeft: 15, 
-    paddingVertical: 15,  
-    width: '84%'
+    paddingTop: 15, 
+    paddingBottom:5, 
+    width: '87%'
   },
 
   close_button : {  
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
 
   description_solution_text : {
     fontSize : 18
+      
   }
   
 });
