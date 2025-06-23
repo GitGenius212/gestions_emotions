@@ -5,7 +5,7 @@ import { FlatList, Text, TextInput, TouchableHighlight, TouchableOpacity, View }
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
-import { addSolution, removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidon';
+import { addSolution, putSolution, removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidon';
 import { SolutionData } from '../Domaine/Classes/SolutionData';
 
 
@@ -21,14 +21,16 @@ type SolutionProps = {
   backgroundColor: string;
   textColor: string;
   removeItem : (id:number) => void;
+  putItem : (text:string, item: SolutionData) => void;
 };
 
 
-const Solution = ({item, onPress, backgroundColor, textColor, removeItem}: SolutionProps) => (
+const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem}: SolutionProps) => (
   <TouchableOpacity onPress={onPress} style={[styles.item_solution, {backgroundColor}]}>
   <View style={styles.description_solution}>
     <Text style={{opacity:0.4}}>{item.createdAt?.toDateString()} - {item.createdAt?.toLocaleTimeString()}</Text>
-    <TextInput multiline  style={[{color: textColor}, styles.description_solution_text]}>{item.description}</TextInput>
+    <TextInput multiline  onChangeText={(text) =>  putItem(text, item)} 
+    style={[{color: textColor}, styles.description_solution_text]}>{item.description}</TextInput>
   </View>
 
   <View>
@@ -92,9 +94,24 @@ const SectionSolutions = () => {
           
           
         }
-        
-        
-        
+         
+      }
+
+      const putItem = (text: string, item: SolutionData) => {
+       
+       //Déclaration de variables
+       let updated_solution : SolutionData = {
+          description: text, 
+          id: item.id, 
+          createdAt: item.createdAt
+
+        }
+        const indexItem = solutions.indexOf(item);
+
+        //Traitements
+        const updated_list_solutions = solutions.toSpliced(indexItem, 1, updated_solution);
+        setSolutions(updated_list_solutions);
+       
       }
     
       const renderItem = ({item}: {item: SolutionData}) => {
@@ -134,6 +151,7 @@ const SectionSolutions = () => {
             backgroundColor={backgroundColor}
             textColor={color}
             removeItem={removeItem}
+            putItem={putItem}
           />
         );
       };
@@ -188,3 +206,5 @@ const SectionSolutions = () => {
 }
 
 export default SectionSolutions
+
+

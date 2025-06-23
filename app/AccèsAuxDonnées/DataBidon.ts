@@ -46,7 +46,11 @@ return {exists, data, index}
   
 }
 
-export function removeSolution(id: number) : SolutionData | undefined{
+export function putSolution(solution: SolutionData) {
+  
+}
+
+export function removeSolution(id: number) : SolutionData | undefined {
   //Déclaration de variables
   const solution = findSolutionById(id);
 
