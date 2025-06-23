@@ -47,7 +47,21 @@ const SectionSolutions = () => {
     const [solutions, setSolutions] = useState(solutions_datas);
       
     //Independant statements
-    const statements: number = (solutions.length === 0) ? 330 : (solutions.length === 1) ? 240: (solutions.length === 2) ? 165: (solutions.length === 3) ? 100: 50;
+  function getNumberMarginBotoom(length: number) : number{
+    if(length === 0) {
+      return 330;
+    } else if(length === 1 ) {
+      return 240;
+    } else if(length === 2) {
+      return 165;
+    } else if(length === 3) {
+      return 100
+    } else {
+      return 50;
+    }
+  }
+
+    const statements: number = getNumberMarginBotoom(solutions.length);
       
       const removeItem = (id: number) => {
         
