@@ -69,9 +69,22 @@ export function removeSolution(id: number) : SolutionData | undefined{
 export function addSolution(solution: SolutionData) : SolutionData{
 
   //Déclaration de variables
-  const new_id = (solutions_datas.length > 0) ? (solutions_datas.length + 1) : 1;
+  let new_id :number; 
+  let largestId : number | undefined = 0;
+
+  
+  //Treatements
+  for (let s of solutions_datas) {
+    if(s.id != undefined && s.id > largestId) {
+      largestId = s.id;
+      
+    }
+  }
+
+  new_id = largestId + 1;
   const check_solution_new_id = findSolutionById(new_id);
 
+  
 
   //Vérification
   if(check_solution_new_id.exists) {
