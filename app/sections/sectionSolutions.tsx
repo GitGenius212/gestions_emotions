@@ -111,7 +111,7 @@ const SectionSolutions = () => {
         //Traitements
         const updated_list_solutions = solutions.toSpliced(indexItem, 1, updated_solution);
         setSolutions(updated_list_solutions);
-       
+        putSolution(updated_solution);
       }
     
       const renderItem = ({item}: {item: SolutionData}) => {

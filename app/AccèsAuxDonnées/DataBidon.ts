@@ -47,7 +47,16 @@ return {exists, data, index}
 }
 
 export function putSolution(solution: SolutionData) {
-  
+
+  if(!solutions_datas.find(s => s.id == solution.id)) 
+    throw new Error(`The solution with this id ${solution.id} not found`);
+
+  for(let i = 0; i < solutions_datas.length;i++) {
+    if(solutions_datas[i].id == solution.id) {
+        solutions_datas[i] = solution;
+    }
+  }
+  return solutions_datas
 }
 
 export function removeSolution(id: number) : SolutionData | undefined {
