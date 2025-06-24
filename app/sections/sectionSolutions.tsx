@@ -49,21 +49,27 @@ const SectionSolutions = () => {
     const [solutions, setSolutions] = useState(solutions_datas);
       
     //Independant statements
-  function getNumberMarginBottom(length: number) : number{
-    if(length === 0) {
-      return 330;
-    } else if(length === 1 ) {
-      return 240;
-    } else if(length === 2) {
-      return 165;
-    } else if(length === 3) {
-      return 100
-    } else {
-      return 50;
+  function getNumberMarginBottom(length?: number) : number{
+    console.log("We are updating a solution");
+    if(length == undefined) {
+      if(solutions.length === 0) {
+        return 330;
+      } else if(solutions.length === 1 ) {
+        return 240;
+      } else if(solutions.length === 2) {
+        return 165;
+      } else if(solutions.length === 3) {
+        return 100;
+      } else {
+        return 50;
     }
+  } else {
+      return 340;
+    }
+    
   }
 
-    const statements: number = getNumberMarginBottom(solutions.length);
+    const statements: number = getNumberMarginBottom();
       
       const removeItem = (id: number) => {
         
