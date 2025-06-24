@@ -1,7 +1,7 @@
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { FlatList, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Keyboard, Text, TextInput, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
@@ -22,14 +22,15 @@ type SolutionProps = {
   textColor: string;
   removeItem : (id:number) => void;
   putItem : (text:string, item: SolutionData) => void;
+  setIsFocused: (p:boolean) => any;
 };
 
 
-const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem}: SolutionProps) => (
+const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem, setIsFocused}: SolutionProps) => (
   <TouchableOpacity onPress={onPress} style={[styles.item_solution, {backgroundColor}]}>
   <View style={styles.description_solution}>
     <Text style={{opacity:0.4}}>{item.createdAt?.toDateString()} - {item.createdAt?.toLocaleTimeString()}</Text>
-    <TextInput multiline  onChangeText={(text) =>  putItem(text, item)} 
+    <TextInput multiline onFocus={() => setIsFocused(true)} onEndEditing={() => setIsFocused(false)} onChangeText={(text) =>  putItem(text, item)} 
     style={[{color: textColor}, styles.description_solution_text]}>{item.description}</TextInput>
   </View>
 
@@ -47,29 +48,56 @@ const SectionSolutions = () => {
     const [selectedId_solution, setSelectedId_solution] = useState<number>();
     const [descriptionSolution, setDescriptionSolution] = React.useState('');
     const [solutions, setSolutions] = useState(solutions_datas);
+    const [isInputFocused, setIsInputFocused] = useState(false);
+
+    useEffect(() => {
+  const keyboardHideListener = Keyboard.addListener('keyboardDidHide', () => {
+    setIsInputFocused(false);
+    Keyboard.dismiss();
+  });
+
+    // Nettoyage à la destruction du composant
+    return () => {
+      keyboardHideListener.remove();
+    };
+  }, []);
+
+
+  useEffect(() => {
+  const keyboardShowListener = Keyboard.addListener('keyboardDidShow', () => {
+    setIsInputFocused(true);
+
+  });
+
+    // Nettoyage à la destruction du composant
+    return () => {
+      keyboardShowListener.remove();
+    };
+  }, []);
+
+  
       
     //Independant statements
-  function getNumberMarginBottom(length?: number) : number{
-    console.log("We are updating a solution");
-    if(length == undefined) {
-      if(solutions.length === 0) {
-        return 330;
-      } else if(solutions.length === 1 ) {
-        return 240;
-      } else if(solutions.length === 2) {
-        return 165;
-      } else if(solutions.length === 3) {
-        return 100;
-      } else {
-        return 50;
+  function getNumberMarginBottom(length: number) : number{
+    if(length === 0) {
+      return 330;
+    } else if(length === 1 ) {
+      return 240;
+    } else if(length === 2) {
+      return 165;
+    } else if(length === 3) {
+      return 100
+    } else {
+      return 50;
     }
-  } else {
-      return 340;
-    }
-    
   }
 
-    const statements: number = getNumberMarginBottom();
+    const statements: number = isInputFocused ? 340 : getNumberMarginBottom(solutions.length);
+
+    function setIsFocused(p: boolean) {
+      console.log("You are updating a solution !");
+        setIsInputFocused(p);
+    }
       
       const removeItem = (id: number) => {
         
@@ -158,12 +186,18 @@ const SectionSolutions = () => {
             textColor={color}
             removeItem={removeItem}
             putItem={putItem}
+            setIsFocused={setIsFocused}
           />
         );
       };
 
   return (
-    <View 
+    <TouchableWithoutFeedback onPress={() => {
+      setIsFocused(false);
+      Keyboard.dismiss();
+    }
+    }>
+            <View 
         style={{
           paddingHorizontal: 20,
           paddingVertical: 15,
@@ -208,6 +242,8 @@ const SectionSolutions = () => {
               />    
 
       </View>
+    </TouchableWithoutFeedback>
+
   )
 }
 
