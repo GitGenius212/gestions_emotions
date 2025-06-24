@@ -1,4 +1,4 @@
-import { addSolution, putSolution, removeSolution, solutions_datas } from "../DataBidon";
+import { addSolution, putSolution, removeSolution, solutions_datas } from "../DataBidonSolutionData";
 
 describe('SolutionData', () => {
 

@@ -5,7 +5,7 @@ import { FlatList, Keyboard, Text, TextInput, TouchableHighlight, TouchableOpaci
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
-import { addSolution, putSolution, removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidon';
+import { addSolution, putSolution, removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
 import { SolutionData } from '../Domaine/Classes/SolutionData';
 
 
