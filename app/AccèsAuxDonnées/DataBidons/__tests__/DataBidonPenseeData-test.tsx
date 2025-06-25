@@ -1,4 +1,4 @@
-import { getPenseeBydate } from "../DataBidonPenseeData";
+import { getPenseeByDate } from "../DataBidonPenseeData";
 
 describe('PenseeData', () => {
     test('given a list of penseeData, when the user search one by date, then he obtains the PenseeData object', () => {
@@ -18,7 +18,7 @@ describe('PenseeData', () => {
             id: 1
         };
         //Action
-        const pensee_obtained = getPenseeBydate(date);
+        const pensee_obtained = getPenseeByDate(date);
 
         //Check
         expect(pensee_obtained).toStrictEqual(pensee_expected);
@@ -31,7 +31,7 @@ describe('PenseeData', () => {
         
         //Action
         function getPenseeByDate_NOT_FOUND() {
-            getPenseeBydate(date);
+            getPenseeByDate(date);
         }
 
         //Check

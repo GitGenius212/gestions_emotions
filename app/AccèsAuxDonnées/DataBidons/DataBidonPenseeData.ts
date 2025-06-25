@@ -57,9 +57,9 @@ export const pensée_datas : PenseeData[] = [
   }
 ];
 
-export function getPenseeBydate(date: Date) : PenseeData | undefined {
+export function getPenseeByDate(date: Date) : PenseeData | undefined {
   const pensee = pensée_datas.find(p => p.date.toLocaleDateString() == date.toLocaleDateString());
-  console.log("the found pensée is ", pensee);
+  
   if(pensee == undefined) {
         throw new Error(`The 'pensée' with this date ${date.toLocaleDateString()} is unfound`);
 
