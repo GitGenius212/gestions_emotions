@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React, { PropsWithChildren } from 'react'
 import styles from '../styles'
 
@@ -9,7 +9,9 @@ export const CustomText = ({ children }: PropsWithChildren) => <Text style={[sty
   return (
     <View style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 30,paddingTop: 25,}}>
     
-        <Text style={{fontSize:50, color:"#03045E"}}>&larr;</Text>
+        <TouchableOpacity onPress={() => console.log("Aller à hier")}>
+          <Text style={{fontSize:50, color:"#03045E"}}>&larr;</Text>
+        </TouchableOpacity>
 
         <View style={{ flex: 1, alignItems: "center"}}>
 
@@ -21,7 +23,10 @@ export const CustomText = ({ children }: PropsWithChildren) => <Text style={[sty
 
         </View>
 
-        <Text style={{fontSize:50, color:"#03045E"}}>&rarr;</Text>
+        <TouchableOpacity onPress={() => console.log("Aller à demain")}>
+          <Text  style={{fontSize:50, color:"#03045E"}}>&rarr;</Text>
+        </TouchableOpacity>
+        
       </View>
   )
 }

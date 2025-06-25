@@ -21,13 +21,13 @@ describe('PenseeData', () => {
         const pensee_obtained = getPenseeBydate(date);
 
         //Check
-        expect(pensee_obtained).toBe(pensee_expected);
+        expect(pensee_obtained).toStrictEqual(pensee_expected);
 
     });
 
     test('given a list of penseeData, when the user search one by unexisted date, then he obtains a specific message error', () => {
         //Set up
-        const date = new Date("2025-06-12T05:11:37.962Z");
+        const date = new Date("2025-06-25T05:11:37.962Z");
         
         //Action
         function getPenseeByDate_NOT_FOUND() {
@@ -35,7 +35,7 @@ describe('PenseeData', () => {
         }
 
         //Check
-        expect(getPenseeByDate_NOT_FOUND).toThrow(new Error("The 'pensée' with this date 2025-06-12 is unfound"));
+        expect(getPenseeByDate_NOT_FOUND).toThrow(new Error("The 'pensée' with this date 2025-06-25 is unfound"));
 
     });
 

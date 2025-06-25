@@ -12,7 +12,9 @@ import SectionSolutions from "./sections/sectionSolutions";
 export default function Index() {
   React.useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-}, [])
+}, []);
+
+
 
   return (
     <ScrollView 
