@@ -7,7 +7,8 @@ export const CustomText = ({ children }: PropsWithChildren) => <Text style={[sty
 
  const SectionDate = () => {
   return (
-    <View style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 30,paddingTop: 25,}}>
+    <View style={{paddingHorizontal: 30,paddingTop: 25}}>
+      <View style={{flexDirection: "row", justifyContent: "space-between"}}>
     
         <TouchableOpacity onPress={() => console.log("Aller à hier")}>
           <Text style={{fontSize:50, color:"#03045E"}}>&larr;</Text>
@@ -28,6 +29,8 @@ export const CustomText = ({ children }: PropsWithChildren) => <Text style={[sty
         </TouchableOpacity>
         
       </View>
+    </View>
+    
   )
 }
 
