@@ -1,11 +1,11 @@
+import { View, Text, TouchableHighlight } from 'react-native'
+import React, {useState} from 'react'
+import styles from '../styles'
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { Text, TouchableHighlight, View } from 'react-native';
-import styles from '../styles';
 
-import CustomCheckbox from "@/components/CustomCheckbox";
 import TextArea from "@/components/TextArea";
+import CustomCheckbox from "@/components/CustomCheckbox";
 
 
 const tachometer = <FontAwesome name="tachometer" size={24}/>
