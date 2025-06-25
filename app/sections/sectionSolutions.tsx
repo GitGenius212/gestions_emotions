@@ -1,7 +1,7 @@
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Keyboard, Text, TextInput, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { FlatList, Keyboard, Pressable, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
@@ -192,7 +192,7 @@ const SectionSolutions = () => {
       };
 
   return (
-    <TouchableWithoutFeedback onPress={() => {
+    <Pressable onPress={() => {
       setIsFocused(false);
       Keyboard.dismiss();
     }
@@ -242,7 +242,7 @@ const SectionSolutions = () => {
               />    
 
       </View>
-    </TouchableWithoutFeedback>
+    </Pressable>
 
   )
 }
