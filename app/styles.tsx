@@ -10,6 +10,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 10,
     marginBottom: 15,
+    
+    
   },
    
   h1 : {

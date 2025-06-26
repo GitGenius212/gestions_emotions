@@ -1,11 +1,14 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { PropsWithChildren, useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import styles from '../styles';
 
+type CustomTextProps = {
+  style_aujourdhui : StyleProp<TextStyle>
+};
 
-export const CustomText = ({ children }: PropsWithChildren) => <Text style={[styles.aujourdhui]}>{children}</Text>;
+export const CustomText = ({ children, style_aujourdhui }: PropsWithChildren<CustomTextProps>) => <Text style={style_aujourdhui}>{children}</Text>;
 
 LocaleConfig.locales['fr'] = {
   monthNames: [
@@ -35,7 +38,21 @@ LocaleConfig.defaultLocale = 'fr';
   const [date, setDate] = useState(new Date());
   const [isToday, setIsToday] = useState(false);  
 
-  
+  const style = StyleSheet.create({
+    aujourdhui: {
+      backgroundColor: "#E26878", 
+      color: "white",
+      paddingVertical: 15,
+      paddingHorizontal: 32,
+      textAlign: "center",
+      fontSize: 16,
+      borderRadius: 10,
+      marginBottom: 15,
+      display: isToday ? 'flex' : 'none'
+      
+      
+    }
+  });
   
 
   return (
@@ -48,6 +65,18 @@ LocaleConfig.defaultLocale = 'fr';
       </View>
 
       <Calendar style={{marginTop:15}} 
+      theme={{
+        arrowColor:'#03045E',
+        textMonthFontSize:24,  
+        backgroundColor: '#ffffff',
+        calendarBackground: '#ffffff',
+        textSectionTitleColor: '#b6c1cd',
+        selectedDayBackgroundColor: '#00adf5',
+        selectedDayTextColor: '#ffffff',
+        todayTextColor: '#C84630',
+        dayTextColor: '#2d4150',
+        
+      }}
       markedDates={{
         [date.toISOString().split('T')[0]]: {selected: true, selectedColor: '#94DDBC'},
        
@@ -56,6 +85,11 @@ LocaleConfig.defaultLocale = 'fr';
         onDayPress={day => {
           setDate(new Date(day.dateString));
           console.log('selected day', day);
+          if(new Date().toISOString().split('T')[0] == day.dateString) {
+              setIsToday(true);
+          } else {
+            setIsToday(false);
+          }
         }}
       />
 
@@ -70,9 +104,11 @@ LocaleConfig.defaultLocale = 'fr';
 
             <Text style={{fontSize: 24, fontWeight: "bold", marginTop: 10}}>Date</Text>
 
-            <Text style={{fontSize: 18, marginBottom: 10,}}>{date.toISOString().split('T')[0]}</Text>
+            <Text style={{fontSize: 18, marginBottom: isToday? 5 : 15}}>{date.toISOString().split('T')[0]}</Text>
 
-            <CustomText>Aujourd'hui</CustomText>
+            <CustomText 
+            style_aujourdhui={style.aujourdhui}
+            >Aujourd'hui</CustomText>
 
         </View>
 
