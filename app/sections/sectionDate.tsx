@@ -2,7 +2,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { PropsWithChildren, useState } from 'react';
 import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import styles from '../styles';
 
 type CustomTextProps = {
   style_aujourdhui : StyleProp<TextStyle>
