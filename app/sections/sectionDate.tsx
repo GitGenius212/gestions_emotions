@@ -35,7 +35,7 @@ LocaleConfig.defaultLocale = 'fr';
  const SectionDate = () => {
 
   const [date, setDate] = useState(new Date());
-  const [isToday, setIsToday] = useState(false);  
+  const [isToday, setIsToday] = useState(true);  
   const [isPressedCalendar, setIsPressedCalendar] = useState(false);
 
   const style = StyleSheet.create({
@@ -53,21 +53,29 @@ LocaleConfig.defaultLocale = 'fr';
       
     }
   });
+
+  function modificationIsToday(date : string) {
+    if(new Date().toISOString().split('T')[0] == date) {
+              setIsToday(true);
+          } else {
+            setIsToday(false);
+          }
+  }
   
   const gotoYesterday = () => {
-    let y = date;
-    console.log("La date avant =>", y);
+    let y = JSON.parse(JSON.stringify(date));  //Copy date
+    y = new Date(y);
     y.setDate(y.getDate() -1);
     setDate(y);
-    console.log("La date d'hier serait =>", date);
+    modificationIsToday(y.toISOString().split('T')[0]);
   }
 
   const gotoTomorrow = () => {
-    let t = date;
-    console.log("La date avant =>", t);
+    let t = JSON.parse(JSON.stringify(date));  //Copy date
+    t = new Date(t);
     t.setDate(t.getDate() + 1);
     setDate(t);
-    console.log("La date de demain =>", date);
+    modificationIsToday(t.toISOString().split('T')[0]);
   }
 
   return (
@@ -85,7 +93,8 @@ LocaleConfig.defaultLocale = 'fr';
         
       </View>
 
-      <Calendar style={{marginTop:15, display:isPressedCalendar ? 'flex' : 'none'}} 
+      <Calendar  style={{marginTop:15, display:isPressedCalendar ? 'flex' : 'none'}}
+      initialDate={date.toISOString().split('T')[0]}
       theme={{
         arrowColor:'#03045E',
         textMonthFontSize:24,  
@@ -105,12 +114,7 @@ LocaleConfig.defaultLocale = 'fr';
       enableSwipeMonths={true}
         onDayPress={day => {
           setDate(new Date(day.dateString));
-          console.log('selected day', day);
-          if(new Date().toISOString().split('T')[0] == day.dateString) {
-              setIsToday(true);
-          } else {
-            setIsToday(false);
-          }
+          modificationIsToday(day.dateString);
         }}
       />
 
@@ -118,8 +122,7 @@ LocaleConfig.defaultLocale = 'fr';
       <View style={{flexDirection: "row", justifyContent: "space-between"}}>
     
         <TouchableOpacity onPress={() => {
-            console.log("Aller à hier");
-            gotoYesterday();
+            gotoYesterday()
           }
         }>
           <Text style={{fontSize:50, color:"#03045E"}}>&larr;</Text>
@@ -138,7 +141,6 @@ LocaleConfig.defaultLocale = 'fr';
         </View>
 
         <TouchableOpacity onPress={() => {
-            console.log("Aller à demain");
             gotoTomorrow();
           }
         }>
