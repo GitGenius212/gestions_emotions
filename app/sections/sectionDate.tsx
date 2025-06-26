@@ -36,6 +36,7 @@ LocaleConfig.defaultLocale = 'fr';
 
   const [date, setDate] = useState(new Date());
   const [isToday, setIsToday] = useState(false);  
+  const [isPressedCalendar, setIsPressedCalendar] = useState(false);
 
   const style = StyleSheet.create({
     aujourdhui: {
@@ -53,17 +54,38 @@ LocaleConfig.defaultLocale = 'fr';
     }
   });
   
+  const gotoYesterday = () => {
+    let y = date;
+    console.log("La date avant =>", y);
+    y.setDate(y.getDate() -1);
+    setDate(y);
+    console.log("La date d'hier serait =>", date);
+  }
+
+  const gotoTomorrow = () => {
+    let t = date;
+    console.log("La date avant =>", t);
+    t.setDate(t.getDate() + 1);
+    setDate(t);
+    console.log("La date de demain =>", date);
+  }
 
   return (
     <View style={{paddingHorizontal: 30, paddingTop:75}}>
       <View style={{position:'absolute', right:45, top:55}}>
-        <TouchableOpacity onPress={() => console.log("Choose a date")}>
-            <FontAwesome name="calendar" size={24} color="#03045E" />
+        <TouchableOpacity
+        style={{
+          backgroundColor:isPressedCalendar ? 'rgba(3,4, 64, 0.8)' : 'white', 
+          padding:5, 
+          borderRadius:60
+        }}
+        onPress={() => setIsPressedCalendar(!isPressedCalendar)}>
+            <FontAwesome name="calendar" size={24} color={isPressedCalendar ? 'white' : "#03045E"} />
         </TouchableOpacity>
         
       </View>
 
-      <Calendar style={{marginTop:15}} 
+      <Calendar style={{marginTop:15, display:isPressedCalendar ? 'flex' : 'none'}} 
       theme={{
         arrowColor:'#03045E',
         textMonthFontSize:24,  
@@ -95,7 +117,11 @@ LocaleConfig.defaultLocale = 'fr';
       
       <View style={{flexDirection: "row", justifyContent: "space-between"}}>
     
-        <TouchableOpacity onPress={() => console.log("Aller à hier")}>
+        <TouchableOpacity onPress={() => {
+            console.log("Aller à hier");
+            gotoYesterday();
+          }
+        }>
           <Text style={{fontSize:50, color:"#03045E"}}>&larr;</Text>
         </TouchableOpacity>
 
@@ -111,7 +137,11 @@ LocaleConfig.defaultLocale = 'fr';
 
         </View>
 
-        <TouchableOpacity onPress={() => console.log("Aller à demain")}>
+        <TouchableOpacity onPress={() => {
+            console.log("Aller à demain");
+            gotoTomorrow();
+          }
+        }>
           <Text  style={{fontSize:50, color:"#03045E"}}>&rarr;</Text>
         </TouchableOpacity>
         
