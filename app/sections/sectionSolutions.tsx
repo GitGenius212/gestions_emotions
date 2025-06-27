@@ -88,7 +88,6 @@ const SectionSolutions = () => {
     const statements: number = isInputFocused ? 340 : getNumberMarginBottom(solutions.length);
 
     function setIsFocused(p: boolean) {
-      console.log("You are updating a solution !");
         setIsInputFocused(p);
     }
       
@@ -206,7 +205,6 @@ const SectionSolutions = () => {
                   description={descriptionSolution}
                   onChangeDescription={setDescriptionSolution}
                   placeholder='Solutions'
-                  onPress={() => console.log("TextInput Pressed")}
                   icons={icons.solution}
             />
 
