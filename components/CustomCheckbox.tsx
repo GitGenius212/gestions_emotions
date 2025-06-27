@@ -25,7 +25,7 @@ export default function CustomCheckbox({ checked, onPress, size = 24, text } : a
           style={{
             width: size - 8,
             height: size - 8,
-            backgroundColor: "#92BCEA",
+            backgroundColor: "#94DDBC",
             borderRadius: 7,
           }}
         />
