@@ -56,9 +56,7 @@ LocaleConfig.defaultLocale = 'fr';
   });
 
   function getPenseeByCurrentDate(p_date: Date) {
-    console.log("Received in (param) =>", p_date);
     const penseeTrouvee = getPenseeByDate(p_date);
-    console.log(penseeTrouvee);
     if(penseeTrouvee != undefined) {
       updatePensee(penseeTrouvee);  
     }
@@ -71,7 +69,6 @@ LocaleConfig.defaultLocale = 'fr';
     dateObtained = new Date(dateObtained);
 
     //Traitements
-    console.log("dateObtained => ", dateObtained);
     if(new Date().toISOString().split('T')[0] == p_date) {
         setIsToday(true);
     } else {

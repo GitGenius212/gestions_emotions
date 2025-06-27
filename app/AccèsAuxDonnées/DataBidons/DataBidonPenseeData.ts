@@ -58,7 +58,6 @@ export const pensée_datas : PenseeData[] = [
 ];
 
 export function getPenseeByDate(date: Date) : PenseeData | undefined {
-  console.log("Received date inside function",  date);
   const pensee = pensée_datas.find(p => p.date.toISOString().split('T')[0] == date.toISOString().split('T')[0]);
   
   if(pensee == undefined) {
