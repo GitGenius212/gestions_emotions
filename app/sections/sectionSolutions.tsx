@@ -7,6 +7,7 @@ import styles from '../styles';
 import TextArea from "@/components/TextArea";
 import { addSolution, putSolution, removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
 import { SolutionData } from '../Domaine/Classes/SolutionData';
+import { SolutionProps } from '../Domaine/props/SolutionProps';
 
 
 
@@ -15,15 +16,7 @@ const compass = <FontAwesome name="compass" size={24}/>
 
 
 
-type SolutionProps = {
-  item: SolutionData;
-  onPress: () => void;
-  backgroundColor: string;
-  textColor: string;
-  removeItem : (id:number) => void;
-  putItem : (text:string, item: SolutionData) => void;
-  setIsFocused: (p:boolean) => any;
-};
+
 
 
 const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem, setIsFocused}: SolutionProps) => (

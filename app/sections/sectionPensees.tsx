@@ -6,55 +6,33 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import TextArea from "@/components/TextArea";
 import CustomCheckbox from "@/components/CustomCheckbox";
+import { PenseeProps } from '../Domaine/props/PenseeProps';
 
 
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
-const SectionPensees = () => {
+
+const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
 
 
     //Selection des émotions aux débuts, avant
-      const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(false);
-      
-    
-      const [isSelected_honte_avant, setIsSelected_honte_avant] = useState(false);
-      
-    
-      const [isSelected_colère_avant, setIsSelected_colère_avant] = useState(false);
-      
-    
-      const [isSelected_joie_avant, setIsSelected_joie_avant] = useState(false);
-      
-    
-      const [isSelected_tristesse_avant, setIsSelected_tristesse_avant] = useState(false);
-      
-    
-      const [isSelected_frustration_avant, setIsSelected_frustration_avant] = useState(false);
-      
-    
-      const [isSelected_dégoût_avant, setIsSelected_dégoût_avant] = useState(false);
+      const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee.emotions_avant.find(e => e == "Peur") != undefined);
+      const [isSelected_honte_avant, setIsSelected_honte_avant] = useState(pensee.emotions_avant.find(e => e == "Honte") != undefined);
+      const [isSelected_colère_avant, setIsSelected_colère_avant] = useState(pensee.emotions_avant.find(e => e == "Colère") != undefined);
+      const [isSelected_joie_avant, setIsSelected_joie_avant] = useState(pensee.emotions_avant.find(e => e == "Joie") != undefined);
+      const [isSelected_tristesse_avant, setIsSelected_tristesse_avant] = useState(pensee.emotions_avant.find(e => e == "Tristesse") != undefined);
+      const [isSelected_frustration_avant, setIsSelected_frustration_avant] = useState(pensee.emotions_avant.find(e => e == "Frustration") != undefined);
+      const [isSelected_dégoût_avant, setIsSelected_dégoût_avant] = useState(pensee.emotions_avant.find(e => e == "Dégoût") != undefined);
       
     
       //Selection des émotions à la fin, après
-      const [isSelected_peur_après, setIsSelected_peur_après] = useState(false);
-      
-    
-      const [isSelected_honte_après, setIsSelected_honte_après] = useState(false);
-      
-    
-      const [isSelected_colère_après, setIsSelected_colère_après] = useState(false);
-      
-    
-      const [isSelected_joie_après, setIsSelected_joie_après] = useState(false);
-      
-    
-      const [isSelected_tristesse_après, setIsSelected_tristesse_après] = useState(false);
-      
-    
-      const [isSelected_frustration_après, setIsSelected_frustration_après] = useState(false);
-      
-    
-      const [isSelected_dégoût_après, setIsSelected_dégoût_après] = useState(false);
+      const [isSelected_peur_après, setIsSelected_peur_après] = useState(pensee.emotions_avant.find(e => e == "Peur") != undefined);
+      const [isSelected_honte_après, setIsSelected_honte_après] = useState(pensee.emotions_avant.find(e => e == "Honte") != undefined);
+      const [isSelected_colère_après, setIsSelected_colère_après] = useState(pensee.emotions_avant.find(e => e == "Colère") != undefined);
+      const [isSelected_joie_après, setIsSelected_joie_après] = useState(pensee.emotions_avant.find(e => e == "Joie") != undefined);
+      const [isSelected_tristesse_après, setIsSelected_tristesse_après] = useState(pensee.emotions_avant.find(e => e == "Tristesse") != undefined); 
+      const [isSelected_frustration_après, setIsSelected_frustration_après] = useState(pensee.emotions_avant.find(e => e == "Frustration") != undefined);
+      const [isSelected_dégoût_après, setIsSelected_dégoût_après] = useState(pensee.emotions_avant.find(e => e == "Dégoût") != undefined);
       
 
   return (
@@ -65,14 +43,14 @@ const SectionPensees = () => {
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
               <TextArea placeholder='Élément déclencheur' 
-              description=''
+              description={pensee.element_declencheur}
               onChangeDescription=''
               onPress={() => console.log("TextInput Pressed")}
                 icons={icons.element_dec}/>
 
                 <TextArea 
                 placeholder='Pensée négative'
-                description=''
+                description={pensee.interpretation}
                 onChangeDescription=''
                 onPress={() => console.log("TextInput Pressed")}
                 icons={icons.pensee_negative}
@@ -158,7 +136,7 @@ const SectionPensees = () => {
 
                 <TextArea 
                 placeholder='Contre-Pensée négative'
-                description=''
+                description={pensee.contre_pensee_negative}
                 onChangeDescription=''
                 onPress={() => console.log("TextInput Pressed")}
                 icons={icons.pensee_negative}

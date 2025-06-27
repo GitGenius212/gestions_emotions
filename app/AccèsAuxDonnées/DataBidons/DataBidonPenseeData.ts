@@ -5,7 +5,7 @@ export const pensée_datas : PenseeData[] = [
     element_declencheur: "La sécurité m'a dit de venir",
     date: new Date("2025-06-12T05:11:37.962Z"),
     interpretation: "J'ai peur qu'il me fait du mal",
-    "emotions_avant": [
+    emotions_avant: [
       "Peur"
     ],
     contre_pensee_negative: "Sois bien avec toi-même. Prends ton temps",
@@ -16,7 +16,7 @@ export const pensée_datas : PenseeData[] = [
   },
   {
     element_declencheur: "Ma tante m'a dit si la chemise me va bien",
-    date: new Date("2025-06-12T10:12:54.992Z"),
+    date: new Date("2025-06-13T10:12:54.992Z"),
     interpretation: "OOOOOOOHHHHH ! Elle est meilleur que moi",
     emotions_avant: [
       "Peur",
@@ -30,7 +30,7 @@ export const pensée_datas : PenseeData[] = [
   },
   {
     element_declencheur: "Une femme me mendiait",
-    date: new Date("2025-06-12T03:19:40.187Z"),
+    date: new Date("2025-06-14T03:19:40.187Z"),
     interpretation: "Elle est meilleur que dans la confiance en soi. J'ai peur de la blesser en lui disant non",
     emotions_avant: [
       "Peur"
@@ -43,7 +43,7 @@ export const pensée_datas : PenseeData[] = [
   },
   {
     element_declencheur: "Je regarde le gars pour le voir parler",
-    date: new Date("2025-06-12T03:11:56.404Z"),
+    date: new Date("2025-06-15T03:11:56.404Z"),
     interpretation: "OOOHHHH ! Nous sommes en compétition. ",
     emotions_avant: [
       "Peur",

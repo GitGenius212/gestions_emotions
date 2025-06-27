@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LogBox, ScrollView } from "react-native";
 
 
@@ -6,6 +6,8 @@ import { LogBox, ScrollView } from "react-native";
 import SectionDate from "./sections/sectionDate";
 import SectionPensees from "./sections/sectionPensees";
 import SectionSolutions from "./sections/sectionSolutions";
+import { pensée_datas } from './AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { PenseeData } from './Domaine/Classes/PenseeData';
 
 
 
@@ -14,7 +16,11 @@ export default function Index() {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
 }, []);
 
+const [pensee, setPensee] = useState(pensée_datas[3]);
 
+function updatePensee(penseeFoundByDate: PenseeData) {
+  setPensee(penseeFoundByDate);
+}
 
   return (
     <ScrollView 
@@ -23,10 +29,16 @@ export default function Index() {
 
 
       {/*Section de la date*/}
-      <SectionDate />
+      <SectionDate 
+      pensee={pensee}
+      updatePensee={updatePensee}
+      />
 
       {/*Section des pensées*/}
-      <SectionPensees />
+      <SectionPensees 
+      pensee={pensee}
+      updatePensee={updatePensee}
+      />
 
       {/*Section des solutions*/}
       <SectionSolutions />

@@ -1,11 +1,12 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { PropsWithChildren, useState } from 'react';
-import { StyleProp, StyleSheet, Text, TextStyle, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { getPenseeByDate } from '../AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { CustomTextProps } from '../Domaine/props/CustomTextProps';
+import { PenseeProps } from '../Domaine/props/PenseeProps';
 
-type CustomTextProps = {
-  style_aujourdhui : StyleProp<TextStyle>
-};
+
 
 export const CustomText = ({ children, style_aujourdhui }: PropsWithChildren<CustomTextProps>) => <Text style={style_aujourdhui}>{children}</Text>;
 
@@ -32,7 +33,7 @@ LocaleConfig.locales['fr'] = {
 
 LocaleConfig.defaultLocale = 'fr';
 
- const SectionDate = () => {
+ const SectionDate = ({pensee, updatePensee} : PenseeProps) => {
 
   const [date, setDate] = useState(new Date());
   const [isToday, setIsToday] = useState(true);  
@@ -54,12 +55,25 @@ LocaleConfig.defaultLocale = 'fr';
     }
   });
 
-  function modificationIsToday(date : string) {
-    if(new Date().toISOString().split('T')[0] == date) {
-              setIsToday(true);
-          } else {
-            setIsToday(false);
-          }
+  function getPenseeByCurrentDate(p_date: Date) {
+    console.log("Received in (param) =>", p_date);
+  }
+
+  function modificationIsToday(p_date : string) {
+    //Déclaration de variables
+    let dateObtained = JSON.parse(JSON.stringify(p_date));
+    dateObtained = new Date(dateObtained);
+
+    //Traitements
+    console.log("dateObtained => ", dateObtained);
+    if(new Date().toISOString().split('T')[0] == p_date) {
+        setIsToday(true);
+    } else {
+        setIsToday(false);
+    }
+
+    getPenseeByCurrentDate(dateObtained);
+
   }
   
   const gotoYesterday = () => {
@@ -80,7 +94,7 @@ LocaleConfig.defaultLocale = 'fr';
 
   return (
     <View style={{paddingHorizontal: 30, paddingTop:75}}>
-      <View style={{position:'absolute', right:45, top:50}}>
+      <View style={{position:'absolute', right:20, top:50}}>
         <TouchableOpacity
         style={{
           backgroundColor:isPressedCalendar ? 'rgba(3,4, 64, 0.8)' : 'white', 
@@ -115,18 +129,22 @@ LocaleConfig.defaultLocale = 'fr';
         onDayPress={day => {
           setDate(new Date(day.dateString));
           modificationIsToday(day.dateString);
+          
         }}
       />
 
       
       <View style={{flexDirection: "row", justifyContent: "space-between"}}>
     
-        <TouchableOpacity onPress={() => {
+        <View style={{marginLeft:20}}>
+          <TouchableOpacity onPress={() => {
             gotoYesterday()
           }
         }>
           <Text style={{fontSize:50, color:"#03045E"}}>&larr;</Text>
         </TouchableOpacity>
+        </View>
+        
 
         <View style={{ flex: 1, alignItems: "center"}}>
 
@@ -140,7 +158,7 @@ LocaleConfig.defaultLocale = 'fr';
 
         </View>
 
-        <View style={{}}>
+        <View style={{marginRight:20}}>
           <TouchableOpacity onPress={() => {
             gotoTomorrow();
           }
