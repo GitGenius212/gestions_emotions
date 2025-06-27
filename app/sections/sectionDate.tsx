@@ -80,7 +80,7 @@ LocaleConfig.defaultLocale = 'fr';
 
   return (
     <View style={{paddingHorizontal: 30, paddingTop:75}}>
-      <View style={{position:'absolute', right:45, top:55}}>
+      <View style={{position:'absolute', right:45, top:50}}>
         <TouchableOpacity
         style={{
           backgroundColor:isPressedCalendar ? 'rgba(3,4, 64, 0.8)' : 'white', 
@@ -140,12 +140,16 @@ LocaleConfig.defaultLocale = 'fr';
 
         </View>
 
-        <TouchableOpacity onPress={() => {
+        <View style={{}}>
+          <TouchableOpacity onPress={() => {
             gotoTomorrow();
           }
         }>
           <Text  style={{fontSize:50, color:"#03045E"}}>&rarr;</Text>
         </TouchableOpacity>
+
+        </View>
+        
         
       </View>
     </View>
