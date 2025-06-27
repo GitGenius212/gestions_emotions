@@ -57,6 +57,12 @@ LocaleConfig.defaultLocale = 'fr';
 
   function getPenseeByCurrentDate(p_date: Date) {
     console.log("Received in (param) =>", p_date);
+    const penseeTrouvee = getPenseeByDate(p_date);
+    console.log(penseeTrouvee);
+    if(penseeTrouvee != undefined) {
+      updatePensee(penseeTrouvee);  
+    }
+   
   }
 
   function modificationIsToday(p_date : string) {

@@ -58,10 +58,11 @@ export const pensée_datas : PenseeData[] = [
 ];
 
 export function getPenseeByDate(date: Date) : PenseeData | undefined {
-  const pensee = pensée_datas.find(p => p.date.toLocaleDateString() == date.toLocaleDateString());
+  console.log("Received date inside function",  date);
+  const pensee = pensée_datas.find(p => p.date.toISOString().split('T')[0] == date.toISOString().split('T')[0]);
   
   if(pensee == undefined) {
-        throw new Error(`The 'pensée' with this date ${date.toLocaleDateString()} is unfound`);
+        throw new Error(`The 'pensée' with this date ${date.toISOString().split('T')[0]} is unfound`);
 
   } else {
     return pensee;
