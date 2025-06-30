@@ -26,7 +26,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
             <Text style={{marginBottom:10}}>
               <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Penséé #1 </Text>
               <Text style={styles.h1}>:</Text>
-              <Text style={{fontSize:24, color:"rgba(255,255,255, 0.8)",}}> {pensee?.date.toTimeString().slice(0,9)}</Text>
+              <Text style={{fontSize:24, color:"rgba(255,255,255, 1.0)",}}> {pensee?.date.toTimeString().slice(0,9)}</Text>
             </Text>
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
