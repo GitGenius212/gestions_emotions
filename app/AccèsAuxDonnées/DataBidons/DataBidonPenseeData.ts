@@ -82,3 +82,13 @@ export function getPenseeByDate(date: Date) : PenseeData | undefined {
   }
   
 }
+
+export function updatePensee(p_pensee: PenseeData) : PenseeData {
+  for(let i = 0; i <pensée_datas.length; i++) {
+    if(pensée_datas[i].id == p_pensee.id) {
+      pensée_datas[i] = p_pensee
+    }
+  }
+  return p_pensee;
+
+}

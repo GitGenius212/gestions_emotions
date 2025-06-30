@@ -37,9 +37,27 @@ const [pensee, setPensee] = useState(pensée_datas[3]);
       const [isSelected_frustration_après, setIsSelected_frustration_après] = useState(pensee.emotions_apres.find(e => e == "Frustration") != undefined);
       const [isSelected_dégoût_après, setIsSelected_dégoût_après] = useState(pensee.emotions_apres.find(e => e == "Dégoût") != undefined);
       
-
+      //TextAreas of SectionPensee states
+      const [element_dec, setElement_dec] = useState(pensee.element_declencheur); 
+         const [interprétation, setInterprétation] = useState(pensee.interpretation); 
+        const [contre_pensee_negative, setContre_pensee_negative] = useState(pensee.contre_pensee_negative);
 
 //Functions
+
+//SetTextAreas of SectionPensee
+function setElementDéclencheurText(p_element_dec: string) {
+  setElement_dec(p_element_dec);
+}
+
+function setInterpretationText(p_interprétation: string) {
+  setInterprétation(p_interprétation);  
+}
+
+function setContrePenséNégativeText(p_contre_pensee_negative: string) {
+  setContre_pensee_negative(p_contre_pensee_negative);
+}
+
+
 //Émotions avant
 function setIsSelectedPeurAvant(p_bool: boolean) {
   setIsSelected_peur_avant(p_bool);
@@ -102,6 +120,9 @@ function setIsSelectedDégoûtAprès(p_bool: boolean) {
 function getPensee(penseeFoundByDate: PenseeData) {
   setPensee(penseeFoundByDate);
   setEmotions(penseeFoundByDate);
+  setElement_dec(penseeFoundByDate.element_declencheur);
+  setInterprétation(penseeFoundByDate.interpretation);
+  setContre_pensee_negative(penseeFoundByDate.contre_pensee_negative);
 }
 
 function setEmotions(penseeFoundByDate : PenseeData) {
@@ -216,7 +237,7 @@ function getEmotionsAprès(penseeFoundByDate : PenseeData) {
       {/*Section des pensées*/}
       <SectionPensees 
       pensee={pensee}
-      selectedEmotions= {{
+      elementsProps= {{
           isSelected_peur_avant,  
           isSelected_honte_avant,
           isSelected_colère_avant,
@@ -231,6 +252,9 @@ function getEmotionsAprès(penseeFoundByDate : PenseeData) {
           isSelected_tristesse_après,
           isSelected_frustration_après,
           isSelected_dégoût_après,
+          element_dec, 
+          interprétation,
+          contre_pensee_negative,
           setIsSelectedPeurAvant,
           setIsSelectedHonteAvant,
           setIsSelectedColèreAvant,
@@ -244,7 +268,10 @@ function getEmotionsAprès(penseeFoundByDate : PenseeData) {
           setIsSelectedJoieAprès,
           setIsSelectedTristesseAprès,
           setIsSelectedFrustrationAprès,
-          setIsSelectedDégoûtAprès
+          setIsSelectedDégoûtAprès, 
+          setElementDéclencheurText,
+          setInterpretationText,
+          setContrePenséNégativeText
 
         
       }}
