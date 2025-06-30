@@ -54,6 +54,20 @@ export const pensée_datas : PenseeData[] = [
       "Joie"
     ],
     id: 4
+  }, 
+  {
+    element_declencheur: "Je regarde le gars pour le voir parler",
+    date: new Date("2025-06-16T03:11:56.404Z"),
+    interpretation: "OOOHHHH ! Il fait trop le mec cool. Je n'aime pas ça",
+    emotions_avant: [
+      "Dégoût",
+      "Colère"
+    ],
+    contre_pensee_negative: "Alhamdoulilah que tu agis uniquement pour plaire à Dieu",
+    emotions_apres: [
+      "Frustration"
+    ],
+    id: 5
   }
 ];
 

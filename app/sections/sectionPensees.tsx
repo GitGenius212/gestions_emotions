@@ -1,38 +1,23 @@
-import { View, Text, TouchableHighlight } from 'react-native'
-import React, {useState} from 'react'
-import styles from '../styles'
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
+import React from 'react';
+import { Text, TouchableHighlight, View } from 'react-native';
+import styles from '../styles';
 
-import TextArea from "@/components/TextArea";
 import CustomCheckbox from "@/components/CustomCheckbox";
+import TextArea from "@/components/TextArea";
 import { PenseeProps } from '../Domaine/props/PenseeProps';
+
 
 
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
 
-const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
+const SectionPensees = ({pensee, selectedEmotions} : PenseeProps) => {
 
 
-    //Selection des émotions aux débuts, avant
-      const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee.emotions_avant.find(e => e == "Peur") != undefined);
-      const [isSelected_honte_avant, setIsSelected_honte_avant] = useState(pensee.emotions_avant.find(e => e == "Honte") != undefined);
-      const [isSelected_colère_avant, setIsSelected_colère_avant] = useState(pensee.emotions_avant.find(e => e == "Colère") != undefined);
-      const [isSelected_joie_avant, setIsSelected_joie_avant] = useState(pensee.emotions_avant.find(e => e == "Joie") != undefined);
-      const [isSelected_tristesse_avant, setIsSelected_tristesse_avant] = useState(pensee.emotions_avant.find(e => e == "Tristesse") != undefined);
-      const [isSelected_frustration_avant, setIsSelected_frustration_avant] = useState(pensee.emotions_avant.find(e => e == "Frustration") != undefined);
-      const [isSelected_dégoût_avant, setIsSelected_dégoût_avant] = useState(pensee.emotions_avant.find(e => e == "Dégoût") != undefined);
-      
     
-      //Selection des émotions à la fin, après
-      const [isSelected_peur_après, setIsSelected_peur_après] = useState(pensee.emotions_avant.find(e => e == "Peur") != undefined);
-      const [isSelected_honte_après, setIsSelected_honte_après] = useState(pensee.emotions_avant.find(e => e == "Honte") != undefined);
-      const [isSelected_colère_après, setIsSelected_colère_après] = useState(pensee.emotions_avant.find(e => e == "Colère") != undefined);
-      const [isSelected_joie_après, setIsSelected_joie_après] = useState(pensee.emotions_avant.find(e => e == "Joie") != undefined);
-      const [isSelected_tristesse_après, setIsSelected_tristesse_après] = useState(pensee.emotions_avant.find(e => e == "Tristesse") != undefined); 
-      const [isSelected_frustration_après, setIsSelected_frustration_après] = useState(pensee.emotions_avant.find(e => e == "Frustration") != undefined);
-      const [isSelected_dégoût_après, setIsSelected_dégoût_après] = useState(pensee.emotions_avant.find(e => e == "Dégoût") != undefined);
+
       
 
   return (
@@ -43,14 +28,14 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
               <TextArea placeholder='Élément déclencheur' 
-              description={pensee.element_declencheur}
+              description={pensee?.element_declencheur ?? ''}
               onChangeDescription=''
               onPress={() => console.log("TextInput Pressed")}
                 icons={icons.element_dec}/>
 
                 <TextArea 
                 placeholder='Pensée négative'
-                description={pensee.interpretation}
+                description={pensee?.interpretation ?? ''}
                 onChangeDescription=''
                 onPress={() => console.log("TextInput Pressed")}
                 icons={icons.pensee_negative}
@@ -60,9 +45,9 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 <Text style={styles.h1}>{tachometer} Émotions </Text>
 
                 <CustomCheckbox 
-                  checked={isSelected_peur_avant} 
+                  checked={selectedEmotions.isSelected_peur_avant} 
                   onPress={ () => { 
-                      setIsSelected_peur_avant(!isSelected_peur_avant)
+                      selectedEmotions.setIsSelectedPeurAvant(!selectedEmotions.isSelected_peur_avant)
                     }
                   }
                     text="Peur"
@@ -70,9 +55,9 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected_honte_avant} 
+                  checked={selectedEmotions.isSelected_honte_avant} 
                   onPress={ () => { 
-                      setIsSelected_honte_avant(!isSelected_honte_avant)
+                      selectedEmotions.setIsSelectedHonteAvant(!selectedEmotions.isSelected_honte_avant)
                     }
                   }
                     text="Honte"
@@ -80,9 +65,9 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected_colère_avant} 
+                  checked={selectedEmotions.isSelected_colère_avant} 
                   onPress={ () => { 
-                      setIsSelected_colère_avant(!isSelected_colère_avant)
+                      selectedEmotions.setIsSelectedColèreAvant(!selectedEmotions.isSelected_colère_avant)
                     }
                   }
                     text="Colère"
@@ -90,9 +75,9 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected_joie_avant} 
+                  checked={selectedEmotions.isSelected_joie_avant} 
                   onPress={ () => { 
-                      setIsSelected_joie_avant(!isSelected_joie_avant)
+                      selectedEmotions.setIsSelectedJoieAvant(!selectedEmotions.isSelected_joie_avant)
                     }
                   }
                     text="Joie"
@@ -100,9 +85,9 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected_tristesse_avant} 
+                  checked={selectedEmotions.isSelected_tristesse_avant} 
                   onPress={ () => { 
-                      setIsSelected_tristesse_avant(!isSelected_tristesse_avant)
+                      selectedEmotions.setIsSelectedTristesseAvant(!selectedEmotions.isSelected_tristesse_avant)
                     }
                   }
                     text="Tristessse"
@@ -110,20 +95,20 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected_frustration_avant} 
+                  checked={selectedEmotions.isSelected_frustration_avant} 
                   onPress={ () => { 
-                      setIsSelected_frustration_avant(!isSelected_frustration_avant)
+                      selectedEmotions.setIsSelectedFrustrationAvant(!selectedEmotions.isSelected_frustration_avant)
                     }
                   }
-                    text="Frutration"
+                    text="Frustration"
                     size={24}
                 /> 
 
 
                 <CustomCheckbox 
-                  checked={isSelected_dégoût_avant} 
+                  checked={selectedEmotions.isSelected_dégoût_avant} 
                   onPress={ () => { 
-                      setIsSelected_dégoût_avant(!isSelected_dégoût_avant)
+                      selectedEmotions.setIsSelectedDégoûtAvant(!selectedEmotions.isSelected_dégoût_avant)
                     }
                   }
                     text="Dégoût"
@@ -136,7 +121,7 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
 
                 <TextArea 
                 placeholder='Contre-Pensée négative'
-                description={pensee.contre_pensee_negative}
+                description={pensee?.contre_pensee_negative ?? ''}
                 onChangeDescription=''
                 onPress={() => console.log("TextInput Pressed")}
                 icons={icons.pensee_negative}
@@ -146,9 +131,9 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
 
                 
                 <CustomCheckbox 
-                  checked={isSelected_peur_après} 
+                  checked={selectedEmotions.isSelected_peur_après} 
                   onPress={ () => { 
-                      setIsSelected_peur_après(!isSelected_peur_après)
+                      selectedEmotions.setIsSelectedPeurAprès(!selectedEmotions.isSelected_peur_après)
                     }
                   }
                     text="Peur"
@@ -156,9 +141,9 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected_honte_après} 
+                  checked={selectedEmotions.isSelected_honte_après} 
                   onPress={ () => { 
-                      setIsSelected_honte_après(!isSelected_honte_après)
+                      selectedEmotions.setIsSelectedHonteAprès(!selectedEmotions.isSelected_honte_après)
                     }
                   }
                     text="Honte"
@@ -166,9 +151,9 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected_colère_après} 
+                  checked={selectedEmotions.isSelected_colère_après} 
                   onPress={ () => { 
-                      setIsSelected_colère_après(!isSelected_colère_après)
+                      selectedEmotions.setIsSelectedColèreAprès(!selectedEmotions.isSelected_colère_après)
                     }
                   }
                     text="Colère"
@@ -176,9 +161,9 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected_joie_après} 
+                  checked={selectedEmotions.isSelected_joie_après} 
                   onPress={ () => { 
-                      setIsSelected_joie_après(!isSelected_joie_après)
+                      selectedEmotions.setIsSelectedJoieAprès(!selectedEmotions.isSelected_joie_après)
                     }
                   }
                     text="Joie"
@@ -186,9 +171,9 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected_tristesse_après} 
+                  checked={selectedEmotions.isSelected_tristesse_après} 
                   onPress={ () => { 
-                      setIsSelected_tristesse_après(!isSelected_tristesse_après)
+                      selectedEmotions.setIsSelectedTristesseAprès(!selectedEmotions.isSelected_tristesse_après)
                     }
                   }
                     text="Tristessse"
@@ -196,20 +181,20 @@ const SectionPensees = ({pensee, updatePensee} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={isSelected_frustration_après} 
+                  checked={selectedEmotions.isSelected_frustration_après} 
                   onPress={ () => { 
-                      setIsSelected_frustration_après(!isSelected_frustration_après)
+                      selectedEmotions.setIsSelectedFrustrationAprès(!selectedEmotions.isSelected_frustration_après)
                     }
                   }
-                    text="Frutration"
+                    text="Frustration"
                     size={24}
                 /> 
 
 
                 <CustomCheckbox 
-                  checked={isSelected_dégoût_après} 
+                  checked={selectedEmotions.isSelected_dégoût_après} 
                   onPress={ () => { 
-                      setIsSelected_dégoût_après(!isSelected_dégoût_après)
+                      selectedEmotions.setIsSelectedDégoûtAprès(!selectedEmotions.isSelected_dégoût_après)
                     }
                   }
                     text="Dégoût"

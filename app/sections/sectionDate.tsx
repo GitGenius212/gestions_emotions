@@ -33,7 +33,7 @@ LocaleConfig.locales['fr'] = {
 
 LocaleConfig.defaultLocale = 'fr';
 
- const SectionDate = ({pensee, updatePensee} : PenseeProps) => {
+ const SectionDate = ({getPensee} : PenseeProps) => {
 
   const [date, setDate] = useState(new Date());
   const [isToday, setIsToday] = useState(true);  
@@ -57,8 +57,9 @@ LocaleConfig.defaultLocale = 'fr';
 
   function getPenseeByCurrentDate(p_date: Date) {
     const penseeTrouvee = getPenseeByDate(p_date);
-    if(penseeTrouvee != undefined) {
-      updatePensee(penseeTrouvee);  
+    if(penseeTrouvee != undefined && getPensee != undefined) {
+      getPensee(penseeTrouvee);  
+      
     }
    
   }
