@@ -1,7 +1,10 @@
-import { PenseeData } from "../Classes/PenseeData";
+import PenseeData from "../Classes/PenseeData";
 
-export type PenseeProps = {
+
+type PenseeProps = {
   pensee? : PenseeData, 
   getPensee? : (penseeFoundByDate: PenseeData) => void;
   elementsProps? : any;
 }
+
+export default PenseeProps;

@@ -6,7 +6,7 @@ import styles from '../styles';
 
 import CustomCheckbox from "@/components/CustomCheckbox";
 import TextArea from "@/components/TextArea";
-import { PenseeProps } from '../Domaine/props/PenseeProps';
+import PenseeProps from '../Domaine/props/PenseeProps';
 
 
 

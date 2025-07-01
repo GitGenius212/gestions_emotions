@@ -3,8 +3,8 @@ import React, { PropsWithChildren, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { getPenseeByDate } from '../AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
-import { CustomTextProps } from '../Domaine/props/CustomTextProps';
-import { PenseeProps } from '../Domaine/props/PenseeProps';
+import CustomTextProps from '../Domaine/props/CustomTextProps';
+import PenseeProps from '../Domaine/props/PenseeProps';
 
 
 

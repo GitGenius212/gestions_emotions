@@ -1,6 +1,6 @@
-import { SolutionData } from "../Classes/SolutionData";
+import SolutionData  from "../Classes/SolutionData";
 
-export type SolutionProps = {
+type SolutionProps = {
   item: SolutionData;
   onPress: () => void;
   backgroundColor: string;
@@ -9,3 +9,5 @@ export type SolutionProps = {
   putItem : (text:string, item: SolutionData) => void;
   setIsFocused: (p:boolean) => any;
 };
+
+export default SolutionProps;

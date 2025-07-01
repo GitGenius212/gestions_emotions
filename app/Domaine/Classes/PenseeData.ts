@@ -1,4 +1,4 @@
-export type PenseeData = { 
+type PenseeData = { 
   id: number;
   element_declencheur: string;
   interpretation: string;
@@ -8,3 +8,5 @@ export type PenseeData = {
   emotions_apres: string[], 
 
 };
+
+export default PenseeData;

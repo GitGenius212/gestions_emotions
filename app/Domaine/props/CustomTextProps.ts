@@ -1,5 +1,7 @@
 import { StyleProp, TextStyle } from "react-native";
 
-export type CustomTextProps = {
+type CustomTextProps = {
   style_aujourdhui : StyleProp<TextStyle>
 };
+
+export default CustomTextProps;

@@ -6,8 +6,8 @@ import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
 import { addSolution, putSolution, removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
-import { SolutionData } from '../Domaine/Classes/SolutionData';
-import { SolutionProps } from '../Domaine/props/SolutionProps';
+import SolutionData from '../Domaine/Classes/SolutionData';
+import SolutionProps from '../Domaine/props/SolutionProps';
 
 
 
