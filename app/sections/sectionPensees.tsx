@@ -16,7 +16,9 @@ const tachometer = <FontAwesome name="tachometer" size={24}/>
 const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
 
 
-    
+    const putPensee = () => {
+      
+    }
       
 
   return (
@@ -32,15 +34,23 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
 
               <TextArea placeholder='Élément déclencheur' 
               description={elementsProps.element_dec}
-              onChangeDescription={elementsProps.setElementDéclencheurText}
-              onPress={() => console.log("TextInput Pressed")}
-                icons={icons.element_dec}/>
+              onChangeDescription={ (text : string) => {
+                console.log("The text is : ", text);
+                  elementsProps.setElementDéclencheurText(text);
+                }
+              }
+              icons={icons.element_dec}/>
 
                 <TextArea 
                 placeholder='Pensée négative'
                 description={elementsProps.interprétation}
-                onChangeDescription={elementsProps.setInterpretationText}
-                onPress={() => console.log("TextInput Pressed")}
+                onChangeDescription={ (text:string) => {
+                  console.log("The text is : ", text);
+                  elementsProps.setInterpretationText(text);
+                }
+                  
+                }
+                
                 icons={icons.pensee_negative}
                 />
 
@@ -125,8 +135,11 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                 <TextArea 
                 placeholder='Contre-Pensée négative'
                 description={elementsProps.contre_pensee_negative}
-                onChangeDescription={elementsProps.setContrePenséNégativeText}
-                onPress={() => console.log("TextInput Pressed")}
+                onChangeDescription={ (text: string) => {
+                    console.log("The text is : ", text);
+                    elementsProps.setContrePenséNégativeText(text);
+                  }
+                }
                 icons={icons.pensee_negative}
                 />
 
