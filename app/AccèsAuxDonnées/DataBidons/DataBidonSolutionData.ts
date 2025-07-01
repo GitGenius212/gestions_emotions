@@ -1,4 +1,4 @@
-import { SolutionData } from "../../Domaine/Classes/SolutionData";
+import SolutionData from "../../Domaine/Classes/SolutionData";
 
 
 export const solutions_datas: SolutionData[] = [

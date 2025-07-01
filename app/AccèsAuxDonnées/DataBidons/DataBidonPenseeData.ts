@@ -1,4 +1,4 @@
-import { PenseeData } from "../../Domaine/Classes/PenseeData";
+import PenseeData from "../../Domaine/Classes/PenseeData";
 
 export const pensée_datas : PenseeData[] = [
   {
