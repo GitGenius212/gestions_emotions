@@ -16,7 +16,25 @@ const tachometer = <FontAwesome name="tachometer" size={24}/>
 const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
 
 
-    const putPensee = () => {
+    const putPensee = ({p_element_dec_text, p_interprétation_text, p_contre_pensee_negative_text,
+      p_emotion_avant, p_emotion_apres} : {p_element_dec_text? : string, p_interprétation_text?: string, p_contre_pensee_negative_text?: string,
+      p_emotion_avant?: string, p_emotion_apres?: string}
+    ) => {
+      if(p_element_dec_text != undefined) {
+        console.log("The élément décheur is changed to ", p_element_dec_text);
+
+      } else if (p_interprétation_text != undefined) {
+          console.log("The interprétation is changed to ", p_interprétation_text);
+
+        } else if (p_contre_pensee_negative_text != undefined) {
+          console.log("The contre-pensée négative is changed to ", p_contre_pensee_negative_text);
+
+        } else if (p_emotion_avant != undefined) {
+          console.log("The emotion avant is changed to ", p_emotion_avant); 
+          
+        } else if (p_emotion_apres != undefined) {
+          console.log("The emotion après is changed to ", p_emotion_apres);
+        }
       
     }
       
@@ -35,8 +53,8 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
               <TextArea placeholder='Élément déclencheur' 
               description={elementsProps.element_dec}
               onChangeDescription={ (text : string) => {
-                console.log("The text is : ", text);
-                  elementsProps.setElementDéclencheurText(text);
+                putPensee({p_element_dec_text: text});
+                elementsProps.setElementDéclencheurText(text);
                 }
               }
               icons={icons.element_dec}/>
@@ -45,7 +63,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                 placeholder='Pensée négative'
                 description={elementsProps.interprétation}
                 onChangeDescription={ (text:string) => {
-                  console.log("The text is : ", text);
+                  putPensee({p_interprétation_text: text});
                   elementsProps.setInterpretationText(text);
                 }
                   
@@ -136,7 +154,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                 placeholder='Contre-Pensée négative'
                 description={elementsProps.contre_pensee_negative}
                 onChangeDescription={ (text: string) => {
-                    console.log("The text is : ", text);
+                    putPensee({p_contre_pensee_negative_text: text});
                     elementsProps.setContrePenséNégativeText(text);
                   }
                 }
