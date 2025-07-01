@@ -1,5 +1,5 @@
 type PenseeDataOptions = {
-  id: number;
+  id?: number;
   element_declencheur?: string;
   interpretation?: string;
   date?: Date;

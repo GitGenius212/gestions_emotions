@@ -1,4 +1,4 @@
-import { getPenseeByDate, updatePensee } from "../DataBidonPenseeData";
+import { getPenseeByDate, getPenseeById, updatePensee } from "../DataBidonPenseeData";
 
 describe('PenseeData', () => {
     test('given a list of penseeData, when the user search one by date, then he obtains the PenseeData object', () => {
@@ -39,25 +39,16 @@ describe('PenseeData', () => {
 
     });
 
-    test("given a penseeData of the #1, when the user update this, then he obtains this updated object", () => {
+    test("given a penseeData of the #1, when the user update only the element déclencheur, then he obtains this full updated object", () => {
         //Set up
         const updated_pensee = {
-            element_declencheur: "La sécurité m'a dit de venir et de rester",
-            date: new Date("2025-06-12T05:11:37.962Z"),
-            interpretation: "J'ai peur qu'il me fait du mal",
-            emotions_avant: [
-            "Peur"
-            ],
-            contre_pensee_negative: "Sois bien avec toi-même. Prends ton temps",
-            emotions_apres: [
-            "Joie"
-            ],
+            element_declencheur: "La sécurité m'a dit de venir à l'hôpital",
             id: 1
         };
         
         //Action
         const updated_pensee_obtained = updatePensee(updated_pensee);
-        const expected_pensee = getPenseeByDate(updated_pensee.date);
+        const expected_pensee = getPenseeById(updated_pensee.id);
 
         //Check
         expect(updated_pensee_obtained).toBe(expected_pensee);

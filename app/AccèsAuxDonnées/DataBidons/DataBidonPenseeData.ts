@@ -1,3 +1,4 @@
+import PenseeDataOptions from "@/app/Domaine/Classes/PenseeDataOptions";
 import PenseeData from "../../Domaine/Classes/PenseeData";
 
 export const pensée_datas : PenseeData[] = [
@@ -83,12 +84,36 @@ export function getPenseeByDate(date: Date) : PenseeData | undefined {
   
 }
 
-export function updatePensee(p_pensee: PenseeData) : PenseeData {
-  for(let i = 0; i <pensée_datas.length; i++) {
-    if(pensée_datas[i].id == p_pensee.id) {
-      pensée_datas[i] = p_pensee
+export function getPenseeById(id: number) : PenseeData | undefined {
+  const pensee = pensée_datas.find(p => p.id == id);
+  
+  if(pensee == undefined) {
+        throw new Error(`The 'pensée' with this id ${id} is unfound`);
+
+  } else {
+    return pensee;
+  }
+  
+}
+
+export function updatePensee(p_pensee_params: PenseeDataOptions) : PenseeData {
+  //Déclaration de variables
+  let updated_pensee: PenseeData = undefined as any;
+
+  //Traitements
+  for(const element of pensée_datas) {
+    if(element.id == p_pensee_params.id) {
+      element.element_declencheur = p_pensee_params.element_declencheur ?? element.element_declencheur;
+      element.interpretation = p_pensee_params.interpretation ?? element.interpretation;
+      element.date = p_pensee_params.date ?? element.date;    
+      element.emotions_avant = p_pensee_params.emotions_avant ?? element.emotions_avant;
+      element.contre_pensee_negative = p_pensee_params.contre_pensee_negative ?? element.contre_pensee_negative;
+      element.emotions_apres = p_pensee_params.emotions_apres ?? element.emotions_apres;
+      updated_pensee = element;
     }
   }
-  return p_pensee;
+
+  //Sorties/Affichages
+  return updated_pensee;
 
 }
