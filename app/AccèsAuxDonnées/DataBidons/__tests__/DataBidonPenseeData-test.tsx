@@ -1,4 +1,4 @@
-import { getPenseeByDate, getPenseeById, updatePensee } from "../DataBidonPenseeData";
+import { getPenseeByDate, getPenseeById, getPenseeWithSameDate, updatePensee } from "../DataBidonPenseeData";
 
 describe('PenseeData', () => {
     test('given a list of penseeData, when the user search one by date, then he obtains the PenseeData object', () => {
@@ -29,7 +29,7 @@ describe('PenseeData', () => {
         //Set up
         const date = new Date("2025-06-25T05:11:37.962Z");
         const pensee_expected = {
-            id : 6, 
+            id : 7, 
           element_declencheur : "", 
           interpretation: "", 
           date: date, 
@@ -63,6 +63,40 @@ describe('PenseeData', () => {
     });
 
     test('given a list of PenseeData with the same date, when the user wil select a date, then he will obtains all the PenseeData having this date ', () => {
+        //Set up
+        const expected_pensees = [
+            {
+                element_declencheur: "La sécurité m'a dit de venir à l'hôpital",
+                date: new Date("2025-06-12T05:11:37.962Z"),
+                interpretation: "J'ai peur qu'il me fait du mal",
+                emotions_avant: [
+                "Peur"
+                ],
+                contre_pensee_negative: "Sois bien avec toi-même. Prends ton temps",
+                emotions_apres: [
+                "Joie"
+                ],
+                id: 1
+            },
+            {
+                element_declencheur: "Je marchais dans le métro",
+                date: new Date("2025-06-12T05:15:37.962Z"),
+                interpretation: "OOOHHHH ! J'ai peur qu'ils me font du mal en m'intimidant et en me criant dessus",
+                emotions_avant: [
+                "Peur"
+                ],
+                contre_pensee_negative: "C'est juste une imagination qui te fait peur. Tu n'as pas à avoir peur d'eux, mais de Dieu.",
+                emotions_apres: [
+                "Joie"
+                ],
+                id: 6
+            },
+        ];
+        //Action
+        const pensees_obtained = getPenseeWithSameDate(new Date("2025-06-12T05:15:37.962Z"));
+
+        //Check
+        expect(pensees_obtained).toStrictEqual(expected_pensees);
 
     });
 

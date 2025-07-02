@@ -70,7 +70,20 @@ export const pensée_datas : PenseeData[] = [
       "Frustration"
     ],
     id: 5
-  }
+  }, 
+  {
+    element_declencheur: "Je marchais dans le métro",
+    date: new Date("2025-06-12T05:15:37.962Z"),
+    interpretation: "OOOHHHH ! J'ai peur qu'ils me font du mal en m'intimidant et en me criant dessus",
+    emotions_avant: [
+      "Peur"
+    ],
+    contre_pensee_negative: "C'est juste une imagination qui te fait peur. Tu n'as pas à avoir peur d'eux, mais de Dieu.",
+    emotions_apres: [
+      "Joie"
+    ],
+    id: 6
+  },
 ];
 
 export function getPenseeByDate(date: Date) : PenseeData | undefined {
@@ -92,6 +105,22 @@ export function getPenseeByDate(date: Date) : PenseeData | undefined {
 
     return pensee;
   
+}
+
+export function getPenseeWithSameDate(date: Date) : PenseeData[] {
+  //Déclaration de variables
+  let pensee_same_date : PenseeData[] = [];
+
+  //Traitements
+  for (let p of pensée_datas) {
+    if(p.date.toISOString().split('T')[0] == date.toISOString().split('T')[0]) {
+      pensee_same_date.push(p);
+    }
+  }
+
+  //Affichages/Sorties
+  return pensee_same_date;
+
 }
 
 function addPensee(p_pensee: PenseeData) : PenseeData {
