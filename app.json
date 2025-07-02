@@ -9,13 +9,12 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true, 
+      "supportsTablet": true,
       "icon": {
         "dark": "./assets/icons/ios-dark.png",
         "light": "./assets/icons/ios-light.png",
         "tinted": "./assets/icons/ios-tinted.png"
       }
-
     },
     "android": {
       "adaptiveIcon": {
@@ -37,15 +36,15 @@
           "image": "./assets/icons/splash-icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff", 
+          "backgroundColor": "#ffffff",
           "dark": {
             "image": "./assets/imicons/splash-icon-dark.png",
             "imageWidth": 200,
             "backgroundColor": "#000000"
           }
-
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
