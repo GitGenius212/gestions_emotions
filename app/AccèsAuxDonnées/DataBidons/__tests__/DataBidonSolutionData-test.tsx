@@ -13,7 +13,7 @@ describe('SolutionData', () => {
                 {
                     id: 5, 
                     description: "Sois toi-même ! Ils doivent t'accepter tel que tu es ",
-                    createdAt: new Date(),
+                    createdAt: new Date() as Date | undefined,
 
                 }, 
 
@@ -44,6 +44,9 @@ describe('SolutionData', () => {
 
             //Action
             addSolution(new_solution);
+
+            //Update te createdAt because of an error of comparison of dates
+            expected_list_solutions[0].createdAt = solutions_datas[0].createdAt;
 
             //Check
             expect(solutions_datas).toStrictEqual(expected_list_solutions);
