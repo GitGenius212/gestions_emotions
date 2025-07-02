@@ -8,6 +8,7 @@ import TextArea from "@/components/TextArea";
 import { updatePensee } from '../AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import PenseeDataOptions from '../Domaine/Classes/PenseeDataOptions';
 import PenseeProps from '../Domaine/props/PenseeProps';
+import React from 'react';
 
 
 

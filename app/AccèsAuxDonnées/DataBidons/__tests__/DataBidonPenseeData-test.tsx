@@ -25,17 +25,24 @@ describe('PenseeData', () => {
 
     });
 
-    test('given a list of penseeData, when the user search one by unexisted date, then he obtains a specific message error', () => {
+    test('given a list of penseeData, when the user search one by unexisted date, then he obtains a new PenseeData with this Date', () => {
         //Set up
         const date = new Date("2025-06-25T05:11:37.962Z");
-        
+        const pensee_expected = {
+            id : 6, 
+          element_declencheur : "", 
+          interpretation: "", 
+          date: date, 
+          emotions_avant: [], 
+          contre_pensee_negative : "", 
+          emotions_apres : []
+        };
         //Action
-        function getPenseeByDate_NOT_FOUND() {
-            getPenseeByDate(date);
-        }
+        const new_pensee = getPenseeByDate(date);
+        
 
         //Check
-        expect(getPenseeByDate_NOT_FOUND).toThrow(new Error("The 'pensée' with this date 2025-06-25 is unfound"));
+        expect(new_pensee).toStrictEqual(pensee_expected);
 
     });
 

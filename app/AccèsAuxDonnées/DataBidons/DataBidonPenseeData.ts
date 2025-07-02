@@ -1,6 +1,7 @@
 import PenseeDataOptions from "@/app/Domaine/Classes/PenseeDataOptions";
 import PenseeData from "../../Domaine/Classes/PenseeData";
 
+
 export const pensée_datas : PenseeData[] = [
   {
     element_declencheur: "La sécurité m'a dit de venir",
@@ -73,15 +74,53 @@ export const pensée_datas : PenseeData[] = [
 ];
 
 export function getPenseeByDate(date: Date) : PenseeData | undefined {
-  const pensee = pensée_datas.find(p => p.date.toISOString().split('T')[0] == date.toISOString().split('T')[0]);
+  let pensee = pensée_datas.find(p => p.date.toISOString().split('T')[0] == date.toISOString().split('T')[0]);
   
+  //On crée un nouvele objet PenseeData
   if(pensee == undefined) {
-        throw new Error(`The 'pensée' with this date ${date.toISOString().split('T')[0]} is unfound`);
+    pensee ??= {
+      id : 0, 
+      element_declencheur : "", 
+      interpretation: "", 
+      date: date, 
+      emotions_avant: [], 
+      contre_pensee_negative : "", 
+      emotions_apres : [],
+    };
+    pensee = addPensee(pensee);
+  } 
 
-  } else {
     return pensee;
-  }
   
+}
+
+function addPensee(p_pensee: PenseeData) : PenseeData {
+  //Déclaration de variables
+  let new_id = 0;
+  let largestId = 0;
+  let new_pensee : PenseeData = undefined as any;
+  //Traitements
+  for (let p of pensée_datas) {
+      if(p.id > largestId) {
+        largestId = p.id;
+        
+      }
+  }
+
+    new_id = largestId + 1;
+    p_pensee.id = new_id;
+
+  pensée_datas.push(p_pensee);
+
+  for (let p of pensée_datas) {
+      if(p.id == new_id) {
+        new_pensee = p;
+        
+      }
+  }
+
+  return new_pensee;
+
 }
 
 export function getPenseeById(id: number) : PenseeData | undefined {

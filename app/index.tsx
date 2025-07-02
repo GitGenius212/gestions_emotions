@@ -3,7 +3,7 @@ import { LogBox, ScrollView } from "react-native";
 
 
 //Sections
-import { pensée_datas } from './AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { getPenseeByDate } from './AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import PenseeData  from './Domaine/Classes/PenseeData';
 import SectionDate from "./sections/sectionDate";
 import SectionPensees from "./sections/sectionPensees";
@@ -17,30 +17,30 @@ export default function Index() {
 }, []);
 
 //Déclaration de variables
-const [pensee, setPensee] = useState(pensée_datas[3]);
+const [pensee, setPensee] = useState(getPenseeByDate(new Date()));
 //Selection des émotions aux débuts, avant
-      const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee.emotions_avant.find((e:string) => e == "Peur") != undefined);
-      const [isSelected_honte_avant, setIsSelected_honte_avant] = useState(pensee.emotions_avant.find((e:string) => e == "Honte") != undefined);
-      const [isSelected_colère_avant, setIsSelected_colère_avant] = useState(pensee.emotions_avant.find((e:string) => e == "Colère") != undefined);
-      const [isSelected_joie_avant, setIsSelected_joie_avant] = useState(pensee.emotions_avant.find((e:string) => e == "Joie") != undefined);
-      const [isSelected_tristesse_avant, setIsSelected_tristesse_avant] = useState(pensee.emotions_avant.find((e:string) => e == "Tristesse") != undefined);
-      const [isSelected_frustration_avant, setIsSelected_frustration_avant] = useState(pensee.emotions_avant.find((e:string) => e == "Frustration") != undefined);
-      const [isSelected_dégoût_avant, setIsSelected_dégoût_avant] = useState(pensee.emotions_avant.find((e:string) => e == "Dégoût") != undefined);
+      const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Peur") != undefined);
+      const [isSelected_honte_avant, setIsSelected_honte_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Honte") != undefined);
+      const [isSelected_colère_avant, setIsSelected_colère_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Colère") != undefined);
+      const [isSelected_joie_avant, setIsSelected_joie_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Joie") != undefined);
+      const [isSelected_tristesse_avant, setIsSelected_tristesse_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Tristesse") != undefined);
+      const [isSelected_frustration_avant, setIsSelected_frustration_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Frustration") != undefined);
+      const [isSelected_dégoût_avant, setIsSelected_dégoût_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Dégoût") != undefined);
       
     
       //Selection des émotions à la fin, après
-      const [isSelected_peur_après, setIsSelected_peur_après] = useState(pensee.emotions_apres.find((e:string) => e == "Peur") != undefined);
-      const [isSelected_honte_après, setIsSelected_honte_après] = useState(pensee.emotions_apres.find((e:string) => e == "Honte") != undefined);
-      const [isSelected_colère_après, setIsSelected_colère_après] = useState(pensee.emotions_apres.find((e:string) => e == "Colère") != undefined);
-      const [isSelected_joie_après, setIsSelected_joie_après] = useState(pensee.emotions_apres.find((e:string) => e == "Joie") != undefined);
-      const [isSelected_tristesse_après, setIsSelected_tristesse_après] = useState(pensee.emotions_apres.find((e:string) => e == "Tristesse") != undefined); 
-      const [isSelected_frustration_après, setIsSelected_frustration_après] = useState(pensee.emotions_apres.find((e:string) => e == "Frustration") != undefined);
-      const [isSelected_dégoût_après, setIsSelected_dégoût_après] = useState(pensee.emotions_apres.find((e:string) => e == "Dégoût") != undefined);
+      const [isSelected_peur_après, setIsSelected_peur_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Peur") != undefined);
+      const [isSelected_honte_après, setIsSelected_honte_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Honte") != undefined);
+      const [isSelected_colère_après, setIsSelected_colère_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Colère") != undefined);
+      const [isSelected_joie_après, setIsSelected_joie_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Joie") != undefined);
+      const [isSelected_tristesse_après, setIsSelected_tristesse_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Tristesse") != undefined); 
+      const [isSelected_frustration_après, setIsSelected_frustration_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Frustration") != undefined);
+      const [isSelected_dégoût_après, setIsSelected_dégoût_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Dégoût") != undefined);
       
       //TextAreas of SectionPensee states
-      const [element_dec, setElement_dec] = useState(pensee.element_declencheur); 
-      const [interprétation, setInterprétation] = useState(pensee.interpretation); 
-      const [contre_pensee_negative, setContre_pensee_negative] = useState(pensee.contre_pensee_negative);
+      const [element_dec, setElement_dec] = useState(pensee?.element_declencheur); 
+      const [interprétation, setInterprétation] = useState(pensee?.interpretation); 
+      const [contre_pensee_negative, setContre_pensee_negative] = useState(pensee?.contre_pensee_negative);
 
       //Checkbox of SectionPensee states
       const [listEmotions_avant, setListEmotions_avant] = useState(pensee?.emotions_avant);
