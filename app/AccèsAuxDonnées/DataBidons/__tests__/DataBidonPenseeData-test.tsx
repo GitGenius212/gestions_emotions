@@ -62,4 +62,8 @@ describe('PenseeData', () => {
 
     });
 
+    test('given a list of PenseeData with the same date, when the user wil select a date, then he will obtains all the PenseeData having this date ', () => {
+
+    });
+
 });
