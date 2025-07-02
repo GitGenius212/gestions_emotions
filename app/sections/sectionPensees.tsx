@@ -22,15 +22,11 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
       //Déclaration de variables
       const newArrayEmotionsAvant  = elementsProps.listEmotions_avant ? elementsProps.listEmotions_avant.slice() : [];
       //Traitements
-      console.log("========================");
-      console.log("Before updateEmotionsAvant: ", newArrayEmotionsAvant);
-      console.log(emotion, "=> ", selected);
       if(selected) {
         newArrayEmotionsAvant.push(emotion);
         elementsProps.setArrayEmotionAvant(newArrayEmotionsAvant);
       } else {  
-        const index = newArrayEmotionsAvant.indexOf(emotion);
-        console.log("Index of emotion to remove: ", index);     
+        const index = newArrayEmotionsAvant.indexOf(emotion);    
         newArrayEmotionsAvant.splice(index, 1);
         elementsProps.setArrayEmotionAvant(newArrayEmotionsAvant);
       }
@@ -44,15 +40,11 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
       const newArrayEmotionsAprès  = elementsProps.listEmotions_apres ? elementsProps.listEmotions_apres.slice() : [];
 
       //Traitements
-      console.log("========================");
-      console.log("Before updateEmotionsAprès: ", newArrayEmotionsAprès);
-      console.log(emotion, "=> ", selected);
       if(selected) {
         newArrayEmotionsAprès.push(emotion);
         elementsProps.setArrayEmotionAprès(newArrayEmotionsAprès);
       } else {  
-        const index = newArrayEmotionsAprès.indexOf(emotion);
-        console.log("Index of emotion to remove: ", index);     
+        const index = newArrayEmotionsAprès.indexOf(emotion);     
         newArrayEmotionsAprès.splice(index, 1);
         elementsProps.setArrayEmotionAprès(newArrayEmotionsAprès);
       }
@@ -84,12 +76,11 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
         } else if (p_emotion_avant != undefined && p_Isselected_emotion_avant != undefined) {
           const arrayObtainedAvant = updateEmotionsAvant(p_emotion_avant, p_Isselected_emotion_avant);
           penseeObject.emotions_avant = arrayObtainedAvant;
-          console.log("The new array of emotions avant will be", arrayObtainedAvant);
 
         } else if (p_emotion_apres != undefined && p_Isselected_emotion_après != undefined) {
           const arrayObtainedAprès = updateEmotionsAprès(p_emotion_apres, p_Isselected_emotion_après);
           penseeObject.emotions_apres = arrayObtainedAprès;
-          console.log("The new array of emotions après will be", arrayObtainedAprès);
+          
         }
 
         updatePensee(penseeObject);
