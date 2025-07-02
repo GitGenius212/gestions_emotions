@@ -39,8 +39,12 @@ const [pensee, setPensee] = useState(pensée_datas[3]);
       
       //TextAreas of SectionPensee states
       const [element_dec, setElement_dec] = useState(pensee.element_declencheur); 
-         const [interprétation, setInterprétation] = useState(pensee.interpretation); 
-        const [contre_pensee_negative, setContre_pensee_negative] = useState(pensee.contre_pensee_negative);
+      const [interprétation, setInterprétation] = useState(pensee.interpretation); 
+      const [contre_pensee_negative, setContre_pensee_negative] = useState(pensee.contre_pensee_negative);
+
+      //Checkbox of SectionPensee states
+      const [listEmotions_avant, setListEmotions_avant] = useState(pensee?.emotions_avant);
+          const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_apres);
 
 //Functions
 
@@ -55,6 +59,15 @@ function setInterpretationText(p_interprétation: string) {
 
 function setContrePenséNégativeText(p_contre_pensee_negative: string) {
   setContre_pensee_negative(p_contre_pensee_negative);
+}
+
+//Checkbox of SectionPensee
+function setArrayEmotionAvant(newArrayEmotionsAvant: string[]) {
+  setListEmotions_avant(newArrayEmotionsAvant);   
+}
+
+function setArrayEmotionAprès(newArrayEmotionsAprès: string[]) {
+  setListEmotions_apres(newArrayEmotionsAprès);   
 }
 
 
@@ -123,6 +136,8 @@ function getPensee(penseeFoundByDate: PenseeData) {
   setElement_dec(penseeFoundByDate.element_declencheur);
   setInterprétation(penseeFoundByDate.interpretation);
   setContre_pensee_negative(penseeFoundByDate.contre_pensee_negative);
+  setListEmotions_apres(penseeFoundByDate.emotions_apres);
+  setListEmotions_avant(penseeFoundByDate.emotions_avant);
 }
 
 function setEmotions(penseeFoundByDate : PenseeData) {
@@ -255,6 +270,10 @@ function getEmotionsAprès(penseeFoundByDate : PenseeData) {
           element_dec, 
           interprétation,
           contre_pensee_negative,
+          listEmotions_apres, 
+          listEmotions_avant,
+          setArrayEmotionAvant, 
+          setArrayEmotionAprès,
           setIsSelectedPeurAvant,
           setIsSelectedHonteAvant,
           setIsSelectedColèreAvant,

@@ -1,6 +1,5 @@
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
-import React, { useState } from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
 import styles from '../styles';
 
@@ -17,52 +16,54 @@ const tachometer = <FontAwesome name="tachometer" size={24}/>
 
 const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
 
-    const [listEmotions_avant, setListEmotions_avant] = useState(pensee?.emotions_avant);
-    const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_apres);
+    
 
-    const updateEmotionsAvant = (emotion:string, selected : boolean) => {
+    const updateEmotionsAvant = (emotion:string, selected : boolean) : string[] => {
       //Déclaration de variables
-      const newArrayEmotionsAvant  = [...(listEmotions_avant as string[])];
+      const newArrayEmotionsAvant  = elementsProps.listEmotions_avant ? elementsProps.listEmotions_avant.slice() : [];
       //Traitements
       console.log("========================");
-      console.log(emotion, "selected => ", selected);
+      console.log("Before updateEmotionsAvant: ", newArrayEmotionsAvant);
+      console.log(emotion, "=> ", selected);
       if(selected) {
         newArrayEmotionsAvant.push(emotion);
-        setListEmotions_avant(newArrayEmotionsAvant);
-        console.log(`New Array Emotion Avant  => ${newArrayEmotionsAvant}`);
-        
-      } else {
-        newArrayEmotionsAvant.splice(newArrayEmotionsAvant.indexOf(emotion), 1);
-        setListEmotions_avant(newArrayEmotionsAvant);
-        console.log(`New Array Emotion Avant  => ${newArrayEmotionsAvant}`);
-        
-        }
+        elementsProps.setArrayEmotionAvant(newArrayEmotionsAvant);
+      } else {  
+        const index = newArrayEmotionsAvant.indexOf(emotion);
+        console.log("Index of emotion to remove: ", index);     
+        newArrayEmotionsAvant.splice(index, 1);
+        elementsProps.setArrayEmotionAvant(newArrayEmotionsAvant);
+      }
+
+        return newArrayEmotionsAvant;
 
     }
 
-    const updateEmotionsAprès = (emotion:string, selected : boolean) => {
+    const updateEmotionsAprès = (emotion:string, selected : boolean) : string[] => {
       //Déclaration de variables
-      const newArrayEmotionsAprès  = [...(listEmotions_apres as string[] )];
+      const newArrayEmotionsAprès  = elementsProps.listEmotions_apres ? elementsProps.listEmotions_apres.slice() : [];
 
       //Traitements
       console.log("========================");
-      console.log(emotion, "selected => ", selected);
+      console.log("Before updateEmotionsAprès: ", newArrayEmotionsAprès);
+      console.log(emotion, "=> ", selected);
       if(selected) {
         newArrayEmotionsAprès.push(emotion);
-        setListEmotions_apres(newArrayEmotionsAprès);
-        console.log(`New Array Emotion Après  => ${newArrayEmotionsAprès}`);
+        elementsProps.setArrayEmotionAprès(newArrayEmotionsAprès);
+      } else {  
+        const index = newArrayEmotionsAprès.indexOf(emotion);
+        console.log("Index of emotion to remove: ", index);     
+        newArrayEmotionsAprès.splice(index, 1);
+        elementsProps.setArrayEmotionAprès(newArrayEmotionsAprès);
+      }
 
-      } else {
-        newArrayEmotionsAprès.splice(newArrayEmotionsAprès.indexOf(emotion), 1);
-        setListEmotions_apres(newArrayEmotionsAprès);
-        console.log(`New Array Emotion Après  => ${newArrayEmotionsAprès}`);
-        }
+        return newArrayEmotionsAprès;
 
     }
 
     const putPensee = ({p_element_dec_text, p_interprétation_text, p_contre_pensee_negative_text,
-      p_emotion_avant, p_emotion_apres} : {p_element_dec_text? : string, p_interprétation_text?: string, p_contre_pensee_negative_text?: string,
-      p_emotion_avant?: string, p_emotion_apres?: string}
+      p_emotion_avant, p_Isselected_emotion_avant, p_emotion_apres, p_Isselected_emotion_après} : {p_element_dec_text? : string, p_interprétation_text?: string, p_contre_pensee_negative_text?: string,
+      p_emotion_avant?: string, p_Isselected_emotion_avant?: boolean, p_Isselected_emotion_après?:boolean, p_emotion_apres?: string}
     ) => {
       //Déclaration des variables
       let penseeObject : PenseeDataOptions = {id: pensee?.id};
@@ -70,30 +71,28 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
       //Traitements
       if(p_element_dec_text != undefined) {
         penseeObject.element_declencheur = p_element_dec_text;
-        console.log("The élément décheur is changed to ", penseeObject);
-        updatePensee(penseeObject);
 
 
       } else if (p_interprétation_text != undefined) {
           penseeObject.interpretation = p_interprétation_text;
-          console.log("The interprétation is changed to ", penseeObject);
-          updatePensee(penseeObject);
+          
 
         } else if (p_contre_pensee_negative_text != undefined) {
           penseeObject.contre_pensee_negative = p_contre_pensee_negative_text;
-          console.log("The contre-pensée négative is changed to ", penseeObject);
-          updatePensee(penseeObject);
+          
 
-        } else if (p_emotion_avant != undefined) {
-          console.log("The emotion avant selected to update is ", p_emotion_avant); 
-          console.log("The listEmotions_avant is ", listEmotions_avant);
+        } else if (p_emotion_avant != undefined && p_Isselected_emotion_avant != undefined) {
+          const arrayObtainedAvant = updateEmotionsAvant(p_emotion_avant, p_Isselected_emotion_avant);
+          penseeObject.emotions_avant = arrayObtainedAvant;
+          console.log("The new array of emotions avant will be", arrayObtainedAvant);
 
-        } else if (p_emotion_apres != undefined) {
-          console.log("The emotion après selected to update is ", p_emotion_apres);
-          console.log("The listEmotions_après is ", listEmotions_apres);
+        } else if (p_emotion_apres != undefined && p_Isselected_emotion_après != undefined) {
+          const arrayObtainedAprès = updateEmotionsAprès(p_emotion_apres, p_Isselected_emotion_après);
+          penseeObject.emotions_apres = arrayObtainedAprès;
+          console.log("The new array of emotions après will be", arrayObtainedAprès);
         }
 
-        
+        updatePensee(penseeObject);
       
     }
       
@@ -138,8 +137,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_peur_avant} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedPeurAvant(!elementsProps.isSelected_peur_avant);
-                      updateEmotionsAvant("Peur", !elementsProps.isSelected_peur_avant);
-                      putPensee({p_emotion_avant: "Peur"});
+                      putPensee({p_emotion_avant: "Peur", p_Isselected_emotion_avant: !elementsProps.isSelected_peur_avant});
                     }
                   }
                     text="Peur"
@@ -150,8 +148,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_honte_avant} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedHonteAvant(!elementsProps.isSelected_honte_avant);
-                      updateEmotionsAvant("Honte", !elementsProps.isSelected_honte_avant);
-                      putPensee({p_emotion_avant: "Honte"});
+                      putPensee({p_emotion_avant: "Honte", p_Isselected_emotion_avant: !elementsProps.isSelected_honte_avant});
                     }
                   }
                     text="Honte"
@@ -162,8 +159,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_colère_avant} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedColèreAvant(!elementsProps.isSelected_colère_avant);
-                      updateEmotionsAvant("Colère", !elementsProps.isSelected_colère_avant);
-                      putPensee({p_emotion_avant: "Colère"});
+                      putPensee({p_emotion_avant: "Colère", p_Isselected_emotion_avant: !elementsProps.isSelected_colère_avant});
                     }
                   }
                     text="Colère"
@@ -174,8 +170,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_joie_avant} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedJoieAvant(!elementsProps.isSelected_joie_avant);
-                      updateEmotionsAvant("Joie", !elementsProps.isSelected_joie_avant);
-                      putPensee({p_emotion_avant: "Joie"});
+                      putPensee({p_emotion_avant: "Joie", p_Isselected_emotion_avant: !elementsProps.isSelected_joie_avant});
                     }
                   }
                     text="Joie"
@@ -186,8 +181,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_tristesse_avant} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedTristesseAvant(!elementsProps.isSelected_tristesse_avant);
-                      updateEmotionsAvant("Tristesse", !elementsProps.isSelected_tristesse_avant);
-                      putPensee({p_emotion_avant: "Tristesse"});
+                      putPensee({p_emotion_avant: "Tristesse", p_Isselected_emotion_avant: !elementsProps.isSelected_tristesse_avant});
                     }
                   }
                     text="Tristessse"
@@ -198,8 +192,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_frustration_avant} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedFrustrationAvant(!elementsProps.isSelected_frustration_avant);
-                      updateEmotionsAvant("Frustration", !elementsProps.isSelected_frustration_avant);
-                      putPensee({p_emotion_avant: "Frustration"});
+                      putPensee({p_emotion_avant: "Frustration", p_Isselected_emotion_avant: !elementsProps.isSelected_frustration_avant});
                     }
                   }
                     text="Frustration"
@@ -211,8 +204,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_dégoût_avant} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedDégoûtAvant(!elementsProps.isSelected_dégoût_avant);
-                      updateEmotionsAvant("Dégoût", !elementsProps.isSelected_dégoût_avant);
-                      putPensee({p_emotion_avant: "Dégoût"});
+                      putPensee({p_emotion_avant: "Dégoût", p_Isselected_emotion_avant: !elementsProps.isSelected_dégoût_avant});
                     }
                   }
                     text="Dégoût"
@@ -241,8 +233,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_peur_après} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedPeurAprès(!elementsProps.isSelected_peur_après);
-                      updateEmotionsAprès("Peur", !elementsProps.isSelected_peur_après);
-                      putPensee({p_emotion_apres: "Peur"});
+                      putPensee({p_emotion_apres: "Peur", p_Isselected_emotion_après: !elementsProps.isSelected_peur_après});
                     }
                   }
                     text="Peur"
@@ -253,8 +244,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_honte_après} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedHonteAprès(!elementsProps.isSelected_honte_après);
-                      updateEmotionsAprès("Honte", !elementsProps.isSelected_honte_après);
-                      putPensee({p_emotion_apres: "Honte"});
+                      putPensee({p_emotion_apres: "Honte", p_Isselected_emotion_après: !elementsProps.isSelected_honte_après});
                     }
                   }
                     text="Honte"
@@ -265,8 +255,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_colère_après} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedColèreAprès(!elementsProps.isSelected_colère_après);
-                      updateEmotionsAprès("Colère", !elementsProps.isSelected_colère_après);
-                      putPensee({p_emotion_apres: "Colère"});
+                      putPensee({p_emotion_apres: "Colère", p_Isselected_emotion_après: !elementsProps.isSelected_colère_après});
                     }
                   }
                     text="Colère"
@@ -277,8 +266,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_joie_après} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedJoieAprès(!elementsProps.isSelected_joie_après);
-                      updateEmotionsAprès("Joie", !elementsProps.isSelected_joie_après);
-                      putPensee({p_emotion_apres: "Joie"});
+                      putPensee({p_emotion_apres: "Joie", p_Isselected_emotion_après: !elementsProps.isSelected_joie_après});
                     }
                   }
                     text="Joie"
@@ -289,8 +277,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_tristesse_après} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedTristesseAprès(!elementsProps.isSelected_tristesse_après);
-                      updateEmotionsAprès("Tristesse", !elementsProps.isSelected_tristesse_après);
-                      putPensee({p_emotion_apres: "Tristesse"});
+                      putPensee({p_emotion_apres: "Tristesse", p_Isselected_emotion_après: !elementsProps.isSelected_tristesse_après});
                     }
                   }
                     text="Tristessse"
@@ -301,8 +288,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_frustration_après} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedFrustrationAprès(!elementsProps.isSelected_frustration_après);
-                      updateEmotionsAprès("Frustration", !elementsProps.isSelected_frustration_après);
-                      putPensee({p_emotion_apres: "Frustration"});
+                      putPensee({p_emotion_apres: "Frustration", p_Isselected_emotion_après: !elementsProps.isSelected_frustration_après});
                     }
                   }
                     text="Frustration"
@@ -314,8 +300,7 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
                   checked={elementsProps.isSelected_dégoût_après} 
                   onPress={ () => { 
                       elementsProps.setIsSelectedDégoûtAprès(!elementsProps.isSelected_dégoût_après);
-                      updateEmotionsAprès("Dégoût", !elementsProps.isSelected_dégoût_après);
-                      putPensee({p_emotion_apres: "Dégoût"});
+                      putPensee({p_emotion_apres: "Dégoût", p_Isselected_emotion_après: !elementsProps.isSelected_dégoût_après});
                     }
                   }
                     text="Dégoût"
