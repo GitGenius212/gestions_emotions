@@ -334,24 +334,26 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
 
             <TouchableHighlight 
             onPress={() => {
-                console.log(pensee?.date.toISOString().split('T')[0]);
-
+                const currentDate = pensee?.date;
+                const isToday = currentDate?.toISOString().split('T')[0] == new Date().toISOString().split('T')[0];
+                
+                
                 //Créer un nouvel objet avec la même date
-                let new_pensee : PenseeData = {
+                const new_pensee : PenseeData = {
                   id : 0, 
                   element_declencheur : "", 
                   interpretation: "", 
-                  date: new Date(pensee?.date.toISOString().split('T')[0] ?? new Date()), 
+                  date: isToday ? new Date() : new Date(currentDate?.toISOString().split('T')[0] ?? new Date()), 
                   emotions_avant: [], 
                   contre_pensee_negative : "", 
                   emotions_apres : [],
                 };
 
-                //Ajouter la pensee dans les données
+                //Ajouter la pensee dans la base de données
                 addPensee(new_pensee);
 
                 //GetPenseesWithSameDate
-                const updated_list_pensees_same_date = getPenseeWithSameDate(pensee?.date ?? new Date());
+                const updated_list_pensees_same_date = getPenseeWithSameDate(currentDate ?? new Date());
                 
                 //Mettre à jour la liste des pensées contenant la même date
                 if(getPensees != undefined) {
