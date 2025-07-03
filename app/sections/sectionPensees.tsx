@@ -11,7 +11,7 @@ import PenseeProps from '../Domaine/props/PenseeProps';
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
 
-const SectionPensees = ({pensee, elementsProps, listPenseesSameDate} : PenseeProps) => {
+const SectionPensees = ({elementsProps, listPenseesSameDate} : PenseeProps) => {
 
     
 

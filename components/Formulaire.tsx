@@ -1,16 +1,19 @@
-import { View, Text, TouchableHighlight } from 'react-native'
-import React, { useState } from 'react'
-import styles from '@/app/styles';
-import CustomCheckbox from './CustomCheckbox';
-import { FontAwesome } from '@expo/vector-icons';
+import { updatePensee } from '@/app/AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 import PenseeProps from '@/app/Domaine/props/PenseeProps';
+import styles from '@/app/styles';
 import { icons } from '@/constants/icons';
+import { FontAwesome } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { Text, TouchableHighlight, View } from 'react-native';
+import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
 
 
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
 const Formulaire = ({pensee, position} : PenseeProps) => {
+
   //Déclaration de variables
     //Selection des émotions aux débuts, avant
 const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Peur") != undefined);
@@ -42,6 +45,76 @@ const [contre_pensee_negative, setContre_pensee_negative] = useState(pensee?.con
 const [listEmotions_avant, setListEmotions_avant] = useState(pensee?.emotions_avant);
 const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_apres);
 
+
+//Functions
+  const updateEmotionsAvant = (emotion:string, selected : boolean) : string[] => {
+      //Déclaration de variables
+      const newArrayEmotionsAvant  = listEmotions_avant ? listEmotions_avant.slice() : [];
+      //Traitements
+      if(selected) {
+        newArrayEmotionsAvant.push(emotion);
+        setListEmotions_avant(newArrayEmotionsAvant);
+      } else {  
+        const index = newArrayEmotionsAvant.indexOf(emotion);    
+        newArrayEmotionsAvant.splice(index, 1);
+        setListEmotions_avant(newArrayEmotionsAvant);
+      }
+
+        return newArrayEmotionsAvant;
+
+    }
+
+    const updateEmotionsAprès = (emotion:string, selected : boolean) : string[] => {
+      //Déclaration de variables
+      const newArrayEmotionsAprès  = listEmotions_apres ? listEmotions_apres.slice() : [];
+
+      //Traitements
+      if(selected) {
+        newArrayEmotionsAprès.push(emotion);
+        setListEmotions_apres(newArrayEmotionsAprès);
+      } else {  
+        const index = newArrayEmotionsAprès.indexOf(emotion);     
+        newArrayEmotionsAprès.splice(index, 1);
+        setListEmotions_apres(newArrayEmotionsAprès);
+      }
+
+        return newArrayEmotionsAprès;
+
+    }
+
+    const putPensee = ({p_element_dec_text, p_interprétation_text, p_contre_pensee_negative_text,
+      p_emotion_avant, p_Isselected_emotion_avant, p_emotion_apres, p_Isselected_emotion_après} : {p_element_dec_text? : string, p_interprétation_text?: string, p_contre_pensee_negative_text?: string,
+      p_emotion_avant?: string, p_Isselected_emotion_avant?: boolean, p_Isselected_emotion_après?:boolean, p_emotion_apres?: string}
+    ) => {
+      //Déclaration des variables
+      let penseeObject : PenseeDataOptions = {id: pensee?.id};
+
+      //Traitements
+      if(p_element_dec_text != undefined) {
+        penseeObject.element_declencheur = p_element_dec_text;
+
+
+      } else if (p_interprétation_text != undefined) {
+          penseeObject.interpretation = p_interprétation_text;
+          
+
+        } else if (p_contre_pensee_negative_text != undefined) {
+          penseeObject.contre_pensee_negative = p_contre_pensee_negative_text;
+          
+
+        } else if (p_emotion_avant != undefined && p_Isselected_emotion_avant != undefined) {
+          const arrayObtainedAvant = updateEmotionsAvant(p_emotion_avant, p_Isselected_emotion_avant);
+          penseeObject.emotions_avant = arrayObtainedAvant;
+
+        } else if (p_emotion_apres != undefined && p_Isselected_emotion_après != undefined) {
+          const arrayObtainedAprès = updateEmotionsAprès(p_emotion_apres, p_Isselected_emotion_après);
+          penseeObject.emotions_apres = arrayObtainedAprès;
+          
+        }
+
+        updatePensee(penseeObject);
+      
+    }
     
   
   return (
@@ -56,8 +129,9 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
               <TextArea placeholder='Élément déclencheur' 
               description={element_dec ?? ""}
               onChangeDescription={ (text : string) => {
+                putPensee({p_element_dec_text: text});
                 setElement_dec(text);
-                console.log(text);
+                
                 }
               }
               icons={icons.element_dec}/>
@@ -66,8 +140,9 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                 placeholder='Pensée négative'
                 description={interprétation ?? ""}
                 onChangeDescription={ (text:string) => {
+                  putPensee({p_interprétation_text: text});
                   setInterprétation(text);
-                  console.log(text);
+                  
                 }
                   
                 }
@@ -82,7 +157,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_peur_avant} 
                   onPress={ () => { 
                       setIsSelected_peur_avant(!isSelected_peur_avant);
-                      console.log("Peur avant => ", !isSelected_peur_avant);
+                      putPensee({p_emotion_avant: "Peur", p_Isselected_emotion_avant: !isSelected_peur_avant});
                     }
                   }
                     text="Peur"
@@ -93,7 +168,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_honte_avant} 
                   onPress={ () => { 
                       setIsSelected_honte_avant(!isSelected_honte_avant);
-                      console.log("Honte avant => ", !isSelected_honte_avant);
+                      putPensee({p_emotion_avant: "Honte", p_Isselected_emotion_avant: !isSelected_honte_avant});
                     }
                   }
                     text="Honte"
@@ -104,7 +179,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_colère_avant} 
                   onPress={ () => { 
                       setIsSelected_colère_avant(!isSelected_colère_avant);
-                      console.log("Colère avant => ", !isSelected_colère_avant);
+                      putPensee({p_emotion_avant: "Colère", p_Isselected_emotion_avant: !isSelected_colère_avant});
                     }
                   }
                     text="Colère"
@@ -115,7 +190,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_joie_avant} 
                   onPress={ () => { 
                       setIsSelected_joie_avant(!isSelected_joie_avant);
-                      console.log("Joie avant => ", !isSelected_joie_avant);
+                      putPensee({p_emotion_avant: "Joie", p_Isselected_emotion_avant: !isSelected_joie_avant});
                     }
                   }
                     text="Joie"
@@ -126,7 +201,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_tristesse_avant} 
                   onPress={ () => { 
                       setIsSelected_tristesse_avant(!isSelected_tristesse_avant);
-                      console.log("Tristesse avant => ", !isSelected_tristesse_avant);
+                      putPensee({p_emotion_avant: "Tristesse", p_Isselected_emotion_avant: !isSelected_tristesse_avant});
                     }
                   }
                     text="Tristessse"
@@ -137,7 +212,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_frustration_avant} 
                   onPress={ () => { 
                       setIsSelected_frustration_avant(!isSelected_frustration_avant);
-                      console.log("Frustration avant => ", !isSelected_frustration_avant);
+                      putPensee({p_emotion_avant: "Frustration", p_Isselected_emotion_avant: !isSelected_frustration_avant});
                     }
                   }
                     text="Frustration"
@@ -149,7 +224,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_dégoût_avant} 
                   onPress={ () => { 
                       setIsSelected_dégoût_avant(!isSelected_dégoût_avant);
-                      console.log("Dégoût avant => ", !isSelected_dégoût_avant);
+                      putPensee({p_emotion_avant: "Dégoût", p_Isselected_emotion_avant: !isSelected_dégoût_avant});
                     }
                   }
                     text="Dégoût"
@@ -164,8 +239,9 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                 placeholder='Contre-Pensée négative'
                 description={contre_pensee_negative ?? ""}
                 onChangeDescription={ (text: string) => {
+                  putPensee({p_contre_pensee_negative_text: text});
                   setContre_pensee_negative(text);
-                    console.log(text);
+            
                   }
                 }
                 icons={icons.pensee_negative}
@@ -178,7 +254,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_peur_après} 
                   onPress={ () => { 
                       setIsSelected_peur_après(!isSelected_peur_après);
-                      console.log("Peur après => ", !isSelected_peur_après);
+                      putPensee({p_emotion_apres: "Peur", p_Isselected_emotion_après: !isSelected_peur_après});
                     }
                   }
                     text="Peur"
@@ -189,7 +265,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_honte_après} 
                   onPress={ () => { 
                       setIsSelected_honte_après(!isSelected_honte_après);
-                      console.log("Honte après => ", !isSelected_honte_après);
+                      putPensee({p_emotion_apres: "Honte", p_Isselected_emotion_après: !isSelected_honte_après});
                     }
                   }
                     text="Honte"
@@ -200,7 +276,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_colère_après} 
                   onPress={ () => { 
                       setIsSelected_colère_après(!isSelected_colère_après);
-                      console.log("Colère après => ", !isSelected_colère_après);
+                      putPensee({p_emotion_apres: "Colère", p_Isselected_emotion_après: !isSelected_colère_après});
                     }
                   }
                     text="Colère"
@@ -211,7 +287,8 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_joie_après} 
                   onPress={ () => { 
                       setIsSelected_joie_après(!isSelected_joie_après);
-                      console.log("Joie après => ", !isSelected_joie_après);
+                      putPensee({p_emotion_apres: "Joie", p_Isselected_emotion_après: !isSelected_joie_après});
+                    
                     }
                   }
                     text="Joie"
@@ -222,7 +299,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_tristesse_après} 
                   onPress={ () => { 
                       setIsSelected_tristesse_après(!isSelected_tristesse_après);
-                      console.log("Tristesse après => ", !isSelected_tristesse_après);
+                      putPensee({p_emotion_apres: "Tristesse", p_Isselected_emotion_après: !isSelected_tristesse_après});
                     }
                   }
                     text="Tristessse"
@@ -233,7 +310,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_frustration_après} 
                   onPress={ () => { 
                       setIsSelected_frustration_après(!isSelected_frustration_après);
-                      console.log("Frustration après => ", !isSelected_frustration_après);
+                      putPensee({p_emotion_apres: "Frustration", p_Isselected_emotion_après: !isSelected_frustration_après});
                     }
                   }
                     text="Frustration"
@@ -245,7 +322,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   checked={isSelected_dégoût_après} 
                   onPress={ () => { 
                       setIsSelected_dégoût_après(!isSelected_dégoût_après);
-                      console.log("Dégoût après => ", !isSelected_dégoût_après);
+                      putPensee({p_emotion_apres: "Dégoût", p_Isselected_emotion_après: !isSelected_dégoût_après});
                     }
                   }
                     text="Dégoût"

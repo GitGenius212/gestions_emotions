@@ -17,7 +17,7 @@ export default function Index() {
 }, []);
 
 //Déclaration de variables==========================================================================
-const [listPenseeSameDate, setListPenseeSameDate] = useState(getPenseeWithSameDate(new Date()));
+const [listPenseesSameDate, setListPenseesSameDate] = useState(getPenseeWithSameDate(new Date()));
 
 
 
@@ -27,11 +27,9 @@ const [listPenseeSameDate, setListPenseeSameDate] = useState(getPenseeWithSameDa
 //Setting the states of the variables
 
 
-
-
 //Obtenir la pensée par date
 function getPensees(penseesFoundByDate: PenseeData[]) {
-  setListPenseeSameDate(penseesFoundByDate);
+  setListPenseesSameDate(penseesFoundByDate);
   
 }
 
@@ -53,7 +51,7 @@ function getPensees(penseesFoundByDate: PenseeData[]) {
 
       {/*Section des pensées*/}
       <SectionPensees 
-      listPenseesSameDate={listPenseeSameDate}
+      listPenseesSameDate={listPenseesSameDate}
       
       />
 
