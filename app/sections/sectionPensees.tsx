@@ -23,10 +23,6 @@ const SectionPensees = ({pensee, elementsProps, listPenseesSameDate} : PenseePro
          {/* Afficher le formulaire en lui donnant la pensée en question*/}
          
          {listPenseesSameDate?.map((penseeItem, index) => {
-          console.log();
-          console.log("listPenseesSameDate => ", listPenseesSameDate);
-          console.log("===========================================");
-          console.log("PenseeItem: ", penseeItem);
             return (
               <Formulaire 
               key={penseeItem.id}

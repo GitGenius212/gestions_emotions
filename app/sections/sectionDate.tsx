@@ -2,7 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { PropsWithChildren, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { getPenseeByDate, getPenseeWithSameDate } from '../AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { getPenseeWithSameDate } from '../AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import CustomTextProps from '../Domaine/props/CustomTextProps';
 import PenseeProps from '../Domaine/props/PenseeProps';
 
@@ -33,7 +33,7 @@ LocaleConfig.locales['fr'] = {
 
 LocaleConfig.defaultLocale = 'fr';
 
- const SectionDate = ({getPensee} : PenseeProps) => {
+ const SectionDate = ({getPensees} : PenseeProps) => {
 
   const [date, setDate] = useState(new Date());
   const [isToday, setIsToday] = useState(true);  
@@ -56,11 +56,10 @@ LocaleConfig.defaultLocale = 'fr';
   });
 
   function getPenseeByCurrentDate(p_date: Date) {
-    const penseeTrouvee = getPenseeByDate(p_date);
+    //Déclaration de variables
     const penseesTrouvees = getPenseeWithSameDate(p_date);
-    if(penseeTrouvee != undefined && getPensee != undefined) {
-      getPensee(penseeTrouvee, penseesTrouvees);  
-      
+    if(getPensees != undefined) {
+      getPensees(penseesTrouvees);  
     }
    
   }
