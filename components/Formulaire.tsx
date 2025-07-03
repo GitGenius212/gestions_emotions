@@ -1,4 +1,4 @@
-import { updatePensee } from '@/app/AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { addPensee, getPenseeWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 import PenseeProps from '@/app/Domaine/props/PenseeProps';
 import styles from '@/app/styles';
@@ -8,11 +8,12 @@ import React, { useState } from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
 import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
+import PenseeData from '@/app/Domaine/Classes/PenseeData';
 
 
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
-const Formulaire = ({pensee, position} : PenseeProps) => {
+const Formulaire = ({pensee, position, getPensees} : PenseeProps) => {
 
   //Déclaration de variables
     //Selection des émotions aux débuts, avant
@@ -332,7 +333,33 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
             </View>
 
             <TouchableHighlight 
-            onPress={() => console.log("Button 'Ajouter' pressed")}
+            onPress={() => {
+                console.log(pensee?.date.toISOString().split('T')[0]);
+
+                //Créer un nouvel objet avec la même date
+                let new_pensee : PenseeData = {
+                  id : 0, 
+                  element_declencheur : "", 
+                  interpretation: "", 
+                  date: new Date(pensee?.date.toISOString().split('T')[0] ?? new Date()), 
+                  emotions_avant: [], 
+                  contre_pensee_negative : "", 
+                  emotions_apres : [],
+                };
+
+                //Ajouter la pensee dans les données
+                addPensee(new_pensee);
+
+                //GetPenseesWithSameDate
+                const updated_list_pensees_same_date = getPenseeWithSameDate(pensee?.date ?? new Date());
+                
+                //Mettre à jour la liste des pensées contenant la même date
+                if(getPensees != undefined) {
+                  getPensees(updated_list_pensees_same_date);
+                }
+
+              }
+            }
             underlayColor='#912937'
             style={styles.button}>
               <View>

@@ -144,7 +144,7 @@ export function getPenseeWithSameDate(date: Date) : PenseeData[] {
 
 }
 
-function addPensee(p_pensee: PenseeData) : PenseeData {
+export function addPensee(p_pensee: PenseeData) : PenseeData {
   //Déclaration de variables
   let new_id = 0;
   let largestId = 0;

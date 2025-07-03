@@ -52,6 +52,7 @@ function getPensees(penseesFoundByDate: PenseeData[]) {
       {/*Section des pensées*/}
       <SectionPensees 
       listPenseesSameDate={listPenseesSameDate}
+      getPensees={getPensees}
       
       />
 

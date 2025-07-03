@@ -11,7 +11,7 @@ import PenseeProps from '../Domaine/props/PenseeProps';
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
 
-const SectionPensees = ({elementsProps, listPenseesSameDate} : PenseeProps) => {
+const SectionPensees = ({listPenseesSameDate, getPensees} : PenseeProps) => {
 
     
 
@@ -24,8 +24,8 @@ const SectionPensees = ({elementsProps, listPenseesSameDate} : PenseeProps) => {
             return (
               <Formulaire 
               key={penseeItem.id}
-              elementsProps={elementsProps}
               position={index +1}
+              getPensees={getPensees}
               pensee={penseeItem}
               />
             )
