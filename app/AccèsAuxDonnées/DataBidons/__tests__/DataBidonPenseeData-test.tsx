@@ -25,24 +25,19 @@ describe('PenseeData', () => {
 
     });
 
-    test('given a list of penseeData, when the user search one by unexisted date, then he obtains a new PenseeData with this Date', () => {
+    test('given a list of penseeData, when the user search one by unexisted date, then he obtains a specific message error', () => {
         //Set up
         const date = new Date("2025-06-25T05:11:37.962Z");
-        const pensee_expected = {
-            id : 8, 
-          element_declencheur : "", 
-          interpretation: "", 
-          date: date, 
-          emotions_avant: [], 
-          contre_pensee_negative : "", 
-          emotions_apres : []
-        };
+        
+
         //Action
-        const new_pensee = getPenseeByDate(date);
+        function getPenseeByDate_NOT_FOUND() {
+            getPenseeByDate(date);
+        }
         
 
         //Check
-        expect(new_pensee).toStrictEqual(pensee_expected);
+        expect(getPenseeByDate_NOT_FOUND).toThrow(new Error("the pensee with this date 2025-06-25 is unfound"));
 
     });
 
@@ -99,5 +94,31 @@ describe('PenseeData', () => {
         expect(pensees_obtained).toStrictEqual(expected_pensees);
 
     });
+
+     test('given a list of penseeData, when the user search one by unexisted date, then he obtains a list containing a new pensee with this date', () => {
+        //Set up
+        const date = new Date("2025-06-25T05:11:37.962Z");
+        const pensee_expected = [
+                {
+                id : 8, 
+            element_declencheur : "", 
+            interpretation: "", 
+            date: date, 
+            emotions_avant: [], 
+            contre_pensee_negative : "", 
+            emotions_apres : []
+            }
+        ]
+        
+        
+            const pensees = getPenseeWithSameDate(date);
+    
+        
+        
+
+        //Check
+        expect(pensees).toStrictEqual(pensee_expected);
+
+    }); 
 
 });

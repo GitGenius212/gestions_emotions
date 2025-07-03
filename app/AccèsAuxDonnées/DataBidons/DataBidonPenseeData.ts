@@ -103,18 +103,9 @@ export const pensée_datas : PenseeData[] = [
 export function getPenseeByDate(date: Date) : PenseeData | undefined {
   let pensee = pensée_datas.find(p => p.date.toISOString().split('T')[0] == date.toISOString().split('T')[0]);
   
-  //On crée un nouvele objet PenseeData
+  
   if(pensee == undefined) {
-    pensee ??= {
-      id : 0, 
-      element_declencheur : "", 
-      interpretation: "", 
-      date: date, 
-      emotions_avant: [], 
-      contre_pensee_negative : "", 
-      emotions_apres : [],
-    };
-    pensee = addPensee(pensee);
+    throw new Error(`the pensee with this date ${date.toISOString().split('T')[0]} is unfound`);
   } 
 
     return pensee;
@@ -123,17 +114,33 @@ export function getPenseeByDate(date: Date) : PenseeData | undefined {
 
 export function getPenseeWithSameDate(date: Date) : PenseeData[] {
   //Déclaration de variables
-  let pensee_same_date : PenseeData[] = [];
+  let pensees_same_date : PenseeData[] = [];
 
   //Traitements
   for (let p of pensée_datas) {
     if(p.date.toISOString().split('T')[0] == date.toISOString().split('T')[0]) {
-      pensee_same_date.push(p);
+      pensees_same_date.push(p);
     }
   }
 
+  if(pensees_same_date.length == 0) {
+    let pensee : PenseeData = {
+      id : 0, 
+      element_declencheur : "", 
+      interpretation: "", 
+      date: date, 
+      emotions_avant: [], 
+      contre_pensee_negative : "", 
+      emotions_apres : [],
+    };
+
+    pensee = addPensee(pensee);
+
+    pensees_same_date.push(pensee);
+  }
+
   //Affichages/Sorties
-  return pensee_same_date;
+  return pensees_same_date;
 
 }
 
