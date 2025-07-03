@@ -27,7 +27,7 @@ const SectionPensees = ({pensee, elementsProps, listPenseesSameDate} : PenseePro
               <Formulaire 
               key={penseeItem.id}
               elementsProps={elementsProps}
-              index={index +1}
+              position={index +1}
               pensee={penseeItem}
               />
             )

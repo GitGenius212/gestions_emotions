@@ -6,7 +6,7 @@ type PenseeProps = {
   getPensees? : (penseesFoundByDate: PenseeData[]) => void;
   elementsProps? : any;
   listPenseesSameDate? : Array<PenseeData>;
-  index?: number;
+  position?: number;
 }
 
 export default PenseeProps;

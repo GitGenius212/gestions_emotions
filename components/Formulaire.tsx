@@ -10,13 +10,13 @@ import TextArea from './TextArea';
 
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
-const Formulaire = ({pensee, elementsProps, index} : PenseeProps) => {
+const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
   //Functions
   
   return (
     <View style={{marginBottom:10}}>
             <Text style={{marginBottom:10}}>
-              <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Penséé #{index} </Text>
+              <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Penséé #{position} </Text>
               <Text style={styles.h1}>:</Text>
               <Text style={{fontSize:24, color:"rgba(255,255,255, 1.0)",}}> {pensee?.date.toTimeString().slice(0,9)}</Text>
             </Text>
