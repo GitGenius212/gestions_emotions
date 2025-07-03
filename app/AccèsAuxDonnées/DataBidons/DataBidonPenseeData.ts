@@ -84,6 +84,20 @@ export const pensée_datas : PenseeData[] = [
     ],
     id: 6
   },
+  {
+    element_declencheur: "Je parlais avec ma mère",
+    date: new Date(),
+    interpretation: `OOOHHHH ! Je dois dire ça ! OOOHH ! Je dpois faire ça ! Je suis incapable de faire ça ! 
+    J'ai peur qu'elle me juge et qu'elle me critique`,
+    emotions_avant: [
+      "Peur"
+    ],
+    contre_pensee_negative: "C'est juste une imagination qui te fait peur. Tu n'as pas à avoir peur d'eux, mais de Dieu.",
+    emotions_apres: [
+      "Joie"
+    ],
+    id: 7
+  }
 ];
 
 export function getPenseeByDate(date: Date) : PenseeData | undefined {

@@ -19,7 +19,8 @@ const SectionPensees = ({pensee, elementsProps} : PenseeProps) => {
 
   return (
     <View style={{flex: 1, backgroundColor:"#94DDBC", padding:15}}>
-
+       {/* Pour chaque pensee dans penseesAvecMêmeDate*/}
+         {/* Afficher le formulaire en lui donnant la pensée en question*/}
         <Formulaire 
         elementsProps={elementsProps}
         pensee={pensee}
