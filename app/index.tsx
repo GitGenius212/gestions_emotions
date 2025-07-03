@@ -3,7 +3,7 @@ import { LogBox, ScrollView } from "react-native";
 
 
 //Sections
-import { getPenseeByDate, getPenseeWithSameDate } from './AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { getPenseeWithSameDate } from './AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import PenseeData from './Domaine/Classes/PenseeData';
 import SectionDate from "./sections/sectionDate";
 import SectionPensees from "./sections/sectionPensees";
