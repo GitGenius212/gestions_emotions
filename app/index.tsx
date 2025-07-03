@@ -3,7 +3,7 @@ import { LogBox, ScrollView } from "react-native";
 
 
 //Sections
-import { getPenseeByDate } from './AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { getPenseeByDate, getPenseeWithSameDate } from './AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import PenseeData from './Domaine/Classes/PenseeData';
 import SectionDate from "./sections/sectionDate";
 import SectionPensees from "./sections/sectionPensees";
@@ -18,6 +18,7 @@ export default function Index() {
 
 //Déclaration de variables==========================================================================
 const [pensee, setPensee] = useState(getPenseeByDate(new Date()));
+const [listPenseeSameDate, setListPenseeSameDate] = useState(getPenseeWithSameDate(new Date()));
 //Selection des émotions aux débuts, avant
 const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Peur") != undefined);
 const [isSelected_honte_avant, setIsSelected_honte_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Honte") != undefined);
@@ -50,6 +51,9 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
 
 
 //Functions====================================================================================================
+//Setting the states of the variables
+
+
 
 //SetTextAreas of SectionPensee
 function setElementDéclencheurText(p_element_dec: string) {
@@ -134,8 +138,9 @@ function setIsSelectedDégoûtAprès(p_bool: boolean) {
 
 
 //Obtenir la pensée par date
-function getPensee(penseeFoundByDate: PenseeData) {
+function getPensee(penseeFoundByDate: PenseeData, penseesFoundByDate: PenseeData[]) {
   setPensee(penseeFoundByDate);  //On met à jour l'objet penséee dans le formulaire
+  setListPenseeSameDate(penseesFoundByDate);
   setEmotions(penseeFoundByDate); //On met à l'état des émotions avant ou après
 
   //On met à jour les TextAreas du formulaire
@@ -263,6 +268,7 @@ function getEmotionsAprès(penseeFoundByDate : PenseeData) {
       {/*Section des pensées*/}
       <SectionPensees 
       pensee={pensee}
+      listPenseesSameDate={listPenseeSameDate}
       elementsProps= {{
           isSelected_peur_avant,  
           isSelected_honte_avant,
@@ -301,7 +307,7 @@ function getEmotionsAprès(penseeFoundByDate : PenseeData) {
           setIsSelectedDégoûtAprès, 
           setElementDéclencheurText,
           setInterpretationText,
-          setContrePenséNégativeText
+          setContrePenséNégativeText, 
 
         
       }}

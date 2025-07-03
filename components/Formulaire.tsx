@@ -12,7 +12,7 @@ import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
-const Formulaire = ({pensee, elementsProps} : PenseeProps) => {
+const Formulaire = ({pensee, elementsProps, index} : PenseeProps) => {
   //Functions
   const updateEmotionsAvant = (emotion:string, selected : boolean) : string[] => {
       //Déclaration de variables
@@ -85,7 +85,7 @@ const Formulaire = ({pensee, elementsProps} : PenseeProps) => {
   return (
     <View style={{marginBottom:10}}>
             <Text style={{marginBottom:10}}>
-              <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Penséé #1 </Text>
+              <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Penséé #{index} </Text>
               <Text style={styles.h1}>:</Text>
               <Text style={{fontSize:24, color:"rgba(255,255,255, 1.0)",}}> {pensee?.date.toTimeString().slice(0,9)}</Text>
             </Text>
