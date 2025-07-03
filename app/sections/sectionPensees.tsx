@@ -15,8 +15,6 @@ const SectionPensees = ({pensee, elementsProps, listPenseesSameDate} : PenseePro
 
     
 
-    
-
   return (
     <View style={{flex: 1, backgroundColor:"#94DDBC", padding:15}}>
        {/* Pour chaque pensee dans penseesAvecMêmeDate*/}

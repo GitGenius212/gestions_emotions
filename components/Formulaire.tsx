@@ -1,5 +1,5 @@
 import { View, Text, TouchableHighlight } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import styles from '@/app/styles';
 import CustomCheckbox from './CustomCheckbox';
 import { FontAwesome } from '@expo/vector-icons';
@@ -10,8 +10,39 @@ import TextArea from './TextArea';
 
 const tachometer = <FontAwesome name="tachometer" size={24}/>
 
-const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
-  //Functions
+const Formulaire = ({pensee, position} : PenseeProps) => {
+  //Déclaration de variables
+    //Selection des émotions aux débuts, avant
+const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Peur") != undefined);
+const [isSelected_honte_avant, setIsSelected_honte_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Honte") != undefined);
+const [isSelected_colère_avant, setIsSelected_colère_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Colère") != undefined);
+const [isSelected_joie_avant, setIsSelected_joie_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Joie") != undefined);
+const [isSelected_tristesse_avant, setIsSelected_tristesse_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Tristesse") != undefined);
+const [isSelected_frustration_avant, setIsSelected_frustration_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Frustration") != undefined);
+const [isSelected_dégoût_avant, setIsSelected_dégoût_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Dégoût") != undefined);
+      
+    
+//Selection des émotions à la fin, après
+const [isSelected_peur_après, setIsSelected_peur_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Peur") != undefined);
+const [isSelected_honte_après, setIsSelected_honte_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Honte") != undefined);
+const [isSelected_colère_après, setIsSelected_colère_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Colère") != undefined);
+const [isSelected_joie_après, setIsSelected_joie_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Joie") != undefined);
+const [isSelected_tristesse_après, setIsSelected_tristesse_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Tristesse") != undefined); 
+const [isSelected_frustration_après, setIsSelected_frustration_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Frustration") != undefined);
+const [isSelected_dégoût_après, setIsSelected_dégoût_après] = useState(pensee?.emotions_apres.find((e:string) => e == "Dégoût") != undefined);
+      
+
+//TextAreas of SectionPensee states
+const [element_dec, setElement_dec] = useState(pensee?.element_declencheur); 
+const [interprétation, setInterprétation] = useState(pensee?.interpretation); 
+const [contre_pensee_negative, setContre_pensee_negative] = useState(pensee?.contre_pensee_negative);
+
+
+//Checkbox of SectionPensee states en liste de string[]
+const [listEmotions_avant, setListEmotions_avant] = useState(pensee?.emotions_avant);
+const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_apres);
+
+    
   
   return (
     <View style={{marginBottom:10}}>
@@ -23,8 +54,9 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
               <TextArea placeholder='Élément déclencheur' 
-              description={pensee?.element_declencheur ?? ""}
+              description={element_dec ?? ""}
               onChangeDescription={ (text : string) => {
+                setElement_dec(text);
                 console.log(text);
                 }
               }
@@ -32,8 +64,9 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
 
                 <TextArea 
                 placeholder='Pensée négative'
-                description={pensee?.interpretation ?? ""}
+                description={interprétation ?? ""}
                 onChangeDescription={ (text:string) => {
+                  setInterprétation(text);
                   console.log(text);
                 }
                   
@@ -46,10 +79,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 <Text style={styles.h1}>{tachometer} Émotions </Text>
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_peur_avant} 
+                  checked={isSelected_peur_avant} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedPeurAvant(elementsProps.isSelected_peur_avant);
-                      console.log("Peur avant => ", !elementsProps.isSelected_peur_avant);
+                      setIsSelected_peur_avant(!isSelected_peur_avant);
+                      console.log("Peur avant => ", !isSelected_peur_avant);
                     }
                   }
                     text="Peur"
@@ -57,10 +90,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_honte_avant} 
+                  checked={isSelected_honte_avant} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedHonteAvant(!elementsProps.isSelected_honte_avant);
-                      console.log("Honte avant => ", !elementsProps.isSelected_honte_avant);
+                      setIsSelected_honte_avant(!isSelected_honte_avant);
+                      console.log("Honte avant => ", !isSelected_honte_avant);
                     }
                   }
                     text="Honte"
@@ -68,10 +101,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_colère_avant} 
+                  checked={isSelected_colère_avant} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedColèreAvant(!elementsProps.isSelected_colère_avant);
-                      console.log("Colère avant => ", !elementsProps.isSelected_colère_avant);
+                      setIsSelected_colère_avant(!isSelected_colère_avant);
+                      console.log("Colère avant => ", !isSelected_colère_avant);
                     }
                   }
                     text="Colère"
@@ -79,10 +112,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_joie_avant} 
+                  checked={isSelected_joie_avant} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedJoieAvant(!elementsProps.isSelected_joie_avant);
-                      console.log("Joie avant => ", !elementsProps.isSelected_joie_avant);
+                      setIsSelected_joie_avant(!isSelected_joie_avant);
+                      console.log("Joie avant => ", !isSelected_joie_avant);
                     }
                   }
                     text="Joie"
@@ -90,10 +123,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_tristesse_avant} 
+                  checked={isSelected_tristesse_avant} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedTristesseAvant(!elementsProps.isSelected_tristesse_avant);
-                      console.log("Tristesse avant => ", !elementsProps.isSelected_tristesse_avant);
+                      setIsSelected_tristesse_avant(!isSelected_tristesse_avant);
+                      console.log("Tristesse avant => ", !isSelected_tristesse_avant);
                     }
                   }
                     text="Tristessse"
@@ -101,10 +134,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_frustration_avant} 
+                  checked={isSelected_frustration_avant} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedFrustrationAvant(!elementsProps.isSelected_frustration_avant);
-                      console.log("Frustration avant => ", !elementsProps.isSelected_frustration_avant);
+                      setIsSelected_frustration_avant(!isSelected_frustration_avant);
+                      console.log("Frustration avant => ", !isSelected_frustration_avant);
                     }
                   }
                     text="Frustration"
@@ -113,10 +146,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_dégoût_avant} 
+                  checked={isSelected_dégoût_avant} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedDégoûtAvant(!elementsProps.isSelected_dégoût_avant);
-                      console.log("Dégoût avant => ", !elementsProps.isSelected_dégoût_avant);
+                      setIsSelected_dégoût_avant(!isSelected_dégoût_avant);
+                      console.log("Dégoût avant => ", !isSelected_dégoût_avant);
                     }
                   }
                     text="Dégoût"
@@ -129,8 +162,9 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
 
                 <TextArea 
                 placeholder='Contre-Pensée négative'
-                description={pensee?.contre_pensee_negative ?? ""}
+                description={contre_pensee_negative ?? ""}
                 onChangeDescription={ (text: string) => {
+                  setContre_pensee_negative(text);
                     console.log(text);
                   }
                 }
@@ -141,10 +175,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
 
                 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_peur_après} 
+                  checked={isSelected_peur_après} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedPeurAprès(!elementsProps.isSelected_peur_après);
-                      console.log("Peur après => ", !elementsProps.isSelected_peur_après);
+                      setIsSelected_peur_après(!isSelected_peur_après);
+                      console.log("Peur après => ", !isSelected_peur_après);
                     }
                   }
                     text="Peur"
@@ -152,10 +186,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_honte_après} 
+                  checked={isSelected_honte_après} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedHonteAprès(!elementsProps.isSelected_honte_après);
-                      console.log("Honte après => ", !elementsProps.isSelected_honte_après);
+                      setIsSelected_honte_après(!isSelected_honte_après);
+                      console.log("Honte après => ", !isSelected_honte_après);
                     }
                   }
                     text="Honte"
@@ -163,10 +197,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_colère_après} 
+                  checked={isSelected_colère_après} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedColèreAprès(!elementsProps.isSelected_colère_après);
-                      console.log("Colère après => ", !elementsProps.isSelected_colère_après);
+                      setIsSelected_colère_après(!isSelected_colère_après);
+                      console.log("Colère après => ", !isSelected_colère_après);
                     }
                   }
                     text="Colère"
@@ -174,10 +208,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_joie_après} 
+                  checked={isSelected_joie_après} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedJoieAprès(!elementsProps.isSelected_joie_après);
-                      console.log("Joie après => ", !elementsProps.isSelected_joie_après);
+                      setIsSelected_joie_après(!isSelected_joie_après);
+                      console.log("Joie après => ", !isSelected_joie_après);
                     }
                   }
                     text="Joie"
@@ -185,10 +219,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_tristesse_après} 
+                  checked={isSelected_tristesse_après} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedTristesseAprès(!elementsProps.isSelected_tristesse_après);
-                      console.log("Tristesse après => ", !elementsProps.isSelected_tristesse_après);
+                      setIsSelected_tristesse_après(!isSelected_tristesse_après);
+                      console.log("Tristesse après => ", !isSelected_tristesse_après);
                     }
                   }
                     text="Tristessse"
@@ -196,10 +230,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
                 /> 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_frustration_après} 
+                  checked={isSelected_frustration_après} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedFrustrationAprès(!elementsProps.isSelected_frustration_après);
-                      console.log("Frustration après => ", !elementsProps.isSelected_frustration_après);
+                      setIsSelected_frustration_après(!isSelected_frustration_après);
+                      console.log("Frustration après => ", !isSelected_frustration_après);
                     }
                   }
                     text="Frustration"
@@ -208,10 +242,10 @@ const Formulaire = ({pensee, elementsProps, position} : PenseeProps) => {
 
 
                 <CustomCheckbox 
-                  checked={elementsProps.isSelected_dégoût_après} 
+                  checked={isSelected_dégoût_après} 
                   onPress={ () => { 
-                      elementsProps.setIsSelectedDégoûtAprès(!elementsProps.isSelected_dégoût_après);
-                      console.log("Dégoût après => ", !elementsProps.isSelected_dégoût_après);
+                      setIsSelected_dégoût_après(!isSelected_dégoût_après);
+                      console.log("Dégoût après => ", !isSelected_dégoût_après);
                     }
                   }
                     text="Dégoût"
