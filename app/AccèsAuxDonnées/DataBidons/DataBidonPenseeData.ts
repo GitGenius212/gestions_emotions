@@ -101,7 +101,7 @@ export const pensée_datas : PenseeData[] = [
 ];
 
 
-function findPenseeById(id:number) {
+export function findPenseeById(id:number) {
 //Déclaration de variables
   let exists = false;
   let data : PenseeData = undefined as any;
@@ -119,6 +119,7 @@ for (let i=0; i< pensée_datas.length; i++) {
 return {exists, data, index}
   
 }
+
 
 export function getPenseeByDate(date: Date) : PenseeData | undefined {
   let pensee = pensée_datas.find(p => p.date.toISOString().split('T')[0] == date.toISOString().split('T')[0]);
@@ -193,17 +194,6 @@ export function addPensee(p_pensee: PenseeData) : PenseeData {
 
 }
 
-export function getPenseeById(id: number) : PenseeData | undefined {
-  const pensee = pensée_datas.find(p => p.id == id);
-  
-  if(pensee == undefined) {
-        throw new Error(`The 'pensée' with this id ${id} is unfound`);
-
-  } else {
-    return pensee;
-  }
-  
-}
 
 export function updatePensee(p_pensee_params: PenseeDataOptions) : PenseeData {
   //Déclaration de variables

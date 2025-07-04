@@ -1,4 +1,4 @@
-import { deletePenseeById, getPenseeByDate, getPenseeById, getPenseeWithSameDate, pensée_datas, updatePensee } from "../DataBidonPenseeData";
+import { deletePenseeById, findPenseeById, getPenseeByDate, getPenseeWithSameDate, pensée_datas, updatePensee } from "../DataBidonPenseeData";
 
 describe('PenseeData', () => {
     test('given a list of penseeData, when the user search one by date, then he obtains the PenseeData object', () => {
@@ -50,10 +50,10 @@ describe('PenseeData', () => {
         
         //Action
         const updated_pensee_obtained = updatePensee(updated_pensee);
-        const expected_pensee = getPenseeById(updated_pensee.id);
+        const expected_pensee = findPenseeById(updated_pensee.id);
 
         //Check
-        expect(updated_pensee_obtained).toBe(expected_pensee);
+        expect(updated_pensee_obtained).toBe(expected_pensee.data);
 
     });
 
