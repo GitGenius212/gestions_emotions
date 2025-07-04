@@ -1,8 +1,8 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { getPenseeWithSameDate } from '../AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { getPenseesFillForm, getPenseeWithSameDate } from '../AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import CustomTextProps from '../Domaine/props/CustomTextProps';
 import PenseeProps from '../Domaine/props/PenseeProps';
 
@@ -38,6 +38,35 @@ LocaleConfig.defaultLocale = 'fr';
   const [date, setDate] = useState(new Date());
   const [isToday, setIsToday] = useState(true);  
   const [isPressedCalendar, setIsPressedCalendar] = useState(false);
+  const [markedDatesPenseesFill, setMarkedDatesPenseesFill] = useState({});
+
+
+useEffect(() => {
+    // Simulate API call
+    const fetchDates = async () => {
+      // Replace this with your actual API call
+      const fetchedDates = getPenseesFillForm();
+
+      // Format the dates into the required object structure
+      const markedDatesObject : Record<string, any> = {};
+      for(let p of fetchedDates) {
+        markedDatesObject[p.date.toISOString().split('T')[0]] = {
+          marked: true
+        };
+      }
+
+      // Update the state with the new marked dates
+      console.log(markedDatesObject);
+      setMarkedDatesPenseesFill(markedDatesObject);
+    };
+
+    fetchDates();
+  }, []);
+
+
+
+
+
 
   const style = StyleSheet.create({
     aujourdhui: {
@@ -127,9 +156,9 @@ LocaleConfig.defaultLocale = 'fr';
             dayTextColor: '#2d4150',
             
           }}
-          markedDates={{
+          markedDates= {{
             [date.toISOString().split('T')[0]]: {selected: true, selectedColor: '#94DDBC'},
-          
+            markedDatesPenseesFill
           }}
           enableSwipeMonths={true}
             onDayPress={day => {
