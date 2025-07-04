@@ -92,7 +92,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
       const isToday = currentDate?.toISOString().split('T')[0] == new Date().toISOString().split('T')[0];
 
       
-      let penseeObject : PenseeDataOptions = (isToday && currentDate.toTimeString().slice(0,9) != "20:00:00") ? {id: pensee?.id} : {id: pensee?.id, date:new Date()};
+      let penseeObject : PenseeDataOptions = (isToday && currentDate.toTimeString().slice(0,9) == "20:00:00") ? {id: pensee?.id, date:new Date()} : {id: pensee?.id} ;
 
       //Traitements
       if(p_element_dec_text != undefined) {
