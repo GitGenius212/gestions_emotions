@@ -1,4 +1,4 @@
-import { deletePenseeById, findPenseeById, getPenseeByDate, getPenseeWithSameDate, pensée_datas, updatePensee } from "../DataBidonPenseeData";
+import { deletePenseeById, findPenseeById, getPenseeByDate, getPenseesFillForm, getPenseeWithSameDate, pensée_datas, updatePensee } from "../DataBidonPenseeData";
 
 describe('PenseeData', () => {
     test('given a list of penseeData, when the user search one by date, then he obtains the PenseeData object', () => {
@@ -95,7 +95,42 @@ describe('PenseeData', () => {
 
     });
 
-     test('given a list of penseeData, when the user search one by unexisted date, then he obtains a list containing a new pensee with this date', () => {
+    test('given a user, when he removes a pensee of id #4, then he obtains the rest of the list', () => {
+            //Set up
+    
+            const expected_list_pensees = pensée_datas.filter(item => item.id != 4);
+    
+            //Action
+            deletePenseeById(4);
+    
+            //Check
+            expect(pensée_datas).toStrictEqual(expected_list_pensees);
+        });
+    
+        test('given a user, when he removes a pensee of id not found, then he obtains a specific error message thrown', () => {
+            //Set up
+    
+            //Action
+            function removePensee_NOT_FOUND() {
+                deletePenseeById(0);
+            }
+            //Check
+            expect(removePensee_NOT_FOUND).toThrow(new Error("The pensee with this id 0 not found"));
+        });
+
+        test('given a list of pensees, when the app search for all the pensees with some filling form, then he obtains only the pensees not empty', () => {
+            
+            //Set up
+            const expected_list_pensees = pensée_datas.filter(item => item.id != 5);
+            console.log("expected_list_pensees => ", expected_list_pensees);
+            //Action
+            const list_pensees_obtained = getPenseesFillForm();
+    
+            //Check
+            expect(list_pensees_obtained).toStrictEqual(expected_list_pensees);
+        });
+
+        test('given a list of penseeData, when the user search one by unexisted date, then he obtains a list containing a new pensee with this date', () => {
         //Set up
         const date = new Date("2025-06-25T05:11:37.962Z");
         const pensee_expected = [
@@ -120,28 +155,5 @@ describe('PenseeData', () => {
         expect(pensees).toStrictEqual(pensee_expected);
 
     }); 
-
-    test('given a user, when he removes a pensee of id #7, then he obtain the rest of the list', () => {
-            //Set up
-    
-            const expected_list_solutions = pensée_datas.filter(item => item.id != 5);
-    
-            //Action
-            deletePenseeById(5);
-    
-            //Check
-            expect(pensée_datas).toStrictEqual(expected_list_solutions);
-        });
-    
-        test('given a user, when he removes a solution of id not found, then he obtain a specific error message thrown', () => {
-            //Set up
-    
-            //Action
-            function removePensee_NOT_FOUND() {
-                deletePenseeById(0);
-            }
-            //Check
-            expect(removePensee_NOT_FOUND).toThrow(new Error("The pensee with this id 0 not found"));
-        });
 
 });

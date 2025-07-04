@@ -58,17 +58,12 @@ export const pensée_datas : PenseeData[] = [
     id: 4
   }, 
   {
-    element_declencheur: "Je regarde le gars pour le voir parler",
+    element_declencheur: "",
     date: new Date("2025-06-16T03:11:56.404Z"),
-    interpretation: "OOOHHHH ! Il fait trop le mec cool. Je n'aime pas ça",
-    emotions_avant: [
-      "Dégoût",
-      "Colère"
-    ],
-    contre_pensee_negative: "Alhamdoulilah que tu agis uniquement pour plaire à Dieu",
-    emotions_apres: [
-      "Frustration"
-    ],
+    interpretation: "",
+    emotions_avant: [],
+    contre_pensee_negative: "",
+    emotions_apres: [],
     id: 5
   }, 
   {
@@ -107,16 +102,16 @@ export function findPenseeById(id:number) {
   let data : PenseeData = undefined as any;
   let index :number = -1;
 
-for (let i=0; i< pensée_datas.length; i++) {
-    if(pensée_datas[i].id == id) {
-        exists = true;
-        data = pensée_datas[i];
-        index = i;
+  for (let i=0; i< pensée_datas.length; i++) {
+      if(pensée_datas[i].id == id) {
+          exists = true;
+          data = pensée_datas[i];
+          index = i;
 
-    } 
+      } 
 
-}
-return {exists, data, index}
+  }
+  return {exists, data, index}
   
 }
 
@@ -130,6 +125,22 @@ export function getPenseeByDate(date: Date) : PenseeData | undefined {
   } 
 
     return pensee;
+  
+}
+
+export function getPenseesFillForm() : PenseeData[] {
+  //Déclaration de variables
+  const penseesFills : PenseeData[] = [];
+
+  //Traitements
+  for (let p of pensée_datas) {
+    if(p.element_declencheur != "" || p.contre_pensee_negative != "" || p.interpretation != "" || 
+      p.emotions_apres.length > 0 || p.emotions_avant.length > 0) {
+      penseesFills.push(p);
+    }
+  }
+  console.log("penseesFills => ", penseesFills);
+  return penseesFills;
   
 }
 
