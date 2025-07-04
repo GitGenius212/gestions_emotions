@@ -88,7 +88,11 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
       p_emotion_avant?: string, p_Isselected_emotion_avant?: boolean, p_Isselected_emotion_après?:boolean, p_emotion_apres?: string}
     ) => {
       //Déclaration des variables
-      let penseeObject : PenseeDataOptions = {id: pensee?.id};
+      const currentDate = pensee?.date;
+      const isToday = currentDate?.toISOString().split('T')[0] == new Date().toISOString().split('T')[0];
+
+      
+      let penseeObject : PenseeDataOptions = (isToday && currentDate.toTimeString().slice(0,9) != "20:00:00") ? {id: pensee?.id} : {id: pensee?.id, date:new Date()};
 
       //Traitements
       if(p_element_dec_text != undefined) {
