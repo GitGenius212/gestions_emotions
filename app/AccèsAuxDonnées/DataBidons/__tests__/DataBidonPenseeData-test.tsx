@@ -1,4 +1,4 @@
-import { getPenseeByDate, getPenseeById, getPenseeWithSameDate, updatePensee } from "../DataBidonPenseeData";
+import { deletePenseeById, getPenseeByDate, getPenseeById, getPenseeWithSameDate, pensée_datas, updatePensee } from "../DataBidonPenseeData";
 
 describe('PenseeData', () => {
     test('given a list of penseeData, when the user search one by date, then he obtains the PenseeData object', () => {
@@ -120,5 +120,28 @@ describe('PenseeData', () => {
         expect(pensees).toStrictEqual(pensee_expected);
 
     }); 
+
+    test('given a user, when he removes a pensee of id #7, then he obtain the rest of the list', () => {
+            //Set up
+    
+            const expected_list_solutions = pensée_datas.filter(item => item.id != 5);
+    
+            //Action
+            deletePenseeById(5);
+    
+            //Check
+            expect(pensée_datas).toStrictEqual(expected_list_solutions);
+        });
+    
+        test('given a user, when he removes a solution of id not found, then he obtain a specific error message thrown', () => {
+            //Set up
+    
+            //Action
+            function removePensee_NOT_FOUND() {
+                deletePenseeById(0);
+            }
+            //Check
+            expect(removePensee_NOT_FOUND).toThrow(new Error("The pensee with this id 0 not found"));
+        });
 
 });

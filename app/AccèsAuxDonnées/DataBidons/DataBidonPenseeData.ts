@@ -100,6 +100,26 @@ export const pensée_datas : PenseeData[] = [
   }
 ];
 
+
+function findPenseeById(id:number) {
+//Déclaration de variables
+  let exists = false;
+  let data : PenseeData = undefined as any;
+  let index :number = -1;
+
+for (let i=0; i< pensée_datas.length; i++) {
+    if(pensée_datas[i].id == id) {
+        exists = true;
+        data = pensée_datas[i];
+        index = i;
+
+    } 
+
+}
+return {exists, data, index}
+  
+}
+
 export function getPenseeByDate(date: Date) : PenseeData | undefined {
   let pensee = pensée_datas.find(p => p.date.toISOString().split('T')[0] == date.toISOString().split('T')[0]);
   
@@ -204,5 +224,24 @@ export function updatePensee(p_pensee_params: PenseeDataOptions) : PenseeData {
 
   //Sorties/Affichages
   return updated_pensee;
+
+}
+
+export function deletePenseeById(id:number ) : PenseeData {
+  //Déclaration de variables
+  const deleted_pensee = findPenseeById(id);
+
+  //Traitements
+    if(deleted_pensee.exists) {
+      pensée_datas.splice(deleted_pensee.index, 1);
+    }
+    
+    
+    if(!deleted_pensee.exists) {
+        throw new Error(`The pensee with this id ${id} not found`);
+    }
+
+  //Affichage/Sortie
+  return deleted_pensee.data;
 
 }
