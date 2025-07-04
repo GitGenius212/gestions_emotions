@@ -1,4 +1,4 @@
-import { addPensee, getPenseeWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { addPensee, deletePenseeById, getPenseeWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 import PenseeProps from '@/app/Domaine/props/PenseeProps';
 import styles from '@/app/styles';
@@ -372,7 +372,22 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
 
             <TouchableHighlight 
                 onPress={() => {
-                    console.log("Button 'Supprimer clicked'");
+                    //Déclaration de variables
+                    const currentDate = pensee?.date;
+                    const currentId = pensee?.id ?? 0;
+                    //Ajouter la pensee dans la base de données
+                    const pensee_deleted = deletePenseeById(currentId);
+
+                    //GetPenseesWithSameDate
+                    const updated_list_pensees_same_date = getPenseeWithSameDate(currentDate ?? new Date());
+                    
+                    //Mettre à jour la liste des pensées contenant la même date
+                    if(getPensees != undefined) {
+                      getPensees(updated_list_pensees_same_date);
+                    }
+                    console.log("==================");
+                    console.log("Button 'the pensee deleted is '", pensee_deleted);
+                    console.log("The new list of this date is => ", updated_list_pensees_same_date);
                   }
                 }
                 underlayColor='#912937'
