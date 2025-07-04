@@ -112,30 +112,30 @@ LocaleConfig.defaultLocale = 'fr';
       </View>
 
       <Calendar  style={{marginTop:15, display:isPressedCalendar ? 'flex' : 'none'}}
-      initialDate={date.toISOString().split('T')[0]}
-      theme={{
-        arrowColor:'#03045E',
-        textMonthFontSize:24,  
-        backgroundColor: '#ffffff',
-        calendarBackground: '#ffffff',
-        textSectionTitleColor: '#b6c1cd',
-        selectedDayBackgroundColor: '#00adf5',
-        selectedDayTextColor: '#ffffff',
-        todayTextColor: '#C84630',
-        dayTextColor: '#2d4150',
-        
-      }}
-      markedDates={{
-        [date.toISOString().split('T')[0]]: {selected: true, selectedColor: '#94DDBC'},
-       
-      }}
-      enableSwipeMonths={true}
-        onDayPress={day => {
-          setDate(new Date(day.dateString));
-          modificationIsToday(day.dateString);
+          initialDate={date.toISOString().split('T')[0]}
+          theme={{
+            arrowColor:'#03045E',
+            textMonthFontSize:24,  
+            backgroundColor: '#ffffff',
+            calendarBackground: '#ffffff',
+            textSectionTitleColor: '#b6c1cd',
+            selectedDayBackgroundColor: '#00adf5',
+            selectedDayTextColor: '#ffffff',
+            todayTextColor: '#C84630',
+            dayTextColor: '#2d4150',
+            
+          }}
+          markedDates={{
+            [date.toISOString().split('T')[0]]: {selected: true, selectedColor: '#94DDBC'},
           
-        }}
-      />
+          }}
+          enableSwipeMonths={true}
+            onDayPress={day => {
+              setDate(new Date(day.dateString));
+              modificationIsToday(day.dateString);
+              
+            }}
+        />
 
       
       <View style={{flexDirection: "row", justifyContent: "space-between"}}>

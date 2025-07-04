@@ -146,15 +146,15 @@ const SectionSolutions = () => {
         let color = '';
         if(item.id != null) {
             if (item.id % 2 === 0) {
-            backgroundColor = '#e3e3e3';
-            color = '#C84630';
+            backgroundColor = '#e3e3e3';  //gray
+            color = '#C84630'; //orange
           }  else {
-            backgroundColor = '#D4A0A7';
-            color = '#C84630';
+            backgroundColor = '#D4A0A7'; //pink
+            color = '#C84630';  //orange
           }
       
           if(item.id == selectedId_solution) {
-            backgroundColor = '#898989';
+            backgroundColor = '#898989';  //full gray
             color = 'white';
           }
         }

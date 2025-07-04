@@ -27,6 +27,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32
 
   }, 
+
+  button_delete_pensee : {
+    backgroundColor: "rgba(252, 8, 41, 0.8)", 
+    borderRadius:10, 
+    width: 150, 
+    paddingVertical: 15, 
+    paddingHorizontal: 32, 
+
+  }, 
   
   button_text : {
     color:'white', 

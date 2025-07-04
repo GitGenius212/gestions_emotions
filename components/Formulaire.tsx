@@ -332,42 +332,59 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
 
             </View>
 
-            <TouchableHighlight 
-            onPress={() => {
-                const currentDate = pensee?.date;
-                const isToday = currentDate?.toISOString().split('T')[0] == new Date().toISOString().split('T')[0];
+            <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+              <TouchableHighlight 
+                onPress={() => {
+                    const currentDate = pensee?.date;
+                    const isToday = currentDate?.toISOString().split('T')[0] == new Date().toISOString().split('T')[0];
                 
                 
-                //Créer un nouvel objet avec la même date
-                const new_pensee : PenseeData = {
-                  id : 0, 
-                  element_declencheur : "", 
-                  interpretation: "", 
-                  date: isToday ? new Date() : new Date(currentDate?.toISOString().split('T')[0] ?? new Date()), 
-                  emotions_avant: [], 
-                  contre_pensee_negative : "", 
-                  emotions_apres : [],
-                };
+                    //Créer un nouvel objet avec la même date
+                    const new_pensee : PenseeData = {
+                      id : 0, 
+                      element_declencheur : "", 
+                      interpretation: "", 
+                      date: isToday ? new Date() : new Date(currentDate?.toISOString().split('T')[0] ?? new Date()), 
+                      emotions_avant: [], 
+                      contre_pensee_negative : "", 
+                      emotions_apres : [],
+                    };
 
-                //Ajouter la pensee dans la base de données
-                addPensee(new_pensee);
+                    //Ajouter la pensee dans la base de données
+                    addPensee(new_pensee);
 
-                //GetPenseesWithSameDate
-                const updated_list_pensees_same_date = getPenseeWithSameDate(currentDate ?? new Date());
-                
-                //Mettre à jour la liste des pensées contenant la même date
-                if(getPensees != undefined) {
-                  getPensees(updated_list_pensees_same_date);
+                    //GetPenseesWithSameDate
+                    const updated_list_pensees_same_date = getPenseeWithSameDate(currentDate ?? new Date());
+                    
+                    //Mettre à jour la liste des pensées contenant la même date
+                    if(getPensees != undefined) {
+                      getPensees(updated_list_pensees_same_date);
+                    }
+
+                  }
                 }
-
-              }
-            }
-            underlayColor='#912937'
-            style={styles.button}>
-              <View>
-                <Text style={styles.button_text}>Ajouter</Text>
-              </View>
+                underlayColor='#912937'
+                style={styles.button}>
+                  <View>
+                    <Text style={styles.button_text}>Ajouter</Text>
+                  </View>
             </TouchableHighlight>
+
+            <TouchableHighlight 
+                onPress={() => {
+                    console.log("Button 'Supprimer clicked'");
+                  }
+                }
+                underlayColor='#912937'
+                style={styles.button_delete_pensee}>
+                  <View>
+                    <Text style={styles.button_text}>Supprimer</Text>
+                  </View>
+            </TouchableHighlight>
+
+            </View>
+
+
 
         </View>
   )
