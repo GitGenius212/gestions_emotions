@@ -55,9 +55,11 @@ LocaleConfig.defaultLocale = 'fr';
     }
   });
 
-  function getPenseeByCurrentDate(p_date: Date) {
+  function getPenseesByCurrentDate(p_date: Date) {
     //Déclaration de variables
     const penseesTrouvees = getPenseeWithSameDate(p_date);
+    
+    //Traitements
     if(getPensees != undefined) {
       getPensees(penseesTrouvees);  
     }
@@ -76,7 +78,7 @@ LocaleConfig.defaultLocale = 'fr';
         setIsToday(false);
     }
 
-    getPenseeByCurrentDate(dateObtained);
+    getPenseesByCurrentDate(dateObtained);
 
   }
   

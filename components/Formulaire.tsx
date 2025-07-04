@@ -375,8 +375,9 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                     //Déclaration de variables
                     const currentDate = pensee?.date;
                     const currentId = pensee?.id ?? 0;
-                    //Ajouter la pensee dans la base de données
-                    const pensee_deleted = deletePenseeById(currentId);
+
+                    //Supprimer la pensee dans la base de données
+                    deletePenseeById(currentId);
 
                     //GetPenseesWithSameDate
                     const updated_list_pensees_same_date = getPenseeWithSameDate(currentDate ?? new Date());
@@ -385,13 +386,13 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                     if(getPensees != undefined) {
                       getPensees(updated_list_pensees_same_date);
                     }
-                    console.log("==================");
-                    console.log("Button 'the pensee deleted is '", pensee_deleted);
-                    console.log("The new list of this date is => ", updated_list_pensees_same_date);
+                    
                   }
                 }
                 underlayColor='#912937'
-                style={styles.button_delete_pensee}>
+                style={[styles.button_delete_pensee, {
+                  display: (position == 1) ? 'none' : 'flex'
+                }]}>
                   <View>
                     <Text style={styles.button_text}>Supprimer</Text>
                   </View>
