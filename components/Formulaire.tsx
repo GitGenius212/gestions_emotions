@@ -84,15 +84,11 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
     }
 
     const putPensee = ({p_element_dec_text, p_interprétation_text, p_contre_pensee_negative_text,
-      p_emotion_avant, p_Isselected_emotion_avant, p_emotion_apres, p_Isselected_emotion_après} : {p_element_dec_text? : string, p_interprétation_text?: string, p_contre_pensee_negative_text?: string,
-      p_emotion_avant?: string, p_Isselected_emotion_avant?: boolean, p_Isselected_emotion_après?:boolean, p_emotion_apres?: string}
+      p_emotion_avant, p_date, p_Isselected_emotion_avant, p_emotion_apres, p_Isselected_emotion_après} : {p_element_dec_text? : string, p_interprétation_text?: string, p_contre_pensee_negative_text?: string,
+      p_emotion_avant?: string, p_date? : Date, p_Isselected_emotion_avant?: boolean, p_Isselected_emotion_après?:boolean, p_emotion_apres?: string}
     ) => {
       //Déclaration des variables
-      const currentDate = pensee?.date;
-      const isToday = currentDate?.toISOString().split('T')[0] == new Date().toISOString().split('T')[0];
-
-      
-      let penseeObject : PenseeDataOptions = (isToday && currentDate.toTimeString().slice(0,9) == "20:00:00") ? {id: pensee?.id, date:new Date()} : {id: pensee?.id} ;
+      let penseeObject : PenseeDataOptions = {id: pensee?.id};
 
       //Traitements
       if(p_element_dec_text != undefined) {
@@ -115,10 +111,37 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
           const arrayObtainedAprès = updateEmotionsAprès(p_emotion_apres, p_Isselected_emotion_après);
           penseeObject.emotions_apres = arrayObtainedAprès;
           
+        } else if(p_date != undefined) {
+          penseeObject.date = p_date;
         }
 
         updatePensee(penseeObject);
       
+    }
+
+    function getTimePensee(p_date : Date | undefined) {
+      
+      //Déclaration de variables
+      const isTimeHasOnly0 = p_date?.toISOString().split('T')[1].startsWith("00:00:00");
+      const isToday = p_date?.toISOString().split('T')[0] == new Date().toISOString().split('T')[0];
+      const new_date_today = new Date();
+      
+      //Traitements
+      if(!isTimeHasOnly0) { //Si le temps commence par 00:00:00
+        return p_date?.toTimeString().slice(0,9);
+      }
+        
+      //Sinon si le temps commence par 00:00:00 et en plus c'est aujourd'hui
+      else if(isTimeHasOnly0 && isToday) {
+        //alors retourne une nouvelle date
+        putPensee({p_date: new_date_today});
+        return new_date_today.toTimeString().slice(0,9);
+
+      } else {
+        //Sinon retourne la date commence par 00:00:00
+        return ''
+      }
+        
     }
     
   
@@ -127,7 +150,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
             <Text style={{marginBottom:10}}>
               <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Penséé #{position} </Text>
               <Text style={styles.h1}>:</Text>
-              <Text style={{fontSize:24, color:"rgba(255,255,255, 1.0)",}}> {pensee?.date.toTimeString().slice(0,9)}</Text>
+              <Text style={{fontSize:24, color:"rgba(255,255,255, 1.0)",}}> {getTimePensee(pensee?.date)}</Text>
             </Text>
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
