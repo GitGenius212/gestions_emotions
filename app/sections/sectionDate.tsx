@@ -54,7 +54,8 @@ LocaleConfig.defaultLocale = 'fr';
       const markedDatesObject : Record<string, any> = {};
       for(let p of fetchedDates) {
         markedDatesObject[p.date.toISOString().split('T')[0]] = {
-          marked: true
+          marked: true, 
+          dotColor:'#94DDBC'
         };
       }
       markedDatesObject[selected_day] = {selected: true, selectedColor: '#94DDBC'};
