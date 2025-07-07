@@ -41,9 +41,12 @@ LocaleConfig.defaultLocale = 'fr';
   const [markedDatesPenseesFill, setMarkedDatesPenseesFill] = useState({});
 
 
-useEffect(() => {
+  useEffect(() => {
+    fetchDates(date.toISOString().split('T')[0]);
+  }, []);
+  
     // Simulate API call
-    const fetchDates = async () => {
+    const fetchDates = async (selected_day: string) => {
       // Replace this with your actual API call
       const fetchedDates = getPenseesFillForm();
 
@@ -54,14 +57,14 @@ useEffect(() => {
           marked: true
         };
       }
-
+      markedDatesObject[selected_day] = {selected: true, selectedColor: '#94DDBC'};
+      
       // Update the state with the new marked dates
       console.log(markedDatesObject);
       setMarkedDatesPenseesFill(markedDatesObject);
     };
 
-    fetchDates();
-  }, []);
+ 
 
 
 
@@ -87,19 +90,22 @@ useEffect(() => {
   function getPenseesByCurrentDate(p_date: Date) {
     //Déclaration de variables
     const penseesTrouvees = getPenseeWithSameDate(p_date);
-    
     //Traitements
     if(getPensees != undefined) {
-      getPensees(penseesTrouvees);  
+      getPensees(penseesTrouvees);
+      
     }
    
   }
 
   function modificationIsToday(p_date : string) {
+    
+    fetchDates(p_date);  //For marketDates
+
     //Déclaration de variables
     let dateObtained = JSON.parse(JSON.stringify(p_date));
     dateObtained = new Date(dateObtained);
-
+    
     //Traitements
     if(new Date().toISOString().split('T')[0] == p_date) {
         setIsToday(true);
@@ -108,6 +114,7 @@ useEffect(() => {
     }
 
     getPenseesByCurrentDate(dateObtained);
+    
 
   }
   
@@ -156,14 +163,16 @@ useEffect(() => {
             dayTextColor: '#2d4150',
             
           }}
-          markedDates= {{
-            [date.toISOString().split('T')[0]]: {selected: true, selectedColor: '#94DDBC'},
+          markedDates= {
             markedDatesPenseesFill
-          }}
+          }
+
+          
           enableSwipeMonths={true}
             onDayPress={day => {
               setDate(new Date(day.dateString));
               modificationIsToday(day.dateString);
+              
               
             }}
         />
