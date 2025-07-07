@@ -122,7 +122,6 @@ describe('PenseeData', () => {
             
             //Set up
             const expected_list_pensees = pensée_datas.filter(item => item.id != 5);
-            console.log("expected_list_pensees => ", expected_list_pensees);
             //Action
             const list_pensees_obtained = getPenseesFillForm();
     
