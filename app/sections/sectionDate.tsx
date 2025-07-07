@@ -44,7 +44,7 @@ LocaleConfig.defaultLocale = 'fr';
   useEffect(() => {
     fetchDates(date.toISOString().split('T')[0]);
   }, []);
-  
+
     // Simulate API call
     const fetchDates = async (selected_day: string) => {
       // Replace this with your actual API call
@@ -60,7 +60,6 @@ LocaleConfig.defaultLocale = 'fr';
       markedDatesObject[selected_day] = {selected: true, selectedColor: '#94DDBC'};
       
       // Update the state with the new marked dates
-      console.log(markedDatesObject);
       setMarkedDatesPenseesFill(markedDatesObject);
     };
 
