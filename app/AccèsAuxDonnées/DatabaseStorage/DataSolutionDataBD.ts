@@ -8,10 +8,18 @@ export const storeSolution = async (value : SolutionData) : Promise<SolutionData
   let new_solution : SolutionData = undefined as any;
 
   //Traitements
+
   try {
+    if(value.id == undefined) {
+      let new_id = await getMaximumId() + 1;
+      value.id = new_id;
+    }
+
     const jsonValue = JSON.stringify(value);
-    await AsyncStorage.setItem('my-key', jsonValue);
     new_solution = JSON.parse(jsonValue);
+    
+    await AsyncStorage.setItem(`Solution#${value.id}`, jsonValue);
+    
 
   } catch (e) {
         console.error(e);
@@ -24,45 +32,32 @@ export const storeSolution = async (value : SolutionData) : Promise<SolutionData
 
 
 //GET
-export const getSolution = async (p_myKey: string) : Promise<SolutionData> => {
+export async function getAllSolutions() : Promise<SolutionData[]> {
   //Déclaration de variables
-  let solution : SolutionData = undefined as any;
-  try {
-    const jsonValue = await AsyncStorage.getItem(p_myKey);
-    solution = (jsonValue != null) ? JSON.parse(jsonValue) : null;
-    
-  } catch (e) {
-        console.error("getSolution() => ", e);
-  }
-
-  return solution;
-};
-
-
-//DELETE
-export const removeSolution = async () => {
-  try {
-    const solution_toDelete = getSolution('my-key');
-    await AsyncStorage.removeItem('my-key');
-    return solution_toDelete;
-  } catch(e) {
-    console.error(e);
-  }
-
-  console.log('Done.');
-}
-
-//GET
-export async function getSolutionById(p_id:number) : Promise<SolutionData> {
-  //Déclaration de variables
+  let solutions_datas_bd : SolutionData[] = [];
   const keys = await getAllKeys();
-  let solutionTrouve : SolutionData = undefined as any;
 
   //Traitements
   for(let key of keys) {
-    let solution = await getSolution(key);
-    if(solution.id == p_id) {
-      solutionTrouve = solution;
+    if(key.startsWith("Solution")) {
+      let solution = await getSolution(key);
+      solutions_datas_bd.push(solution);
+    }
+  }
+  //Affichages/Sorties
+  return solutions_datas_bd;
+}
+
+
+export async function getSolutionById(p_id:number) : Promise<SolutionData> {
+  //Déclaration de variables
+  const solutions_datas_bd = await getAllSolutions();
+  let solutionTrouve : SolutionData = undefined as any;
+
+  //Traitements
+  for(let s of solutions_datas_bd) {
+    if(s.id == p_id) {
+      solutionTrouve = s;
     }
   }
   
@@ -88,6 +83,57 @@ const getAllKeys = async ()  : Promise<readonly string[]> => {
   return keys;
   
 }
+
+const getMaximumId = async () : Promise<number> => {
+  //Déclaration de variables
+  let largestId = 0;
+  const keys = await getAllKeys();
+
+  //Traitements
+  for(let key of keys) {
+    let solution = await getSolution(key);
+    if(solution.id != undefined && solution.id > largestId) {
+      largestId = solution.id;
+    }
+  }
+
+  //Affichages/Sorties
+  return largestId;
+}
+
+
+export const getSolution = async (p_myKey: string) : Promise<SolutionData> => {
+  //Déclaration de variables
+  let solution : SolutionData = undefined as any;
+  try {
+    const jsonValue = await AsyncStorage.getItem(p_myKey);
+    solution = (jsonValue != null) ? JSON.parse(jsonValue) : null;
+    
+  } catch (e) {
+        console.error("getSolution() => ", e);
+  }
+
+  return solution;
+};
+
+
+//DELETE
+export const removeSolution = async (p_id: number) => {
+  try {
+    const solution_toDelete = await getSolutionById(p_id);
+    await AsyncStorage.removeItem(`Solution#${p_id}`);
+    return solution_toDelete;
+  } catch(e) {
+    console.error(e);
+  }
+
+  console.log('Done.');
+}
+
+
+
+
+
 
 
 
