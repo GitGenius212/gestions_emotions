@@ -1,6 +1,6 @@
 import SolutionData from '@/app/Domaine/Classes/SolutionData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getAllSolutions, getSolution, getSolutionById, removeSolution, storeSolution } from '../DataSolutionDataBD';
+import { getAllSolutions, getSolution, getSolutionById, removeSolution, storeSolution, putSolution } from '../DataSolutionDataBD';
 
 describe('SolutionDataBD', () => {
   test('given a solutionData, when we store this, then we obtain this object', async () => {
@@ -52,21 +52,26 @@ describe('SolutionDataBD', () => {
 
   test('given a solutionData, when we update this, then we obtain this object updated', async () => {
     //Mise en place
-  const solution_updated: SolutionData = {
-    id: 4,
-    description: 'Sois Conscient de tes émotions et de leurs déclencheurs.Ressens et réflechis. ',
-    createdAt: new Date("2025-06-12T16:59:00.667Z"),
-  };
+    const solution_updated: SolutionData = {
+      id: 4,
+      description: 'Sois Conscient de tes émotions et de leurs déclencheurs.Ressens et réflechis. ',
+      createdAt: new Date("2025-06-12T16:59:00.667Z"),
+    };
 
-  //Action
-  await storeSolution(solution_updated);
-  const solution_obtained = await getSolution('Solution#4');
+    const list_solutions_expected = [
+      {
+        id: 4,
+        description: 'Sois Conscient de tes émotions et de leurs déclencheurs.Ressens et réflechis. ',
+        createdAt: new Date("2025-06-12T16:59:00.667Z").toISOString(),
+      }
+    ]
+    //Action
+    const list_solutions_obtained = await putSolution(solution_updated);
+    
 
-  //Check
-  expect(solution_obtained).toEqual({
-    ...solution_updated,
-    createdAt: solution_updated.createdAt?.toISOString(),
-  });
+    //Check
+    expect(list_solutions_obtained).toEqual(list_solutions_expected);
+
   });
 
   test('given a list of SolutionData, when we search a solution by id, then we obtain the objet of SolutionData', async () => {
@@ -87,43 +92,7 @@ describe('SolutionDataBD', () => {
   });
   });
 
-  test('given a solutionData, when we update this, then we obtain this object updated', async () => {
-    //Mise en place
-  const solution_updated: SolutionData = {
-    id: 4,
-    description: 'Sois Conscient de tes émotions et de leurs déclencheurs.Ressens et réflechis. ',
-    createdAt: new Date("2025-06-12T16:59:00.667Z"),
-  };
-
-  //Action
-  await storeSolution(solution_updated);
-  const solution_obtained = await getSolution('Solution#4');
-
-  //Check
-  expect(solution_obtained).toEqual({
-    ...solution_updated,
-    createdAt: solution_updated.createdAt?.toISOString(),
-  });
-  });
   
-
-  test('given a list of SolutionData, when we search a solution by id, then we obtain the objet of SolutionData', async () => {
-    //Mise en place
-  const solution_expected: SolutionData = {
-    id: 4,
-    description: 'Sois Conscient de tes émotions et de leurs déclencheurs.Ressens et réflechis. ',
-    createdAt: new Date("2025-06-12T16:59:00.667Z"),
-  };
-
-  //Action
-  const solution_obtained = await getSolutionById(4);
-
-  //Check
-  expect(solution_obtained).toEqual({
-    ...solution_expected,
-    createdAt: solution_expected.createdAt?.toISOString(),
-  });
-  });
 
   test('given a list of SolutionData, when we search a solution by unexisted id, then we obtain a specific message', async () => {
     

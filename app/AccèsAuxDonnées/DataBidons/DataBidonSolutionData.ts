@@ -45,7 +45,7 @@ return {exists, data, index}
   
 }
 
-export function putSolution(solution: SolutionData) {
+export function putSolution(solution: SolutionData) : SolutionData[] {
 
   if(!solutions_datas.find(s => s.id == solution.id)) 
     throw new Error(`The solution with this id ${solution.id} not found`);

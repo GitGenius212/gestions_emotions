@@ -2,7 +2,7 @@ import SolutionData from '@/app/Domaine/Classes/SolutionData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-//PUT, POST
+//POST
 export const storeSolution = async (value : SolutionData) : Promise<SolutionData> => {
   //Déclaration de variables
   let new_solution : SolutionData = undefined as any;
@@ -27,6 +27,29 @@ export const storeSolution = async (value : SolutionData) : Promise<SolutionData
 
   //Sorties/Affichages
   return new_solution;
+
+};
+
+
+//PUT
+export const putSolution = async (value : SolutionData) : Promise<SolutionData[]> => {
+  //Déclaration de variables
+  let list_solution_updated : SolutionData[] = []
+
+  //Traitements
+
+  try {
+    const jsonValue = JSON.stringify(value);
+    await AsyncStorage.setItem(`Solution#${value.id}`, jsonValue);
+    list_solution_updated = await getAllSolutions();
+    
+
+  } catch (e) {
+        console.error("storeSolution() =>", e);
+  }
+
+  //Sorties/Affichages
+  return list_solution_updated
 
 };
 
