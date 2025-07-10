@@ -49,26 +49,6 @@ describe('SolutionDataBD', () => {
     expect(AsyncStorage.getItem).toHaveBeenCalledWith('Solution#4');
   });
 
-  test('given a SolutionData, when we remove it, then we obtains this solutionData', async () => {
-    //Mise en place
-    const solution_expected = {
-      id: 4,
-      description: 'Sois Conscient de tes émotions et de leurs déclencheurs.',
-      createdAt: new Date("2025-06-12T16:59:00.667Z")
-  };
-
-    //Action
-    const solution_deleted = await removeSolution(4);
-
-    //Check
-    expect(solution_deleted).toEqual({
-    ...solution_expected,
-    createdAt: solution_expected.createdAt?.toISOString(),
-  });
-
-  
-
-  });
 
   test('given a solutionData, when we update this, then we obtain this object updated', async () => {
     //Mise en place
@@ -147,7 +127,29 @@ describe('SolutionDataBD', () => {
 
   test('given a list of SolutionData, when we search a solution by unexisted id, then we obtain a specific message', async () => {
     
-    await expect(getSolutionById(5)).rejects.toThrow("The solution with the id 5 not found");
+    //Check
+    await expect(getSolutionById(0)).rejects.toThrow("The solution with the id 0 not found");
+  });
+
+  test('given a SolutionData, when we remove it, then we obtains this solutionData', async () => {
+    //Mise en place
+    const solution_expected = {
+      id: 4,
+      description: 'Sois Conscient de tes émotions et de leurs déclencheurs.Ressens et réflechis. ',
+      createdAt: new Date("2025-06-12T16:59:00.667Z")
+  };
+
+    //Action
+    const solution_deleted = await removeSolution(4);
+
+    //Check
+    expect(solution_deleted).toEqual({
+    ...solution_expected,
+    createdAt: solution_expected.createdAt?.toISOString(),
+  });
+
+  
+
   });
 
   

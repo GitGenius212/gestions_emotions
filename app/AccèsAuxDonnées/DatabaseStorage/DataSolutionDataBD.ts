@@ -22,7 +22,7 @@ export const storeSolution = async (value : SolutionData) : Promise<SolutionData
     
 
   } catch (e) {
-        console.error(e);
+        console.error("storeSolution() =>", e);
   }
 
   //Sorties/Affichages
@@ -124,7 +124,7 @@ export const removeSolution = async (p_id: number) => {
     await AsyncStorage.removeItem(`Solution#${p_id}`);
     return solution_toDelete;
   } catch(e) {
-    console.error(e);
+    console.error("removeSolution() => ", e);
   }
 
   console.log('Done.');
