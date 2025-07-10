@@ -78,7 +78,7 @@ export function removeSolution(id: number) : SolutionData | undefined {
   
 }
 
-export function addSolution(solution: SolutionData) : SolutionData{
+export function addSolution(solution: SolutionData) : SolutionData {
 
   //Déclaration de variables
   let new_id :number; 

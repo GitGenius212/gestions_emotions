@@ -1,6 +1,6 @@
 import SolutionData from '@/app/Domaine/Classes/SolutionData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getData, removeValue, storeData } from '../DataSolutionDataBD';
+import { getSolution, getSolutionById, removeSolution, storeSolution } from '../DataSolutionDataBD';
 
 describe('SolutionDataBD', () => {
   test('given a solutionData, when we store this, then we obtain this object', async () => {
@@ -12,8 +12,8 @@ describe('SolutionDataBD', () => {
   };
 
   //Action
-  await storeData(new_solution);
-  const solution_obtained = await getData();
+  await storeSolution(new_solution);
+  const solution_obtained = await getSolution('my-key');
 
   //Check
   expect(solution_obtained).toEqual({
@@ -24,7 +24,7 @@ describe('SolutionDataBD', () => {
 
   test('should call AsyncStorage.getItem with "my-key"', async () => {
     //Action
-    await getData();
+    await getSolution('my-key');
 
     //Check
     expect(AsyncStorage.getItem).toHaveBeenCalledWith('my-key');
@@ -39,7 +39,7 @@ describe('SolutionDataBD', () => {
   };
 
     //Action
-    const solution_deleted = await removeValue();
+    const solution_deleted = await removeSolution();
 
     //Check
     expect(solution_deleted).toEqual({
@@ -60,14 +60,74 @@ describe('SolutionDataBD', () => {
   };
 
   //Action
-  await storeData(solution_updated);
-  const solution_obtained = await getData();
+  await storeSolution(solution_updated);
+  const solution_obtained = await getSolution('my-key');
 
   //Check
   expect(solution_obtained).toEqual({
     ...solution_updated,
     createdAt: solution_updated.createdAt?.toISOString(),
   });
+  });
+
+  test('given a list of SolutionData, when we search a solution by id, then we obtain the objet of SolutionData', async () => {
+    //Mise en place
+  const solution_expected: SolutionData = {
+    id: 4,
+    description: 'Sois Conscient de tes émotions et de leurs déclencheurs.Ressens et réflechis. ',
+    createdAt: new Date("2025-06-12T16:59:00.667Z"),
+  };
+
+  //Action
+  const solution_obtained = await getSolutionById(4);
+
+  //Check
+  expect(solution_obtained).toEqual({
+    ...solution_expected,
+    createdAt: solution_expected.createdAt?.toISOString(),
+  });
+  });
+
+  test('given a solutionData, when we update this, then we obtain this object updated', async () => {
+    //Mise en place
+  const solution_updated: SolutionData = {
+    id: 4,
+    description: 'Sois Conscient de tes émotions et de leurs déclencheurs.Ressens et réflechis. ',
+    createdAt: new Date("2025-06-12T16:59:00.667Z"),
+  };
+
+  //Action
+  await storeSolution(solution_updated);
+  const solution_obtained = await getSolution('my-key');
+
+  //Check
+  expect(solution_obtained).toEqual({
+    ...solution_updated,
+    createdAt: solution_updated.createdAt?.toISOString(),
+  });
+  });
+
+  test('given a list of SolutionData, when we search a solution by id, then we obtain the objet of SolutionData', async () => {
+    //Mise en place
+  const solution_expected: SolutionData = {
+    id: 4,
+    description: 'Sois Conscient de tes émotions et de leurs déclencheurs.Ressens et réflechis. ',
+    createdAt: new Date("2025-06-12T16:59:00.667Z"),
+  };
+
+  //Action
+  const solution_obtained = await getSolutionById(4);
+
+  //Check
+  expect(solution_obtained).toEqual({
+    ...solution_expected,
+    createdAt: solution_expected.createdAt?.toISOString(),
+  });
+  });
+
+  test('given a list of SolutionData, when we search a solution by unexisted id, then we obtain a specific message', async () => {
+    
+    await expect(getSolutionById(5)).rejects.toThrow("The solution with the id 5 not found");
   });
 
 });
