@@ -5,10 +5,10 @@ import { FlatList, Keyboard, Pressable, Text, TextInput, TouchableHighlight, Tou
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
-import { addSolution, putSolution, removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
+import { addSolution, putSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
 import SolutionData from '../Domaine/Classes/SolutionData';
 import SolutionProps from '../Domaine/props/SolutionProps';
-import { getAllSolutions } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
+import { getAllSolutions, removeSolution } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
 
 
 
@@ -107,12 +107,14 @@ const SectionSolutions = () => {
         setIsInputFocused(p);
     }
       
-      const removeItem = (id: number) => {
+      const removeItem = async (id: number) => {
         
+        //Update the state of the solutions in FrontEnd
         setSolutions(solutions.filter(item => item.id !== id));
         if(id == selectedId_solution) setSelectedId_solution(undefined);
         
-        removeSolution(id);
+        //Remove the solution in the backend
+        await Promise.resolve(removeSolution(id));
         
       };
 
