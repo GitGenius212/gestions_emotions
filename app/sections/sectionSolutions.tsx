@@ -8,6 +8,7 @@ import TextArea from "@/components/TextArea";
 import { addSolution, putSolution, removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
 import SolutionData from '../Domaine/Classes/SolutionData';
 import SolutionProps from '../Domaine/props/SolutionProps';
+import { getAllSolutions } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
 
 
 
@@ -57,6 +58,21 @@ const SectionSolutions = () => {
 
 
   useEffect(() => {
+
+    async function getAllSolutionsFromBD() {
+      const result = await Promise.resolve(getAllSolutions());
+      return result;
+    }
+
+    getAllSolutionsFromBD().then((value) => {
+      const listSolutions = value;
+      setSolutions(listSolutions);
+    });
+
+
+
+
+
   const keyboardShowListener = Keyboard.addListener('keyboardDidShow', () => {
     setIsInputFocused(true);
 
