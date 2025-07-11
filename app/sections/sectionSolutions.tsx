@@ -5,10 +5,10 @@ import { FlatList, Keyboard, Pressable, Text, TextInput, TouchableHighlight, Tou
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
-import { addSolution, putSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
+import {putSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
 import SolutionData from '../Domaine/Classes/SolutionData';
 import SolutionProps from '../Domaine/props/SolutionProps';
-import { getAllSolutions, removeSolution } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
+import { getAllSolutions, removeSolution, storeSolution } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
 
 
 
@@ -23,7 +23,8 @@ const compass = <FontAwesome name="compass" size={24}/>
 const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem, setIsFocused}: SolutionProps) => (
   <TouchableOpacity onPress={onPress} style={[styles.item_solution, {backgroundColor}]}>
   <View style={styles.description_solution}>
-    <Text style={{opacity:0.4}}>{item.createdAt?.toDateString()} - {item.createdAt?.toLocaleTimeString()}</Text>
+    <Text style={{opacity:0.4}}>{new Date(item.createdAt?.toString() ?? "").toDateString()} 
+      - {new Date(item.createdAt?.toString() ?? "").toLocaleTimeString()}</Text>
     <TextInput multiline onFocus={() => setIsFocused(true)} onEndEditing={() => setIsFocused(false)} onChangeText={(text) =>  putItem(text, item)} 
     style={[{color: textColor}, styles.description_solution_text]}>{item.description}</TextInput>
   </View>
@@ -118,16 +119,16 @@ const SectionSolutions = () => {
         
       };
 
-      const addItem = (description: string) => {
+      const addItem = async (description: string) => {
         //Create an object SolutionData with this description
         let newSolution : SolutionData = {
           description
         }
         //Add this new solution to the list
-        let solution_added = addSolution(newSolution);
+        let solution_added = await Promise.resolve(storeSolution(newSolution));
 
         
-        //Update the solutions list
+        //Update the state of the solutions list
         if(solutions[0] === solution_added) {
           const new_list = solutions.toSpliced(0, 1, solution_added);
           setSolutions(new_list);
