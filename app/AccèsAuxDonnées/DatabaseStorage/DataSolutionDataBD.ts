@@ -10,14 +10,17 @@ export const storeSolution = async (value : SolutionData) : Promise<SolutionData
   //Traitements
 
   try {
-    if(value.id == undefined) {
+    
+      //Set up the object
       let new_id = await getMaximumId() + 1;
       value.id = new_id;
-    }
+    
 
+    value.createdAt = new Date();
     const jsonValue = JSON.stringify(value);
     new_solution = JSON.parse(jsonValue);
     
+
     await AsyncStorage.setItem(`Solution#${value.id}`, jsonValue);
     
 
@@ -34,7 +37,7 @@ export const storeSolution = async (value : SolutionData) : Promise<SolutionData
 //PUT
 export const putSolution = async (value : SolutionData) : Promise<SolutionData[]> => {
   //Déclaration de variables
-  let list_solution_updated : SolutionData[] = []
+  let list_solution_updated : SolutionData[] = [];
 
   //Traitements
 
