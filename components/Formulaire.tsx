@@ -1,4 +1,4 @@
-import { addPensee, deletePenseeById, getPenseeWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 import PenseeProps from '@/app/Domaine/props/PenseeProps';
 import styles from '@/app/styles';
@@ -381,7 +381,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                     addPensee(new_pensee);
 
                     //GetPenseesWithSameDate
-                    const updated_list_pensees_same_date = getPenseeWithSameDate(currentDate ?? new Date());
+                    const updated_list_pensees_same_date = getPenseesWithSameDate(currentDate ?? new Date());
                     
                     //Mettre à jour la liste des pensées contenant la même date
                     if(getPensees != undefined) {
@@ -407,7 +407,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                     deletePenseeById(currentId);
 
                     //GetPenseesWithSameDate
-                    const updated_list_pensees_same_date = getPenseeWithSameDate(currentDate ?? new Date());
+                    const updated_list_pensees_same_date = getPenseesWithSameDate(currentDate ?? new Date());
                     
                     //Mettre à jour la liste des pensées contenant la même date
                     if(getPensees != undefined) {
