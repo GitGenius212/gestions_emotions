@@ -61,14 +61,12 @@ export const putSolution = async (value : SolutionData) : Promise<SolutionData[]
 export async function getAllSolutions() : Promise<SolutionData[]> {
   //Déclaration de variables
   let solutions_datas_bd : SolutionData[] = [];
-  const keys = await getAllKeys();
+  const keys = await getAllSolutionKeys();
 
   //Traitements
   for(let key of keys) {
-    if(key.startsWith("Solution")) {
       let solution = await getSolution(key);
       solutions_datas_bd.push(solution);
-    }
   }
   //Affichages/Sorties
   return solutions_datas_bd;
@@ -94,15 +92,15 @@ export async function getSolutionById(p_id:number) : Promise<SolutionData> {
   return solutionTrouve;
 }
 
-const getAllKeys = async ()  : Promise<readonly string[]> => {
+const getAllSolutionKeys = async ()  : Promise<readonly string[]> => {
   //Déclaration de variables
   let keys = [] as readonly string[];
 
   //Traitenments
   try {
-    keys = await AsyncStorage.getAllKeys();
+    keys = (await AsyncStorage.getAllKeys()).filter(filterSolution);
   } catch(e) {
-    console.error("getAllKeys() => ", e);
+    console.error("getAllSolutionKeys() => ", e);
   }
 
   //Affichage/Sorties
@@ -110,10 +108,14 @@ const getAllKeys = async ()  : Promise<readonly string[]> => {
   
 }
 
+function filterSolution(value: string) {
+  return value.startsWith("Solution");
+}
+
 const getMaximumId = async () : Promise<number> => {
   //Déclaration de variables
   let largestId = 0;
-  const keys = await getAllKeys();
+  const keys = await getAllSolutionKeys();
 
   //Traitements
   for(let key of keys) {
@@ -131,6 +133,8 @@ const getMaximumId = async () : Promise<number> => {
 export const getSolution = async (p_myKey: string) : Promise<SolutionData> => {
   //Déclaration de variables
   let solution : SolutionData = undefined as any;
+
+  //Traitements
   try {
     const jsonValue = await AsyncStorage.getItem(p_myKey);
     solution = (jsonValue != null) ? JSON.parse(jsonValue) : null;
@@ -139,6 +143,7 @@ export const getSolution = async (p_myKey: string) : Promise<SolutionData> => {
         console.error("getSolution() => ", e);
   }
 
+  //Affichage/Sorties
   return solution;
 };
 
