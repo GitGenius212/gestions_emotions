@@ -2,7 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { getPenseesFillForm, getPenseeWithSameDate } from '../AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { getPenseesFillForm, getPenseesWithSameDate } from '../AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import CustomTextProps from '../Domaine/props/CustomTextProps';
 import PenseeProps from '../Domaine/props/PenseeProps';
 
@@ -88,7 +88,7 @@ LocaleConfig.defaultLocale = 'fr';
 
   function getPenseesByCurrentDate(p_date: Date) {
     //Déclaration de variables
-    const penseesTrouvees = getPenseeWithSameDate(p_date);
+    const penseesTrouvees = getPenseesWithSameDate(p_date);
     //Traitements
     if(getPensees != undefined) {
       getPensees(penseesTrouvees);
