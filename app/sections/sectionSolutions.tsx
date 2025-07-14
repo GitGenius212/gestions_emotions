@@ -5,10 +5,10 @@ import { FlatList, Keyboard, Pressable, Text, TextInput, TouchableHighlight, Tou
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
-import {putSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
+import {solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
 import SolutionData from '../Domaine/Classes/SolutionData';
 import SolutionProps from '../Domaine/props/SolutionProps';
-import { getAllSolutions, removeSolution, storeSolution } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
+import { getAllSolutions, removeSolution, storeSolution, putSolution } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
 
 
 
