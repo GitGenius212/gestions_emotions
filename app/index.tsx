@@ -3,7 +3,7 @@ import { LogBox, ScrollView } from "react-native";
 
 
 //Sections
-import { getPenseeWithSameDate } from './AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
+import { getPenseesWithSameDate } from './AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import PenseeData from './Domaine/Classes/PenseeData';
 import SectionDate from "./sections/sectionDate";
 import SectionPensees from "./sections/sectionPensees";
@@ -17,7 +17,7 @@ export default function Index() {
 }, []);
 
 //Déclaration de variables==========================================================================
-const [listPenseesSameDate, setListPenseesSameDate] = useState(getPenseeWithSameDate(new Date()));
+const [listPenseesSameDate, setListPenseesSameDate] = useState(getPenseesWithSameDate(new Date()));
 
 
 
