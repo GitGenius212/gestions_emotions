@@ -7,15 +7,17 @@ import PenseeData from './Domaine/Classes/PenseeData';
 import SectionDate from "./sections/sectionDate";
 import SectionPensees from "./sections/sectionPensees";
 import SectionSolutions from "./sections/sectionSolutions";
-import { getPenseesWithSameDate } from './AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
+import { clearPenseesEmpty, getPenseesWithSameDate } from './AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
 
 
 
 export default function Index() {
   React.useEffect(() => {
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    
 
     async function getPenseesFromBD() {
+          await clearPenseesEmpty();
           const result = await Promise.resolve(getPenseesWithSameDate(new Date()));
           return result;
         }

@@ -1,7 +1,5 @@
-import PenseeData from '@/app/Domaine/Classes/PenseeData';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { addPensee, deletePenseeById, getPenseesFillForm, getPenseesWithSameDate, updatePensee } from '../DatatPenseesDataBD';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
+import { addPensee, clearPenseesEmpty, deletePenseeById, getAllPensees, getPenseesFillForm, getPenseesWithSameDate, updatePensee } from '../DatatPenseesDataBD';
 
 const date = new Date();
 const unexisted_date = new Date("2025-05-05");
@@ -182,6 +180,44 @@ test('given a list of penseeData, when the user want to show all the pensee that
 
         //Check
         expect(list_pensees_fill_obtained).toEqual(list_pensee_fill_expected);
+});
+
+test('given a list of empties pensees, when the user enter in the application, then he will obtains only the pensee with Fill Form', async() => {
+        //Set up
+        const new_pensee  = {
+                        id : 0, 
+                        element_declencheur : "", 
+                        interpretation: "", 
+                        date:date, 
+                        emotions_avant: [], 
+                        contre_pensee_negative : "", 
+                        emotions_apres : [],
+                };
+
+        const list_pensee_fill_expected = [
+                        {
+                                id : 1, 
+                                element_declencheur : "Je regarde le gars pour le voir parler", 
+                                interpretation: "OOOHHHH ! Nous sommes en compétition. ", 
+                                date:date.toISOString(), 
+                                emotions_avant: ["Peur", "Colère"], 
+                                contre_pensee_negative : "", 
+                                emotions_apres : ["Joie"],
+                        }
+                ];
+        
+        await addPensee(new_pensee);
+        await addPensee(new_pensee);
+        await addPensee(new_pensee);
+
+
+        //Action
+        
+        await clearPenseesEmpty();
+        const list_pensee_obtained = await getAllPensees();
+
+        //Check
+        expect(list_pensee_obtained).toEqual(list_pensee_fill_expected); 
 });
 
 });

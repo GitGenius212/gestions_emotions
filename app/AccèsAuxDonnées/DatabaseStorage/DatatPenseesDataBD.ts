@@ -139,9 +139,41 @@ export async function getPenseesFillForm() : Promise<PenseeData[]> {
         penseesFills.push(p);
       }
   }
-  
+
   //Affichages/Sorties
   return penseesFills;
+}
+
+export async function clearPenseesEmpty() {
+  //Déclaration de variables
+  const existedListPensees = await getAllPensees();
+  const penseesEmpties : PenseeData[] = [];
+  const keys : string[] = [];
+
+  //Traitements
+
+  //1. Get the list of the empties pensees
+  for (let p of existedListPensees) {
+      if(p.element_declencheur == "" && p.contre_pensee_negative == "" && p.interpretation == "" && 
+        p.emotions_apres.length == 0 && p.emotions_avant.length == 0) {
+        penseesEmpties.push(p);
+      }
+  }
+
+  if(penseesEmpties.length > 0) {
+    for(let pe of penseesEmpties) {
+      keys.push(`Pensée#${pe.id}`);
+    }
+
+    try {
+    await AsyncStorage.multiRemove(keys);
+
+    } catch(e) {
+      console.error("clearPenseesEmpty() with multiRemove() => ", e);
+    }
+
+  }
+ 
 }
 
 //POST
