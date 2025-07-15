@@ -122,11 +122,11 @@ const SectionSolutions = () => {
       const addItem = async (description: string) => {
         //Create an object SolutionData with this description
         let newSolution : SolutionData = {
-          description
+          description, 
+          isSelected: false
         }
         //Add this new solution to the list
         let solution_added = await Promise.resolve(storeSolution(newSolution));
-
         
         //Update the state of the solutions list
         if(solutions[0] === solution_added) {
