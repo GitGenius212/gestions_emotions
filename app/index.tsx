@@ -20,7 +20,7 @@ export default function Index() {
           await clearPenseesEmpty();
           const result = await Promise.resolve(getPenseesWithSameDate(new Date()));
           return result;
-        }
+    }
     
         getPenseesFromBD().then((value) => {
           const listPensees = value;
