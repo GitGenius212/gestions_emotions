@@ -109,7 +109,7 @@ const getAllSolutionKeys = async ()  : Promise<readonly string[]> => {
 }
 
 function filterSolution(value: string) {
-  return value.startsWith("Solution");
+  return value.startsWith("Solution#");
 }
 
 const getMaximumId = async () : Promise<number> => {
