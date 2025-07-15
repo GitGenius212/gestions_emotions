@@ -1,6 +1,6 @@
 import PenseeData from '@/app/Domaine/Classes/PenseeData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } from '../DatatPenseesDataBD';
+import { addPensee, deletePenseeById, getPenseesFillForm, getPenseesWithSameDate, updatePensee } from '../DatatPenseesDataBD';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 
 const date = new Date();
@@ -162,4 +162,26 @@ test('given a pensee with an id 3, when the user delete this object, then he obt
         expect(pensee_deleted_obtained).toEqual(pensee_deleted_expected);
 
 });
+
+test('given a list of penseeData, when the user want to show all the pensee that he has fill, then he obtains a list of penseeData with some filling the pensee', async () => {
+        //Set up
+        const list_pensee_fill_expected = [
+                {
+                        id : 1, 
+                        element_declencheur : "Je regarde le gars pour le voir parler", 
+                        interpretation: "OOOHHHH ! Nous sommes en compétition. ", 
+                        date:date.toISOString(), 
+                        emotions_avant: ["Peur", "Colère"], 
+                        contre_pensee_negative : "", 
+                        emotions_apres : ["Joie"],
+                }
+        ];
+
+        //Action
+        const list_pensees_fill_obtained = await getPenseesFillForm();
+
+        //Check
+        expect(list_pensees_fill_obtained).toEqual(list_pensee_fill_expected);
+});
+
 });

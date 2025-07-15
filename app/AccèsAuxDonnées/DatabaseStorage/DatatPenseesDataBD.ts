@@ -127,6 +127,23 @@ export async function getPenseeById(p_id:number) : Promise<PenseeData> {
   return penseeTrouvee;
 }
 
+export async function getPenseesFillForm() : Promise<PenseeData[]> {
+  //Déclaration de variables
+  const penseesFills : PenseeData[] = [];
+  const existedListPensees = await getAllPensees();
+
+  //Traitements
+  for (let p of existedListPensees) {
+      if(p.element_declencheur != "" || p.contre_pensee_negative != "" || p.interpretation != "" || 
+        p.emotions_apres.length > 0 || p.emotions_avant.length > 0) {
+        penseesFills.push(p);
+      }
+  }
+  
+  //Affichages/Sorties
+  return penseesFills;
+}
+
 //POST
 export const addPensee = async (p_pensee: PenseeData) : Promise<PenseeData> => {
   //Déclaration de variables
