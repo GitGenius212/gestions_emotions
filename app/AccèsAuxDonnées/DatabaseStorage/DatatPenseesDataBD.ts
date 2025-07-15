@@ -1,4 +1,5 @@
 import PenseeData from '@/app/Domaine/Classes/PenseeData';
+import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -30,6 +31,7 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
     };
 
     pensee = await addPensee(pensee);
+    
 
     pensees_same_date.push(pensee);
   }
@@ -92,6 +94,39 @@ function filterPensees(value: string) {
   return value.startsWith("Pensée");
 }
 
+export async function getAllPensees() : Promise<PenseeData[]> {
+  //Déclaration de variables
+  let pensees_datas_bd : PenseeData[] = [];
+  const keys = await getAllPenseeKeys();
+
+  //Traitements
+  for(let key of keys) {
+      let solution = await getPensee(key);
+      pensees_datas_bd.push(solution);
+  }
+  //Affichages/Sorties
+  return pensees_datas_bd;
+}
+
+export async function getPenseeById(p_id:number) : Promise<PenseeData> {
+  //Déclaration de variables
+  const solutions_datas_bd = await getAllPensees();
+  let penseeTrouvee : PenseeData = undefined as any;
+
+  //Traitements
+  for(let s of solutions_datas_bd) {
+    if(s.id == p_id) {
+      penseeTrouvee = s;
+    }
+  }
+  
+  if(penseeTrouvee == undefined) {
+        throw new Error(`The solution with the id ${p_id} not found`);
+    }
+
+  return penseeTrouvee;
+}
+
 //POST
 export const addPensee = async (p_pensee: PenseeData) : Promise<PenseeData> => {
   //Déclaration de variables
@@ -118,26 +153,53 @@ export const addPensee = async (p_pensee: PenseeData) : Promise<PenseeData> => {
 };
 
 
-// //PUT
-// const updatePensee = async (p_pensee_params: PenseeDataOptions) : Promise<PenseeData> => {
-//   try {
-//     const jsonValue = JSON.stringify(p_pensee_params);
-//     await AsyncStorage.setItem('key', jsonValue);
-//   } catch(e) {
-//     // save error
-//   }
+//PUT
+export const updatePensee = async (p_pensee_params: PenseeDataOptions) : Promise<PenseeData> => {
+  //Déclaration de variables
+  let updated_pensee: PenseeData = undefined as any;
 
-//   console.log('Done.')
-// }
+  //Traitements
 
-// //DELETE
-// const deletePenseeById = async (p_id: number) : Promise<PenseeData> => {
-//   try {
-//     await AsyncStorage.removeItem('@MyApp_key')
-//   } catch(e) {
-//     // remove error
-//   }
+  
 
-//   console.log('Done.')
-// }
+  try {
+
+    //1. Prendre l'objet existant
+  const existedPensée = await getPenseeById(p_pensee_params.id ?? 0);
+
+    //2. Modifier l'objet selon ce qui est donné en paramètre
+    existedPensée.element_declencheur = p_pensee_params.element_declencheur ?? existedPensée.element_declencheur;
+    existedPensée.interpretation = p_pensee_params.interpretation ?? existedPensée.interpretation;
+    existedPensée.date = p_pensee_params.date ?? existedPensée.date;    
+    existedPensée.emotions_avant = p_pensee_params.emotions_avant ?? existedPensée.emotions_avant;
+    existedPensée.contre_pensee_negative = p_pensee_params.contre_pensee_negative ?? existedPensée.contre_pensee_negative;
+    existedPensée.emotions_apres = p_pensee_params.emotions_apres ?? existedPensée.emotions_apres;
+    updated_pensee = existedPensée;
+
+    const jsonValue = JSON.stringify(existedPensée);
+    await AsyncStorage.setItem(`Pensée#${p_pensee_params.id}`, jsonValue);
+
+  } catch(e) {
+    console.error("updatePensee() => ", e);
+  }
+
+  //Affichages/Sorties
+  return updated_pensee;
+}
+
+//DELETE
+export const deletePenseeById = async (p_id: number) : Promise<PenseeData> => {
+  //Déclaration de variables
+  const pensee_deleted = await getPenseeById(p_id);
+
+  //Traitements
+  try {
+    await AsyncStorage.removeItem(`Pensée#${p_id}`);
+  } catch(e) {
+    console.error("deletePenseeById() => ", e);
+  }
+
+  //Affichage/Sorties
+  return pensee_deleted;
+}
 

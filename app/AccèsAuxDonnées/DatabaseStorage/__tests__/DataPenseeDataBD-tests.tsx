@@ -1,6 +1,7 @@
 import PenseeData from '@/app/Domaine/Classes/PenseeData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { addPensee, getPenseesWithSameDate } from '../DatatPenseesDataBD';
+import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } from '../DatatPenseesDataBD';
+import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 
 const date = new Date();
 const unexisted_date = new Date("2025-05-05");
@@ -114,11 +115,51 @@ test('given a list of pensee, when the user search the pensees with a an unexist
         expect(list_pensee_obtained).toEqual(list_pensee_expected);
 });
 
-test('given a pensee, when he update the pensee, then he obtains the full pensee updated', () => {
+test('given a pensee, when he update the pensee, then he obtains the full pensee updated', async () => {
+        //Set up
+        const params_updated : PenseeDataOptions = {
+                id: 1, 
+                element_declencheur : "Je regarde le gars pour le voir parler", 
+                interpretation: "OOOHHHH ! Nous sommes en compétition. ", 
+                emotions_avant: ["Peur", "Colère"], 
+                contre_pensee_negative : "", 
+                emotions_apres : ["Joie"],
+        }
 
+        const updated_pensee_expected = {
+                id : 1, 
+                element_declencheur : "Je regarde le gars pour le voir parler", 
+                interpretation: "OOOHHHH ! Nous sommes en compétition. ", 
+                date:date.toISOString(), 
+                emotions_avant: ["Peur", "Colère"], 
+                contre_pensee_negative : "", 
+                emotions_apres : ["Joie"],
+        };
+
+        //Action
+        const updated_pensee_obtained = await updatePensee(params_updated);
+
+        //Check
+        expect(updated_pensee_obtained).toEqual(updated_pensee_expected);
 });
 
-test('given a pensee, when the user delete this object, then he obtains the pensee deleted', () => {
+test('given a pensee with an id 3, when the user delete this object, then he obtains the pensee deleted', async () => {
+        //Set up
+        const pensee_deleted_expected = {
+                id : 3, 
+                element_declencheur : "", 
+                interpretation: "", 
+                date:unexisted_date.toISOString(), 
+                emotions_avant: [], 
+                contre_pensee_negative : "", 
+                emotions_apres : [],
+            }
+
+        //Action
+        const pensee_deleted_obtained = await deletePenseeById(3);
+
+        //Check
+        expect(pensee_deleted_obtained).toEqual(pensee_deleted_expected);
 
 });
 });
