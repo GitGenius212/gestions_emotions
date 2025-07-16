@@ -4,7 +4,7 @@
     "slug": "gestions_emotions",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icons/icon.png",
+    "icon": "./assets/icons/adaptive-icon.png",
     "scheme": "gestionsemotions",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -18,8 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icons/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icons/adaptive-icon.png"
       },
       "edgeToEdgeEnabled": true
     },
