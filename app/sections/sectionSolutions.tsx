@@ -62,7 +62,6 @@ const SectionSolutions = () => {
 
     async function getAllSolutionsFromBD() {
       const result = await Promise.resolve(getAllSolutions());
-      console.log(result);
       return result;
     }
 
@@ -161,10 +160,9 @@ const SectionSolutions = () => {
           description: text, 
           id: item.id, 
           createdAt: item.createdAt, 
-          isSelected: isSelectedSol
+          isSelected: isSelectedSol ?? (selectedId_solution?.includes(item.id ?? 0))
         
         }
-        console.log("updated_solution => ", updated_solution);
 
         const indexItem = solutions.indexOf(item);
 
@@ -205,16 +203,12 @@ const SectionSolutions = () => {
                   //Delete the id from the list 
                   const list = selectedId_solution.filter((id:number) => id != item.id);
                   setSelectedId_solution(list);
-                  console.log("list => ", list);
-                  console.log("descriptionSolution => ", item.description);
                   putItem(item.description, item, !selectedId_solution?.includes(item.id ?? 0));
 
           } else {
             //Add the id in the selectedId_solution list
             const list = selectedId_solution?.toSpliced(0, 0, item.id ?? 0);
             setSelectedId_solution(list);
-            console.log("list => ", list);
-            console.log("descriptionSolution => ", item.description);
             putItem(item.description, item, !selectedId_solution?.includes(item.id ?? 0));
 
             
