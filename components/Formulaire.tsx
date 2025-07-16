@@ -1,4 +1,3 @@
-import { addPensee, deletePenseeById, getPenseeWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 import PenseeProps from '@/app/Domaine/props/PenseeProps';
 import styles from '@/app/styles';
@@ -9,6 +8,7 @@ import { Text, TouchableHighlight, View } from 'react-native';
 import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
 import PenseeData from '@/app/Domaine/Classes/PenseeData';
+import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
 
 
 const tachometer = <FontAwesome name="tachometer" size={24}/>
@@ -83,7 +83,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
 
     }
 
-    const putPensee = ({p_element_dec_text, p_interprétation_text, p_contre_pensee_negative_text,
+    const putPensee = async ({p_element_dec_text, p_interprétation_text, p_contre_pensee_negative_text,
       p_emotion_avant, p_date, p_Isselected_emotion_avant, p_emotion_apres, p_Isselected_emotion_après} : {p_element_dec_text? : string, p_interprétation_text?: string, p_contre_pensee_negative_text?: string,
       p_emotion_avant?: string, p_date? : Date, p_Isselected_emotion_avant?: boolean, p_Isselected_emotion_après?:boolean, p_emotion_apres?: string}
     ) => {
@@ -115,7 +115,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
           penseeObject.date = p_date;
         }
 
-        updatePensee(penseeObject);
+        await updatePensee(penseeObject);
       
     }
 
@@ -361,7 +361,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
 
             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
               <TouchableHighlight 
-                onPress={() => {
+                onPress={async () => {
                     const currentDate = pensee?.date;
                     const isToday = currentDate?.toISOString().split('T')[0] == new Date().toISOString().split('T')[0];
                 
@@ -378,10 +378,10 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                     };
 
                     //Ajouter la pensee dans la base de données
-                    addPensee(new_pensee);
+                    await addPensee(new_pensee);
 
                     //GetPenseesWithSameDate
-                    const updated_list_pensees_same_date = getPenseeWithSameDate(currentDate ?? new Date());
+                    const updated_list_pensees_same_date = await getPenseesWithSameDate(currentDate ?? new Date());
                     
                     //Mettre à jour la liste des pensées contenant la même date
                     if(getPensees != undefined) {
@@ -398,16 +398,16 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
             </TouchableHighlight>
 
             <TouchableHighlight 
-                onPress={() => {
+                onPress={async () => {
                     //Déclaration de variables
                     const currentDate = pensee?.date;
                     const currentId = pensee?.id ?? 0;
 
                     //Supprimer la pensee dans la base de données
-                    deletePenseeById(currentId);
+                    await deletePenseeById(currentId);
 
                     //GetPenseesWithSameDate
-                    const updated_list_pensees_same_date = getPenseeWithSameDate(currentDate ?? new Date());
+                    const updated_list_pensees_same_date = await getPenseesWithSameDate(currentDate ?? new Date());
                     
                     //Mettre à jour la liste des pensées contenant la même date
                     if(getPensees != undefined) {
@@ -418,7 +418,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                 }
                 underlayColor='#912937'
                 style={[styles.button_delete_pensee, {
-                  display: (position == 1) ? 'none' : 'flex'
+                  
                 }]}>
                   <View>
                     <Text style={styles.button_text}>Supprimer</Text>

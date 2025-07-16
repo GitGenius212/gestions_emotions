@@ -1,4 +1,4 @@
-import { deletePenseeById, findPenseeById, getPenseeByDate, getPenseesFillForm, getPenseeWithSameDate, pensée_datas, updatePensee } from "../DataBidonPenseeData";
+import { deletePenseeById, findPenseeById, getPenseeByDate, getPenseesFillForm, getPenseesWithSameDate, pensée_datas, updatePensee } from "../DataBidonPenseeData";
 
 describe('PenseeData', () => {
     test('given a list of penseeData, when the user search one by date, then he obtains the PenseeData object', () => {
@@ -88,7 +88,7 @@ describe('PenseeData', () => {
             },
         ];
         //Action
-        const pensees_obtained = getPenseeWithSameDate(new Date("2025-06-12T05:15:37.962Z"));
+        const pensees_obtained = getPenseesWithSameDate(new Date("2025-06-12T05:15:37.962Z"));
 
         //Check
         expect(pensees_obtained).toStrictEqual(expected_pensees);
@@ -145,7 +145,7 @@ describe('PenseeData', () => {
         ]
         
         
-            const pensees = getPenseeWithSameDate(date);
+            const pensees = getPenseesWithSameDate(date);
     
         
         

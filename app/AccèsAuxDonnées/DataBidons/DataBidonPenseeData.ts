@@ -144,7 +144,7 @@ export function getPenseesFillForm() : PenseeData[] {
   
 }
 
-export function getPenseeWithSameDate(date: Date) : PenseeData[] {
+export function getPenseesWithSameDate(date: Date) : PenseeData[] {
   //Déclaration de variables
   let pensees_same_date : PenseeData[] = [];
 

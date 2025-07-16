@@ -2,9 +2,9 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { getPenseesFillForm, getPenseeWithSameDate } from '../AccèsAuxDonnées/DataBidons/DataBidonPenseeData';
 import CustomTextProps from '../Domaine/props/CustomTextProps';
 import PenseeProps from '../Domaine/props/PenseeProps';
+import { getPenseesFillForm, getPenseesWithSameDate } from '../AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
 
 
 
@@ -48,15 +48,19 @@ LocaleConfig.defaultLocale = 'fr';
     // Simulate API call
     const fetchDates = async (selected_day: string) => {
       // Replace this with your actual API call
-      const fetchedDates = getPenseesFillForm();
-
+      const listFetchedDates = await getPenseesFillForm();
+      
       // Format the dates into the required object structure
       const markedDatesObject : Record<string, any> = {};
-      for(let p of fetchedDates) {
-        markedDatesObject[p.date.toISOString().split('T')[0]] = {
-          marked: true
+      for(let p of listFetchedDates) {
+        let converted_date = new Date(p.date);
+        markedDatesObject[converted_date.toISOString().split('T')[0]] = {
+          marked: true, 
+          dotColor: '#94DDBC'
         };
+        
       }
+
       markedDatesObject[selected_day] = {selected: true, selectedColor: '#94DDBC'};
       
       // Update the state with the new marked dates
@@ -86,9 +90,9 @@ LocaleConfig.defaultLocale = 'fr';
     }
   });
 
-  function getPenseesByCurrentDate(p_date: Date) {
+  async function getPenseesByCurrentDate(p_date: Date) {
     //Déclaration de variables
-    const penseesTrouvees = getPenseeWithSameDate(p_date);
+    const penseesTrouvees = await getPenseesWithSameDate(p_date);
     //Traitements
     if(getPensees != undefined) {
       getPensees(penseesTrouvees);

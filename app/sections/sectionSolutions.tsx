@@ -5,9 +5,10 @@ import { FlatList, Keyboard, Pressable, Text, TextInput, TouchableHighlight, Tou
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
-import { addSolution, putSolution, removeSolution, solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
+import {solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
 import SolutionData from '../Domaine/Classes/SolutionData';
 import SolutionProps from '../Domaine/props/SolutionProps';
+import { getAllSolutions, removeSolution, storeSolution, putSolution } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
 
 
 
@@ -22,7 +23,8 @@ const compass = <FontAwesome name="compass" size={24}/>
 const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem, setIsFocused}: SolutionProps) => (
   <TouchableOpacity onPress={onPress} style={[styles.item_solution, {backgroundColor}]}>
   <View style={styles.description_solution}>
-    <Text style={{opacity:0.4}}>{item.createdAt?.toDateString()} - {item.createdAt?.toLocaleTimeString()}</Text>
+    <Text style={{opacity:0.4}}>{new Date(item.createdAt?.toString() ?? "").toDateString()} 
+      - {new Date(item.createdAt?.toString() ?? "").toLocaleTimeString()}</Text>
     <TextInput multiline onFocus={() => setIsFocused(true)} onEndEditing={() => setIsFocused(false)} onChangeText={(text) =>  putItem(text, item)} 
     style={[{color: textColor}, styles.description_solution_text]}>{item.description}</TextInput>
   </View>
@@ -38,7 +40,7 @@ const SectionSolutions = () => {
     
     
 
-    const [selectedId_solution, setSelectedId_solution] = useState<number>();
+    const [selectedId_solution, setSelectedId_solution] = useState<number[]>();
     const [descriptionSolution, setDescriptionSolution] = React.useState('');
     const [solutions, setSolutions] = useState(solutions_datas);
     const [isInputFocused, setIsInputFocused] = useState(false);
@@ -57,6 +59,29 @@ const SectionSolutions = () => {
 
 
   useEffect(() => {
+
+    async function getAllSolutionsFromBD() {
+      const result = await Promise.resolve(getAllSolutions());
+      return result;
+    }
+
+    getAllSolutionsFromBD().then((value) => {
+      const listSolutions = value;
+      const solutionIdsSelected  : number[]= [];
+      for(let s of listSolutions) {
+        if(s.isSelected) {
+          solutionIdsSelected.push(s.id ?? 0);
+        }
+
+      }
+      setSelectedId_solution(solutionIdsSelected);
+      setSolutions(listSolutions);
+    });
+
+
+
+
+
   const keyboardShowListener = Keyboard.addListener('keyboardDidShow', () => {
     setIsInputFocused(true);
 
@@ -91,25 +116,30 @@ const SectionSolutions = () => {
         setIsInputFocused(p);
     }
       
-      const removeItem = (id: number) => {
+      const removeItem = async (p_id: number) => {
         
-        setSolutions(solutions.filter(item => item.id !== id));
-        if(id == selectedId_solution) setSelectedId_solution(undefined);
+        //Update the state of the solutions in FrontEnd
+        setSolutions(solutions.filter(item => item.id !== p_id));
+        if(selectedId_solution?.includes(p_id)) {
+          const listSelectedSolution = selectedId_solution.filter((id:number) => id != p_id);
+          setSelectedId_solution(listSelectedSolution);
+        }
         
-        removeSolution(id);
+        //Remove the solution in the backend
+        await Promise.resolve(removeSolution(p_id));
         
       };
 
-      const addItem = (description: string) => {
+      const addItem = async (description: string) => {
         //Create an object SolutionData with this description
         let newSolution : SolutionData = {
-          description
+          description, 
+          isSelected: false
         }
         //Add this new solution to the list
-        let solution_added = addSolution(newSolution);
-
+        let solution_added = await Promise.resolve(storeSolution(newSolution));
         
-        //Update the solutions list
+        //Update the state of the solutions list
         if(solutions[0] === solution_added) {
           const new_list = solutions.toSpliced(0, 1, solution_added);
           setSolutions(new_list);
@@ -123,15 +153,17 @@ const SectionSolutions = () => {
          
       }
 
-      const putItem = (text: string, item: SolutionData) => {
+      const putItem = (text: string, item: SolutionData, isSelectedSol?: boolean) => {
        
        //Déclaration de variables
        let updated_solution : SolutionData = {
           description: text, 
           id: item.id, 
-          createdAt: item.createdAt
-
+          createdAt: item.createdAt, 
+          isSelected: isSelectedSol ?? (selectedId_solution?.includes(item.id ?? 0))
+        
         }
+
         const indexItem = solutions.indexOf(item);
 
         //Traitements
@@ -153,7 +185,7 @@ const SectionSolutions = () => {
             color = '#C84630';  //orange
           }
       
-          if(item.id == selectedId_solution) {
+          if(selectedId_solution?.includes(item.id)) {
             backgroundColor = '#898989';  //full gray
             color = 'white';
           }
@@ -167,10 +199,19 @@ const SectionSolutions = () => {
           <Solution
             item={item}
             onPress={() => {
-                if (selectedId_solution === item.id) {
-            setSelectedId_solution(undefined);
+                if (selectedId_solution?.includes(item.id ?? 0)) {
+                  //Delete the id from the list 
+                  const list = selectedId_solution.filter((id:number) => id != item.id);
+                  setSelectedId_solution(list);
+                  putItem(item.description, item, !selectedId_solution?.includes(item.id ?? 0));
+
           } else {
-            setSelectedId_solution(item.id);
+            //Add the id in the selectedId_solution list
+            const list = selectedId_solution?.toSpliced(0, 0, item.id ?? 0);
+            setSelectedId_solution(list);
+            putItem(item.description, item, !selectedId_solution?.includes(item.id ?? 0));
+
+            
           }
               }
             }

@@ -45,7 +45,7 @@ return {exists, data, index}
   
 }
 
-export function putSolution(solution: SolutionData) {
+export function putSolution(solution: SolutionData) : SolutionData[] {
 
   if(!solutions_datas.find(s => s.id == solution.id)) 
     throw new Error(`The solution with this id ${solution.id} not found`);
@@ -78,7 +78,7 @@ export function removeSolution(id: number) : SolutionData | undefined {
   
 }
 
-export function addSolution(solution: SolutionData) : SolutionData{
+export function addSolution(solution: SolutionData) : SolutionData {
 
   //Déclaration de variables
   let new_id :number; 
