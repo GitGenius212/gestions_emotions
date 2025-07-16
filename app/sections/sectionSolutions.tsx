@@ -40,7 +40,7 @@ const SectionSolutions = () => {
     
     
 
-    const [selectedId_solution, setSelectedId_solution] = useState<number>();
+    const [selectedId_solution, setSelectedId_solution] = useState<number[]>();
     const [descriptionSolution, setDescriptionSolution] = React.useState('');
     const [solutions, setSolutions] = useState(solutions_datas);
     const [isInputFocused, setIsInputFocused] = useState(false);
@@ -62,11 +62,20 @@ const SectionSolutions = () => {
 
     async function getAllSolutionsFromBD() {
       const result = await Promise.resolve(getAllSolutions());
+      console.log(result);
       return result;
     }
 
     getAllSolutionsFromBD().then((value) => {
       const listSolutions = value;
+      const solutionIdsSelected  : number[]= [];
+      for(let s of listSolutions) {
+        if(s.isSelected) {
+          solutionIdsSelected.push(s.id ?? 0);
+        }
+
+      }
+      setSelectedId_solution(solutionIdsSelected);
       setSolutions(listSolutions);
     });
 
@@ -108,14 +117,17 @@ const SectionSolutions = () => {
         setIsInputFocused(p);
     }
       
-      const removeItem = async (id: number) => {
+      const removeItem = async (p_id: number) => {
         
         //Update the state of the solutions in FrontEnd
-        setSolutions(solutions.filter(item => item.id !== id));
-        if(id == selectedId_solution) setSelectedId_solution(undefined);
+        setSolutions(solutions.filter(item => item.id !== p_id));
+        if(selectedId_solution?.includes(p_id)) {
+          const listSelectedSolution = selectedId_solution.filter((id:number) => id != p_id);
+          setSelectedId_solution(listSelectedSolution);
+        }
         
         //Remove the solution in the backend
-        await Promise.resolve(removeSolution(id));
+        await Promise.resolve(removeSolution(p_id));
         
       };
 
@@ -142,15 +154,18 @@ const SectionSolutions = () => {
          
       }
 
-      const putItem = (text: string, item: SolutionData) => {
+      const putItem = (text: string, item: SolutionData, isSelectedSol?: boolean) => {
        
        //Déclaration de variables
        let updated_solution : SolutionData = {
           description: text, 
           id: item.id, 
-          createdAt: item.createdAt
-
+          createdAt: item.createdAt, 
+          isSelected: isSelectedSol
+        
         }
+        console.log("updated_solution => ", updated_solution);
+
         const indexItem = solutions.indexOf(item);
 
         //Traitements
@@ -172,7 +187,7 @@ const SectionSolutions = () => {
             color = '#C84630';  //orange
           }
       
-          if(item.id == selectedId_solution) {
+          if(selectedId_solution?.includes(item.id)) {
             backgroundColor = '#898989';  //full gray
             color = 'white';
           }
@@ -186,10 +201,23 @@ const SectionSolutions = () => {
           <Solution
             item={item}
             onPress={() => {
-                if (selectedId_solution === item.id) {
-            setSelectedId_solution(undefined);
+                if (selectedId_solution?.includes(item.id ?? 0)) {
+                  //Delete the id from the list 
+                  const list = selectedId_solution.filter((id:number) => id != item.id);
+                  setSelectedId_solution(list);
+                  console.log("list => ", list);
+                  console.log("descriptionSolution => ", item.description);
+                  putItem(item.description, item, !selectedId_solution?.includes(item.id ?? 0));
+
           } else {
-            setSelectedId_solution(item.id);
+            //Add the id in the selectedId_solution list
+            const list = selectedId_solution?.toSpliced(0, 0, item.id ?? 0);
+            setSelectedId_solution(list);
+            console.log("list => ", list);
+            console.log("descriptionSolution => ", item.description);
+            putItem(item.description, item, !selectedId_solution?.includes(item.id ?? 0));
+
+            
           }
               }
             }
