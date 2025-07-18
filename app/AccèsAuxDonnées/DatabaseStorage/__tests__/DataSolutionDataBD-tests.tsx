@@ -148,5 +148,35 @@ describe('SolutionDataBD', () => {
   //Check
   expect(solution_obtained).toEqual(solution_expected);
   });
+
+  test('given a list of PenseeData, when wesearch all solutions, then we obtains a list of solutions sorted by id from bigger to smaller', async () => {
+      //Set up
+      const new_solution: SolutionData = {
+        description: 'Test2',
+      };
+
+      await storeSolution(new_solution);
+
+      const date_id_1 = (await getSolutionById(1)).createdAt;
+
+      const list_expected = [
+        {
+          id: 2, 
+          description: 'Test2',
+          createdAt : new Date().toISOString()
+        }, 
+        
+        {
+          id: 1, 
+          description: 'Sois Conscient de tes émotions et de leurs déclencheurs.',
+          createdAt : date_id_1
+        }
+      ];
+      //Action
+      const listObtained = await getAllSolutions();
+
+      //Check
+      expect(listObtained).toEqual(list_expected);
+  });
   
 });

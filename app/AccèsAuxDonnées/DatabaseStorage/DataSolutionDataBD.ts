@@ -68,6 +68,11 @@ export async function getAllSolutions() : Promise<SolutionData[]> {
       let solution = await getSolution(key);
       solutions_datas_bd.push(solution);
   }
+
+  if(solutions_datas_bd.length > 0) {
+    solutions_datas_bd.sort(function(a, b){return (b.id?? 0) - (a.id ?? 0) });
+  }
+
   //Affichages/Sorties
   return solutions_datas_bd;
 }

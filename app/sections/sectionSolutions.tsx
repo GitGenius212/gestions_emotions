@@ -1,7 +1,7 @@
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
-import { FlatList, Keyboard, Pressable, Text, TextInput, TouchableHighlight, TouchableOpacity, View } from 'react-native';
+import { FlatList, Keyboard, Pressable, Text, TextInput, TouchableHighlight, TouchableOpacity, useColorScheme, View } from 'react-native';
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
@@ -44,7 +44,8 @@ const SectionSolutions = () => {
     const [descriptionSolution, setDescriptionSolution] = React.useState('');
     const [solutions, setSolutions] = useState(solutions_datas);
     const [isInputFocused, setIsInputFocused] = useState(false);
-
+    let colorScheme = useColorScheme();
+      
     useEffect(() => {
   const keyboardHideListener = Keyboard.addListener('keyboardDidHide', () => {
     setIsInputFocused(false);
@@ -235,7 +236,7 @@ const SectionSolutions = () => {
           paddingHorizontal: 20,
           paddingVertical: 15,
            
-          backgroundColor:'beige'
+          backgroundColor:(colorScheme === 'dark') ? '#7b7b6e' : 'beige'
         }}
         >
             <Text style={styles.h1}>
@@ -279,6 +280,6 @@ const SectionSolutions = () => {
   )
 }
 
-export default SectionSolutions
+export default SectionSolutions;
 
 

@@ -1,10 +1,10 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { getPenseesFillForm, getPenseesWithSameDate } from '../AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
 import CustomTextProps from '../Domaine/props/CustomTextProps';
 import PenseeProps from '../Domaine/props/PenseeProps';
-import { getPenseesFillForm, getPenseesWithSameDate } from '../AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
 
 
 
@@ -39,6 +39,7 @@ LocaleConfig.defaultLocale = 'fr';
   const [isToday, setIsToday] = useState(true);  
   const [isPressedCalendar, setIsPressedCalendar] = useState(false);
   const [markedDatesPenseesFill, setMarkedDatesPenseesFill] = useState({});
+  let colorScheme = useColorScheme();
 
 
   useEffect(() => {
@@ -137,33 +138,54 @@ LocaleConfig.defaultLocale = 'fr';
     modificationIsToday(t.toISOString().split('T')[0]);
   }
 
+  function setBackgroundIcon() : string {
+    if(colorScheme === 'dark') {
+      return isPressedCalendar ? '#606b8c' : '#1D3D47';
+    } else {
+      return isPressedCalendar ? 'rgba(3,4, 64, 0.8)' : 'white'
+
+    }
+  }
+
+  function setColorIcon() : string{
+    if(colorScheme == 'dark') {
+      return isPressedCalendar ? 'white' : '#606b8c';
+    } else {
+      return isPressedCalendar ? 'white' : "#03045E"
+
+    }
+  }
+
   return (
-    <View style={{paddingHorizontal: 30, paddingTop:75}}>
+    <View style={{paddingHorizontal: 30, paddingTop:75, backgroundColor: (colorScheme === 'dark') ? '#1D3D47' : ''}}>
       <View style={{position:'absolute', right:20, top:50}}>
         <TouchableOpacity
         style={{
-          backgroundColor:isPressedCalendar ? 'rgba(3,4, 64, 0.8)' : 'white', 
+          backgroundColor: setBackgroundIcon(), 
           padding:5, 
           borderRadius:60
         }}
         onPress={() => setIsPressedCalendar(!isPressedCalendar)}>
-            <FontAwesome name="calendar" size={24} color={isPressedCalendar ? 'white' : "#03045E"} />
+            <FontAwesome name="calendar" size={24} color={setColorIcon()} />
         </TouchableOpacity>
         
       </View>
 
-      <Calendar  style={{marginTop:15, display:isPressedCalendar ? 'flex' : 'none'}}
+      <Calendar  
+      key={colorScheme}
+      style={{marginTop:15, display:isPressedCalendar ? 'flex' : 'none', backgroundColor:(colorScheme === 'dark') ? '#1D3D47' : 'white'}}
           initialDate={date.toISOString().split('T')[0]}
           theme={{
-            arrowColor:'#03045E',
+            arrowColor:(colorScheme === 'dark') ? '#606b8c' : '#03045E',
             textMonthFontSize:24,  
-            backgroundColor: '#ffffff',
-            calendarBackground: '#ffffff',
-            textSectionTitleColor: '#b6c1cd',
+            calendarBackground: (colorScheme === 'dark') ? '#1D3D47' : 'white',
+            textSectionTitleColor: (colorScheme === 'dark') ? 'white': '#b6c1cd',
+            textDisabledColor: 'grey', 
             selectedDayBackgroundColor: '#00adf5',
             selectedDayTextColor: '#ffffff',
             todayTextColor: '#C84630',
-            dayTextColor: '#2d4150',
+            dayTextColor: (colorScheme === 'dark') ? 'white': '#2d4150',
+            monthTextColor: (colorScheme === 'dark') ? 'white' : 'black'
             
           }}
           markedDates= {
@@ -188,16 +210,16 @@ LocaleConfig.defaultLocale = 'fr';
             gotoYesterday()
           }
         }>
-          <Text style={{fontSize:50, color:"#03045E"}}>&larr;</Text>
+          <Text style={{fontSize:50, color:(colorScheme === 'dark') ? '#606b8c': "#03045E"}}>&larr;</Text>
         </TouchableOpacity>
         </View>
         
 
         <View style={{ flex: 1, alignItems: "center"}}>
 
-            <Text style={{fontSize: 24, fontWeight: "bold", marginTop: 10}}>Date</Text>
+            <Text style={{fontSize: 24, fontWeight: "bold", marginTop: 10, color:(colorScheme === 'dark') ? 'white' : ''}}>Date</Text>
 
-            <Text style={{fontSize: 18, marginBottom: isToday? 5 : 15}}>{date.toISOString().split('T')[0]}</Text>
+            <Text style={{fontSize: 18, marginBottom: isToday? 5 : 15, color:(colorScheme === 'dark') ? 'white' : ''}}>{date.toISOString().split('T')[0]}</Text>
 
             <CustomText 
             style_aujourdhui={style.aujourdhui}
@@ -210,7 +232,7 @@ LocaleConfig.defaultLocale = 'fr';
             gotoTomorrow();
           }
         }>
-          <Text  style={{fontSize:50, color:"#03045E"}}>&rarr;</Text>
+          <Text  style={{fontSize:50, color:(colorScheme === 'dark') ? '#606b8c':"#03045E"}}>&rarr;</Text>
         </TouchableOpacity>
 
         </View>
@@ -222,4 +244,4 @@ LocaleConfig.defaultLocale = 'fr';
   )
 }
 
-export default SectionDate
+export default SectionDate;
