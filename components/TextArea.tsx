@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, TextInput, View } from 'react-native';
+import {TextInput, View } from 'react-native';
 
 interface Props {
   placeholder: string;
@@ -7,9 +7,10 @@ interface Props {
   icons?: any;
   description: string;
   onChangeDescription : any;
+  padding_left: number
 }
 
-const TextArea = ({placeholder, onPress, icons, description, onChangeDescription}: Props) => {
+const TextArea = ({placeholder, onPress, icons, padding_left, description, onChangeDescription}: Props) => {
   return (
     <View 
     style={{
@@ -23,14 +24,8 @@ const TextArea = ({placeholder, onPress, icons, description, onChangeDescription
         
     }}
     >
-      <Image source={icons} style={{
-        width:20, 
-        height:20,
-        position: 'absolute',
-        top:11, 
-        left: 8,
-        
-        }} resizeMode='contain' />
+      {icons}
+
       <TextInput 
         onPress={onPress}
         value={description}
@@ -47,7 +42,7 @@ const TextArea = ({placeholder, onPress, icons, description, onChangeDescription
           paddingTop: 10,
           width: '100%',
           borderRadius: 10,
-          paddingLeft: 35,
+          paddingLeft:padding_left,
         }}
       />
     </View>
