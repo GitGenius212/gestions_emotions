@@ -2,16 +2,12 @@ import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 import PenseeProps from '@/app/Domaine/props/PenseeProps';
 import styles from '@/app/styles';
 import { icons } from '@/constants/icons';
-import { FontAwesome } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
 import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
 import PenseeData from '@/app/Domaine/Classes/PenseeData';
 import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
-
-
-const tachometer = <FontAwesome name="tachometer" size={24}/>
 
 const Formulaire = ({pensee, position, getPensees} : PenseeProps) => {
 
@@ -154,7 +150,8 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
             </Text>
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
-              <TextArea placeholder='Élément déclencheur' 
+              <TextArea placeholder='Élément déclencheur'
+              padding_left={32} 
               description={element_dec ?? ""}
               onChangeDescription={ (text : string) => {
                 putPensee({p_element_dec_text: text});
@@ -162,10 +159,11 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                 
                 }
               }
-              icons={icons.element_dec}/>
+              icons={icons.lightningBolt}/>
 
                 <TextArea 
                 placeholder='Pensée négative'
+                padding_left={43}
                 description={interprétation ?? ""}
                 onChangeDescription={ (text:string) => {
                   putPensee({p_interprétation_text: text});
@@ -175,11 +173,11 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                   
                 }
                 
-                icons={icons.pensee_negative}
+                icons={icons.message_processing}
                 />
 
 
-                <Text style={styles.h1}>{tachometer} Émotions </Text>
+                <Text style={styles.h1}>{icons.tachometer} Émotions :</Text>
 
                 <CustomCheckbox 
                   checked={isSelected_peur_avant} 
@@ -265,6 +263,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
 
                 <TextArea 
                 placeholder='Contre-Pensée négative'
+                padding_left={43}
                 description={contre_pensee_negative ?? ""}
                 onChangeDescription={ (text: string) => {
                   putPensee({p_contre_pensee_negative_text: text});
@@ -272,10 +271,10 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
             
                   }
                 }
-                icons={icons.pensee_negative}
+                icons={icons.message_processing}
                 />
 
-                <Text style={[styles.h1, {fontSize:22}]}>{tachometer} Après ma contre-pensée : </Text>
+                <Text style={[styles.h1, {fontSize:22}]}>{icons.tachometer} Après ma contre-pensée : </Text>
 
                 
                 <CustomCheckbox 

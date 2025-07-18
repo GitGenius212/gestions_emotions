@@ -1,5 +1,6 @@
 import { icons } from '@/constants/icons';
 import { FontAwesome } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Keyboard, Pressable, Text, TextInput, TouchableHighlight, TouchableOpacity, useColorScheme, View } from 'react-native';
 import styles from '../styles';
@@ -9,15 +10,6 @@ import {solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutio
 import SolutionData from '../Domaine/Classes/SolutionData';
 import SolutionProps from '../Domaine/props/SolutionProps';
 import { getAllSolutions, removeSolution, storeSolution, putSolution } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
-
-
-
-const compass = <FontAwesome name="compass" size={24}/>
-
-
-
-
-
 
 
 const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem, setIsFocused}: SolutionProps) => (
@@ -240,14 +232,15 @@ const SectionSolutions = () => {
         }}
         >
             <Text style={styles.h1}>
-              {compass} Solutions
+              {icons.compass} Solutions
             </Text>
 
             <TextArea 
                   description={descriptionSolution}
                   onChangeDescription={setDescriptionSolution}
                   placeholder='Solutions'
-                  icons={icons.solution}
+                  icons={icons.lightBulb_on}
+                  padding_left={40}
             />
 
 
