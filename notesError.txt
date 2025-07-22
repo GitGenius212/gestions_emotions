@@ -1,0 +1,17 @@
+//Problems with development build
+
+1. Supprimer nodes-modules
+
+2. npm install
+
+3. Restart TS Server (CTRL-P)
+
+4. Upgarde expo-sdk
+
+
+Bundletool: https://github.com/google/bundletool/releases + https://www.youtube.com/watch?v=IRosxRo7R8o
+
+keytool -genkeypair -v -keystore monkeystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias monalias
+
+java -jar "C:\Users\hp\Desktop\test\Test\bundletool-all-1.18.1.jar" build-apks --bundle="C:\Users\hp\Desktop\test\Test\application-6d4f390a-0694-46d5-ba05-e061da25f813.aab" --output="C:\Users\hp\Desktop\test\Test\Serenia.apks" --mode=universal --ks="C:\Users\hp\Desktop\test\Test\monkeystore.jks" --ks-key-alias=monalias
+Enter keystore password:
