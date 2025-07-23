@@ -1,6 +1,4 @@
 import { icons } from '@/constants/icons';
-import { FontAwesome } from '@expo/vector-icons';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import React, { useEffect, useState } from 'react';
 import { FlatList, Keyboard, Pressable, Text, TextInput, TouchableHighlight, TouchableOpacity, useColorScheme, View } from 'react-native';
 import styles from '../styles';
