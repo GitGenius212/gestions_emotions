@@ -143,6 +143,8 @@ const SectionSolutions = () => {
           
           
         }
+        //Clear the textArea Solution
+        setDescriptionSolution("");
          
       }
 
