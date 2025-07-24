@@ -44,6 +44,28 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
 
 
 //Functions
+function getDateFromLocaleDate(): Date {
+    //Déclaration de variables
+    const localStringDate = new Date().toLocaleString();
+    const date :string = localStringDate.split(",")[0];
+    const now = new Date();
+
+    //Traitements
+    const year = parseInt(date.split("/")[2]);
+    const month = parseInt(date.split("/")[0]);
+    const day = parseInt(date.split("/")[1]);    
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    const date_from_locale_string = new Date(year, month-1, day, hours, minutes, seconds);
+
+    //Sorties/Affichages
+    return date_from_locale_string;
+    
+  }
+
+
   const updateEmotionsAvant = (emotion:string, selected : boolean) : string[] => {
       //Déclaration de variables
       const newArrayEmotionsAvant  = listEmotions_avant ? listEmotions_avant.slice() : [];
@@ -119,8 +141,8 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
       
       //Déclaration de variables
       const isTimeHasOnly0 = p_date?.toISOString().split('T')[1].startsWith("00:00:00");
-      const isToday = p_date?.toISOString().split('T')[0] == new Date().toISOString().split('T')[0];
-      const new_date_today = new Date();
+      const isToday = p_date?.toISOString().split('T')[0] == getDateFromLocaleDate().toISOString().split('T')[0];
+      const new_date_today = getDateFromLocaleDate();
       
       //Traitements
       if(!isTimeHasOnly0) { //Si le temps commence par 00:00:00
@@ -362,7 +384,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
               <TouchableHighlight 
                 onPress={async () => {
                     const currentDate = pensee?.date;
-                    const isToday = currentDate?.toISOString().split('T')[0] == new Date().toISOString().split('T')[0];
+                    const isToday = currentDate?.toISOString().split('T')[0] == getDateFromLocaleDate().toISOString().split('T')[0];
                 
                 
                     //Créer un nouvel objet avec la même date
@@ -370,7 +392,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                       id : 0, 
                       element_declencheur : "", 
                       interpretation: "", 
-                      date: isToday ? new Date() : new Date(currentDate?.toISOString().split('T')[0] ?? new Date()), 
+                      date: isToday ? getDateFromLocaleDate() : new Date(currentDate?.toISOString().split('T')[0] ?? getDateFromLocaleDate()), 
                       emotions_avant: [], 
                       contre_pensee_negative : "", 
                       emotions_apres : [],
@@ -380,7 +402,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                     await addPensee(new_pensee);
 
                     //GetPenseesWithSameDate
-                    const updated_list_pensees_same_date = await getPenseesWithSameDate(currentDate ?? new Date());
+                    const updated_list_pensees_same_date = await getPenseesWithSameDate(currentDate ?? getDateFromLocaleDate());
                     
                     //Mettre à jour la liste des pensées contenant la même date
                     if(getPensees != undefined) {
@@ -406,7 +428,7 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                     await deletePenseeById(currentId);
 
                     //GetPenseesWithSameDate
-                    const updated_list_pensees_same_date = await getPenseesWithSameDate(currentDate ?? new Date());
+                    const updated_list_pensees_same_date = await getPenseesWithSameDate(currentDate ?? getDateFromLocaleDate());
                     
                     //Mettre à jour la liste des pensées contenant la même date
                     if(getPensees != undefined) {

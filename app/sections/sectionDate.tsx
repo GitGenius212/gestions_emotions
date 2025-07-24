@@ -35,24 +35,42 @@ LocaleConfig.defaultLocale = 'fr';
 
  const SectionDate = ({getPensees} : PenseeProps) => {
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(getDateFromLocaleDate());
   const [isToday, setIsToday] = useState(true);  
   const [isPressedCalendar, setIsPressedCalendar] = useState(false);
   const [markedDatesPenseesFill, setMarkedDatesPenseesFill] = useState({});
   let colorScheme = useColorScheme();
 
 
+  function getDateFromLocaleDate(): Date {
+    //Déclaration de variables
+    const localStringDate = new Date().toLocaleString();
+    const date :string = localStringDate.split(",")[0];
+    const now = new Date();
+    
+    //Traitements
+    const year = parseInt(date.split("/")[2]);
+    const month = parseInt(date.split("/")[0]);
+    const day = parseInt(date.split("/")[1]);    
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    const date_from_locale_string = new Date(year, month-1, day, hours, minutes, seconds);
+
+    //Sorties/Affichages
+    return date_from_locale_string;
+  }
+
   useEffect(() => {
     fetchDates(date.toISOString().split('T')[0]);
   }, []);
 
-    // Simulate API call
+
     const fetchDates = async (selected_day: string) => {
-      // Replace this with your actual API call
       const listFetchedDates = await getPenseesFillForm();
-      
-      // Format the dates into the required object structure
       const markedDatesObject : Record<string, any> = {};
+      
       for(let p of listFetchedDates) {
         let converted_date = new Date(p.date);
         markedDatesObject[converted_date.toISOString().split('T')[0]] = {
@@ -111,7 +129,7 @@ LocaleConfig.defaultLocale = 'fr';
     dateObtained = new Date(dateObtained);
     
     //Traitements
-    if(new Date().toISOString().split('T')[0] == p_date) {
+    if(getDateFromLocaleDate().toISOString().split('T')[0] == p_date) {
         setIsToday(true);
     } else {
         setIsToday(false);
