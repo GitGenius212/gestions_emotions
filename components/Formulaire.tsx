@@ -3,7 +3,7 @@ import PenseeProps from '@/app/Domaine/props/PenseeProps';
 import styles from '@/app/styles';
 import { icons } from '@/constants/icons';
 import React, { useState } from 'react';
-import { Text, TouchableHighlight, View } from 'react-native';
+import { Text, TextInput, TouchableHighlight, View } from 'react-native';
 import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
 import PenseeData from '@/app/Domaine/Classes/PenseeData';
@@ -165,11 +165,12 @@ function getDateFromLocaleDate(): Date {
   
   return (
     <View style={{marginBottom:10}}>
-            <Text style={{marginBottom:10}}>
+      <View style={{flexDirection:'row'}}>
               <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Penséé #{position} </Text>
               <Text style={styles.h1}>:</Text>
-              <Text style={{fontSize:24, color:"rgba(255,255,255, 1.0)",}}> {getTimePensee(pensee?.date)}</Text>
-            </Text>
+              <TextInput style={{fontSize:24, paddingTop:0, color:"rgba(255,255,255, 1.0)"}}> {getTimePensee(pensee?.date)}</TextInput>
+      </View>
+            
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
               <TextArea placeholder='Élément déclencheur'
