@@ -166,7 +166,7 @@ function getDateFromLocaleDate(): Date {
   return (
     <View style={{marginBottom:10}}>
       <View style={{flexDirection:'row'}}>
-              <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Penséé #{position} </Text>
+              <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Pensée #{position} </Text>
               <Text style={styles.h1}>:</Text>
               <TextInput 
               style={{
