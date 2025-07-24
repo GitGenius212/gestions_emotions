@@ -168,7 +168,15 @@ function getDateFromLocaleDate(): Date {
       <View style={{flexDirection:'row'}}>
               <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Penséé #{position} </Text>
               <Text style={styles.h1}>:</Text>
-              <TextInput style={{fontSize:24, paddingTop:0, color:"rgba(255,255,255, 1.0)"}}> {getTimePensee(pensee?.date)}</TextInput>
+              <TextInput 
+              style={{
+                fontSize:24, 
+                paddingTop:0, 
+                width:110, 
+                color:"rgba(255,255,255, 1.0)",
+                }}> 
+                  {getTimePensee(pensee?.date)}
+              </TextInput>
       </View>
             
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
