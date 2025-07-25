@@ -8,6 +8,7 @@ import SectionDate from "./sections/sectionDate";
 import SectionPensees from "./sections/sectionPensees";
 import SectionSolutions from "./sections/sectionSolutions";
 import { clearPenseesEmpty, getPenseesWithSameDate } from './AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
+import { getDateFromLocaleDate } from './functions';
 
 
 
@@ -18,7 +19,7 @@ export default function Index() {
 
     async function getPenseesFromBD() {
           await clearPenseesEmpty();
-          const result = await Promise.resolve(getPenseesWithSameDate(new Date()));
+          const result = await Promise.resolve(getPenseesWithSameDate(getDateFromLocaleDate()));
           return result;
     }
     

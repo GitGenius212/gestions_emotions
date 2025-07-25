@@ -8,6 +8,7 @@ import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
 import PenseeData from '@/app/Domaine/Classes/PenseeData';
 import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
+import { getDateFromLocaleDate } from '@/app/functions';
 
 const Formulaire = ({pensee, position, getPensees} : PenseeProps) => {
 
@@ -44,27 +45,6 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
 
 
 //Functions
-function getDateFromLocaleDate(): Date {
-    //Déclaration de variables
-    const localStringDate = new Date().toLocaleString();
-    const date :string = localStringDate.split(",")[0];
-    const now = new Date();
-
-    //Traitements
-    const year = parseInt(date.split("/")[2]);
-    const month = parseInt(date.split("/")[0]);
-    const day = parseInt(date.split("/")[1]);    
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
-
-    const date_from_locale_string = new Date(year, month-1, day, hours, minutes, seconds);
-
-    //Sorties/Affichages
-    return date_from_locale_string;
-    
-  }
-
 
   const updateEmotionsAvant = (emotion:string, selected : boolean) : string[] => {
       //Déclaration de variables

@@ -5,6 +5,7 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { getPenseesFillForm, getPenseesWithSameDate } from '../AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
 import CustomTextProps from '../Domaine/props/CustomTextProps';
 import PenseeProps from '../Domaine/props/PenseeProps';
+import { getDateFromLocaleDate } from '../functions';
 
 
 
@@ -42,25 +43,6 @@ LocaleConfig.defaultLocale = 'fr';
   let colorScheme = useColorScheme();
 
 
-  function getDateFromLocaleDate(): Date {
-    //Déclaration de variables
-    const localStringDate = new Date().toLocaleString();
-    const date :string = localStringDate.split(",")[0];
-    const now = new Date();
-    
-    //Traitements
-    const year = parseInt(date.split("/")[2]);
-    const month = parseInt(date.split("/")[0]);
-    const day = parseInt(date.split("/")[1]);    
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const seconds = now.getSeconds();
-
-    const date_from_locale_string = new Date(year, month-1, day, hours, minutes, seconds);
-
-    //Sorties/Affichages
-    return date_from_locale_string;
-  }
 
   useEffect(() => {
     fetchDates(date.toISOString().split('T')[0]);
