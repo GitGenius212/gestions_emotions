@@ -1,14 +1,14 @@
+import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
+import PenseeData from '@/app/Domaine/Classes/PenseeData';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 import PenseeProps from '@/app/Domaine/props/PenseeProps';
+import { getDateFromLocaleDate } from '@/app/functions';
 import styles from '@/app/styles';
 import { icons } from '@/constants/icons';
 import React, { useState } from 'react';
 import { Text, TextInput, TouchableHighlight, View } from 'react-native';
 import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
-import PenseeData from '@/app/Domaine/Classes/PenseeData';
-import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
-import { getDateFromLocaleDate } from '@/app/functions';
 
 const Formulaire = ({pensee, position, getPensees} : PenseeProps) => {
 
@@ -43,6 +43,7 @@ const [contre_pensee_negative, setContre_pensee_negative] = useState(pensee?.con
 const [listEmotions_avant, setListEmotions_avant] = useState(pensee?.emotions_avant);
 const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_apres);
 
+const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sélection de l'item dans la liste
 
 //Functions
 
@@ -154,9 +155,23 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
                 paddingTop:0, 
                 width:110, 
                 color:"rgba(255,255,255, 1.0)",
-                }}> 
-                  {getTimePensee(pensee?.date)}
-              </TextInput>
+                }}
+                value={heures}
+                onChangeText={(text : string) => {
+                  setHeures(text);
+                  if(text.length === 8) {
+                        // Regex pour valider le format HH:MM:SS
+                        // Heures: 00-23, Minutes: 00-59, Secondes: 00-59
+                        const timeRegex = /^([01]?\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
+                        
+                        if(timeRegex.test(text)) {
+                          console.log("Heures valides:", text);
+                        } else {
+                          console.log("Format d'heure invalide:", text);
+                        }
+                  }
+                }}
+              />
       </View>
             
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
