@@ -3,12 +3,12 @@ import { LogBox, ScrollView } from "react-native";
 
 
 //Sections
+import { clearPenseesEmpty, getPenseesWithSameDate } from './AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
 import PenseeData from './Domaine/Classes/PenseeData';
+import { getDateFromLocaleDate } from '@/app/functions';
 import SectionDate from "./sections/sectionDate";
 import SectionPensees from "./sections/sectionPensees";
 import SectionSolutions from "./sections/sectionSolutions";
-import { clearPenseesEmpty, getPenseesWithSameDate } from './AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
-import { getDateFromLocaleDate } from './functions';
 
 
 

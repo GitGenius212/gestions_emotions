@@ -5,7 +5,8 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { getPenseesFillForm, getPenseesWithSameDate } from '../AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
 import CustomTextProps from '../Domaine/props/CustomTextProps';
 import PenseeProps from '../Domaine/props/PenseeProps';
-import { getDateFromLocaleDate } from '../functions';
+import { getDateFromLocaleDate } from '@/app/functions';
+
 
 
 
