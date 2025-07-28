@@ -119,27 +119,9 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
     }
 
     function getTimePensee(p_date : Date | undefined) {
-      //Déclaration de variables
-      const isTimeHasOnly0 = p_date?.toISOString().split('T')[1].startsWith("00:00:00");
-      const isToday = p_date?.toISOString().split('T')[0] == getDateFromLocaleDate().toISOString().split('T')[0];
-      const new_date_today = getDateFromLocaleDate();
-      
-      //Traitements
-      if(!isTimeHasOnly0) { //Si le temps commence par 00:00:00
-        return p_date?.toTimeString().slice(0,9);
-      }
-        
-      //Sinon si le temps commence par 00:00:00 et en plus c'est aujourd'hui
-      else if(isTimeHasOnly0 && isToday) {
-        //alors retourne une nouvelle date
-        putPensee({p_date: new_date_today});
-        return new_date_today.toTimeString().slice(0,9);
 
-      } else {
-        //Sinon retourne la date commence par 00:00:00
-        return ''
-      }
-        
+            return p_date?.toTimeString().slice(0,9);
+
     }
     
   
@@ -178,9 +160,9 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                               const hours = parseInt(hourStringInput.split(':')[0]);
                               const minutes = parseInt(hourStringInput.split(':')[1]);
                               const seconds = parseInt(hourStringInput.split(':')[2]);
-                              const newDate = new Date(year, month, day, hours, minutes, seconds);
-                              console.log("Heures valides:", hourStringInput);
-                              console.log("New date to send => ", newDate);
+                              let newDate = new Date(year, month, day, hours, minutes, seconds);
+                              //The date can add up a day
+                              
                               putPensee({p_date: newDate});
 
                             } else {
