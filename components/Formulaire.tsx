@@ -119,7 +119,6 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
     }
 
     function getTimePensee(p_date : Date | undefined) {
-      
       //Déclaration de variables
       const isTimeHasOnly0 = p_date?.toISOString().split('T')[1].startsWith("00:00:00");
       const isToday = p_date?.toISOString().split('T')[0] == getDateFromLocaleDate().toISOString().split('T')[0];
@@ -157,20 +156,39 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                 color:"rgba(255,255,255, 1.0)",
                 }}
                 value={heures}
-                onChangeText={(text : string) => {
-                  setHeures(text);
-                  if(text.length === 8) {
-                        // Regex pour valider le format HH:MM:SS
-                        // Heures: 00-23, Minutes: 00-59, Secondes: 00-59
-                        const timeRegex = /^([01]?\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
-                        
-                        if(timeRegex.test(text)) {
-                          console.log("Heures valides:", text);
-                        } else {
-                          console.log("Format d'heure invalide:", text);
-                        }
+                onChangeText={
+                  (text : string) => {
+                      //Déclaration de variables
+                      let hourStringInput = text.trim();
+                      const date_actuel = pensee?.date;
+                      const year = date_actuel?.getFullYear() ?? 99;
+                      const month = date_actuel?.getMonth() ?? 99;
+                      const day = date_actuel?.getDate() ?? 99;
+
+                      //Traitements
+                      setHeures(hourStringInput);
+
+                      if(hourStringInput.length === 5 || hourStringInput.length === 8) {
+                            // Regex pour valider le format HH:MM ou HH:MM:SS
+                            // Heures: 00-23, Minutes: 00-59, Secondes: 00-59 (optionnelles)
+                            const timeRegex = /^([01]?\d|2[0-3]):([0-5]\d)(:([0-5]\d))?$/;
+                            
+                            if(timeRegex.test(hourStringInput)) {
+                              hourStringInput = (hourStringInput.length === 5) ? hourStringInput + ":00" : hourStringInput;
+                              const hours = parseInt(hourStringInput.split(':')[0]);
+                              const minutes = parseInt(hourStringInput.split(':')[1]);
+                              const seconds = parseInt(hourStringInput.split(':')[2]);
+                              const newDate = new Date(year, month, day, hours, minutes, seconds);
+                              console.log("Heures valides:", hourStringInput);
+                              console.log("New date to send => ", newDate);
+                              putPensee({p_date: newDate});
+
+                            } else {
+                              console.error("Format d'heure invalide:", hourStringInput);
+                            }
+                      }
+                    }
                   }
-                }}
               />
       </View>
             
