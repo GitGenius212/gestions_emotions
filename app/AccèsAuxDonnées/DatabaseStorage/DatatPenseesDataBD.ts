@@ -31,7 +31,7 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
     };
 
     pensee = await addPensee(pensee);
-    
+    console.log(`Aucune pensée trouvée pour la date ${p_date}`);
 
     pensees_same_date.push(pensee);
   }

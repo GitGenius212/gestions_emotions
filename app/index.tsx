@@ -29,6 +29,7 @@ export default function Index() {
           //Convert string to date
           for(let p of listPensees) {
             p.date = new Date(p.date);
+            console.log(`Pensee date: ${p.date}`);
           }
 
 

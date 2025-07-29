@@ -11,7 +11,7 @@ import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
 
 const Formulaire = ({pensee, position, getPensees} : PenseeProps) => {
-
+  console.log("Formulaire.tsx - Pensee: ", pensee);
   //Déclaration de variables
     //Selection des émotions aux débuts, avant
 const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Peur") != undefined);
@@ -119,9 +119,9 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
     }
 
     function getTimePensee(p_date : Date | undefined) {
+                  return p_date?.toTimeString().slice(0,9);
 
-            return p_date?.toTimeString().slice(0,9);
-
+        
     }
     
   
@@ -145,7 +145,7 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                       const date_actuel = pensee?.date;
                       const year = date_actuel?.getFullYear() ?? 99;
                       const month = date_actuel?.getMonth() ?? 99;
-                      const day = date_actuel?.getDate() ?? 99;
+                      let day = date_actuel?.getDate() ?? 99;
 
                       //Traitements
                       setHeures(hourStringInput);
@@ -158,11 +158,15 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                             if(timeRegex.test(hourStringInput)) {
                               hourStringInput = (hourStringInput.length === 5) ? hourStringInput + ":00" : hourStringInput;
                               const hours = parseInt(hourStringInput.split(':')[0]);
+                              //To adapt the date for UTC converter in javascript
+                              if(hours < 20) {
+                                day += 1;
+                              }
                               const minutes = parseInt(hourStringInput.split(':')[1]);
                               const seconds = parseInt(hourStringInput.split(':')[2]);
-                              let newDate = new Date(year, month, day, hours, minutes, seconds);
-                              //The date can add up a day
-                              
+                              const newDate = new Date(year, month, day, hours, minutes, seconds);
+                              console.log("Heures valides:", hourStringInput);
+                              console.log("New date to send => ", newDate);
                               putPensee({p_date: newDate});
 
                             } else {
