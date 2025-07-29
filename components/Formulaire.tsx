@@ -172,10 +172,10 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                               }
                               //Sinon si l'heure actuel est inférieur à 20 et l'heure modifié est supérieur à 20
                               //alors diminue le day de 1
-                              else if(hours > 20 && actualHour < 20) {
+                              else if(hours >= 20 && actualHour < 20) {
                                 day -= 1;
                               //Sinon si l'heure actuel est supérieur à 20 et l'heure modifié est supérieur à 20
-                              } else if(actualHour > 20 && hours > 20) {
+                              } else if(actualHour >= 20 && hours >= 20) {
                                   console.log("Fais rien");
                               }
                               const minutes = parseInt(hourStringInput.split(':')[1]);
@@ -445,10 +445,10 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
             <TouchableHighlight 
                 onPress={async () => {
                     //Déclaration de variables
-                    const currentDate = pensee?.date;
+                    let currentDate = pensee?.date;
                     const currentId = pensee?.id ?? 0;
 
-                    //Supprimer la pensee dans la base de données
+                    //Supprimer la pensée dans la base de données
                     await deletePenseeById(currentId);
 
                     //GetPenseesWithSameDate
