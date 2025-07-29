@@ -146,6 +146,8 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                       const year = date_actuel?.getFullYear() ?? 99;
                       const month = date_actuel?.getMonth() ?? 99;
                       let day = date_actuel?.getDate() ?? 99;
+                      const actualHour = date_actuel?.getHours() ?? 99;
+
 
                       //Traitements
                       setHeures(hourStringInput);
@@ -159,8 +161,22 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                               hourStringInput = (hourStringInput.length === 5) ? hourStringInput + ":00" : hourStringInput;
                               const hours = parseInt(hourStringInput.split(':')[0]);
                               //To adapt the date for UTC converter in javascript
-                              if(hours < 20) {
+                              //04:00 
+                              //si l'heure modifié est inférieur à 20h et l'heure de la date actuel est supérieur à 20h
+                              if(hours < 20 && actualHour > 20) {
                                 day += 1;
+                              } 
+                              //Sinon si l'heure actuel est inférieur à 20 et l'heure modifié est inférieur à 20
+                              else if(hours < 20 && actualHour < 20) {
+                                console.log("Fais rien");
+                              }
+                              //Sinon si l'heure actuel est inférieur à 20 et l'heure modifié est supérieur à 20
+                              //alors diminue le day de 1
+                              else if(hours > 20 && actualHour < 20) {
+                                day -= 1;
+                              //Sinon si l'heure actuel est supérieur à 20 et l'heure modifié est supérieur à 20
+                              } else if(actualHour > 20 && hours > 20) {
+                                  console.log("Fais rien");
                               }
                               const minutes = parseInt(hourStringInput.split(':')[1]);
                               const seconds = parseInt(hourStringInput.split(':')[2]);
