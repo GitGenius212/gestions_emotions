@@ -171,8 +171,12 @@ LocaleConfig.defaultLocale = 'fr';
   }
 
   return (
-    <View style={{paddingHorizontal: 30, paddingTop:75, backgroundColor: (colorScheme === 'dark') ? '#1D3D47' : ''}}>
-      <View style={{position:'absolute', right:20, top:50}}>
+    <View style={{backgroundColor: (colorScheme === 'dark') ? '#1D3D47' : ''}}>
+      <View style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:35}}>
+        <Text style={{fontSize: 24, fontWeight: "bold", color: '#C84630', paddingTop:10}}>Journal du bien-être</Text>
+      </View>
+    <View style={{paddingHorizontal: 30, paddingTop:32}}>
+      <View style={{position:'absolute', right:20, top:5}}>
         <TouchableOpacity
         style={{
           backgroundColor: setBackgroundIcon(), 
@@ -256,7 +260,8 @@ LocaleConfig.defaultLocale = 'fr';
         
         
       </View>
-    </View>
+    </View> //sectionCalendrier
+    </View> //sectionDate
     
   )
 }
