@@ -172,95 +172,95 @@ LocaleConfig.defaultLocale = 'fr';
 
   return (
     <View style={{backgroundColor: (colorScheme === 'dark') ? '#1D3D47' : ''}}>
-      <View style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:35}}>
-        <Text style={{fontSize: 24, fontWeight: "bold", color: '#C84630', paddingTop:10}}>Journal du bien-être</Text>
-      </View>
-    <View style={{paddingHorizontal: 30, paddingTop:32}}>
-      <View style={{position:'absolute', right:20, top:5}}>
-        <TouchableOpacity
-        style={{
-          backgroundColor: setBackgroundIcon(), 
-          padding:5, 
-          borderRadius:60
-        }}
-        onPress={() => setIsPressedCalendar(!isPressedCalendar)}>
-            <FontAwesome name="calendar" size={24} color={setColorIcon()} />
-        </TouchableOpacity>
-        
-      </View>
-
-      <Calendar  
-      key={colorScheme}
-      style={{marginTop:15, display:isPressedCalendar ? 'flex' : 'none', backgroundColor:(colorScheme === 'dark') ? '#1D3D47' : 'white'}}
-          initialDate={`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`}
-          theme={{
-            arrowColor:(colorScheme === 'dark') ? '#606b8c' : '#03045E',
-            textMonthFontSize:24,  
-            calendarBackground: (colorScheme === 'dark') ? '#1D3D47' : 'white',
-            textSectionTitleColor: (colorScheme === 'dark') ? 'white': '#b6c1cd',
-            textDisabledColor: 'grey', 
-            selectedDayBackgroundColor: '#00adf5',
-            selectedDayTextColor: '#ffffff',
-            todayTextColor: '#C84630',
-            dayTextColor: (colorScheme === 'dark') ? 'white': '#2d4150',
-            monthTextColor: (colorScheme === 'dark') ? 'white' : 'black'
-            
+        <View style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:35}}>
+          <Text style={{fontSize: 24, fontWeight: "bold", color: '#C84630', paddingTop:10}}>Journal du bien-être</Text>
+        </View>
+      <View style={{paddingHorizontal: 30, paddingTop:32}}>
+        <View style={{position:'absolute', right:20, top:5}}>
+          <TouchableOpacity
+          style={{
+            backgroundColor: setBackgroundIcon(), 
+            padding:5, 
+            borderRadius:60
           }}
-          markedDates= {
-            markedDatesPenseesFill
-          }
-
+          onPress={() => setIsPressedCalendar(!isPressedCalendar)}>
+              <FontAwesome name="calendar" size={24} color={setColorIcon()} />
+          </TouchableOpacity>
           
-          enableSwipeMonths={true}
-            onDayPress={day => {
-              // CORRECTION : Créer une date locale au lieu d'UTC
-              const [year, month, dayNum] = day.dateString.split('-').map(Number);
-              const localDate = new Date(year, month - 1, dayNum, 0, 0, 0, 0);
-              setDate(localDate);
-              modificationIsToday(day.dateString);
-              
+        </View>
+
+        <Calendar  
+        key={colorScheme}
+        style={{marginTop:15, display:isPressedCalendar ? 'flex' : 'none', backgroundColor:(colorScheme === 'dark') ? '#1D3D47' : 'white'}}
+            initialDate={`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`}
+            theme={{
+              arrowColor:(colorScheme === 'dark') ? '#606b8c' : '#03045E',
+              textMonthFontSize:24,  
+              calendarBackground: (colorScheme === 'dark') ? '#1D3D47' : 'white',
+              textSectionTitleColor: (colorScheme === 'dark') ? 'white': '#b6c1cd',
+              textDisabledColor: 'grey', 
+              selectedDayBackgroundColor: '#00adf5',
+              selectedDayTextColor: '#ffffff',
+              todayTextColor: '#C84630',
+              dayTextColor: (colorScheme === 'dark') ? 'white': '#2d4150',
+              monthTextColor: (colorScheme === 'dark') ? 'white' : 'black'
               
             }}
-        />
+            markedDates= {
+              markedDatesPenseesFill
+            }
 
+            
+            enableSwipeMonths={true}
+              onDayPress={day => {
+                // CORRECTION : Créer une date locale au lieu d'UTC
+                const [year, month, dayNum] = day.dateString.split('-').map(Number);
+                const localDate = new Date(year, month - 1, dayNum, 0, 0, 0, 0);
+                setDate(localDate);
+                modificationIsToday(day.dateString);
+                
+                
+              }}
+          />
+
+        
+        <View style={{flexDirection: "row", justifyContent: "space-between"}}>
       
-      <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-    
-        <View style={{marginLeft:20}}>
-          <TouchableOpacity onPress={() => {
-            gotoYesterday()
-          }
-        }>
-          <Text style={{fontSize:50, color:(colorScheme === 'dark') ? '#606b8c': "#03045E"}}>&larr;</Text>
-        </TouchableOpacity>
+          <View style={{marginLeft:20}}>
+            <TouchableOpacity onPress={() => {
+              gotoYesterday()
+            }
+          }>
+            <Text style={{fontSize:50, color:(colorScheme === 'dark') ? '#606b8c': "#03045E"}}>&larr;</Text>
+          </TouchableOpacity>
+          </View>
+          
+
+          <View style={{ flex: 1, alignItems: "center"}}>
+
+              <Text style={{fontSize: 24, fontWeight: "bold", marginTop: 10, color:(colorScheme === 'dark') ? 'white' : ''}}>Date</Text>
+
+              <Text style={{fontSize: 18, marginBottom: isToday? 5 : 15, color:(colorScheme === 'dark') ? 'white' : ''}}>{`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`}</Text>
+
+              <CustomText 
+              style_aujourdhui={style.aujourdhui}
+              >Aujourd'hui</CustomText>
+
+          </View>
+
+          <View style={{marginRight:20}}>
+            <TouchableOpacity onPress={() => {
+              gotoTomorrow();
+            }
+          }>
+            <Text  style={{fontSize:50, color:(colorScheme === 'dark') ? '#606b8c':"#03045E"}}>&rarr;</Text>
+          </TouchableOpacity>
+
+          </View>
+          
+          
         </View>
-        
-
-        <View style={{ flex: 1, alignItems: "center"}}>
-
-            <Text style={{fontSize: 24, fontWeight: "bold", marginTop: 10, color:(colorScheme === 'dark') ? 'white' : ''}}>Date</Text>
-
-            <Text style={{fontSize: 18, marginBottom: isToday? 5 : 15, color:(colorScheme === 'dark') ? 'white' : ''}}>{`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`}</Text>
-
-            <CustomText 
-            style_aujourdhui={style.aujourdhui}
-            >Aujourd'hui</CustomText>
-
-        </View>
-
-        <View style={{marginRight:20}}>
-          <TouchableOpacity onPress={() => {
-            gotoTomorrow();
-          }
-        }>
-          <Text  style={{fontSize:50, color:(colorScheme === 'dark') ? '#606b8c':"#03045E"}}>&rarr;</Text>
-        </TouchableOpacity>
-
-        </View>
-        
-        
-      </View>
-    </View> //sectionCalendrier
+      </View> 
     </View> //sectionDate
     
   )
