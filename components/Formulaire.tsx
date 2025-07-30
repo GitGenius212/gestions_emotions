@@ -144,8 +144,8 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                       let hourStringInput = text.trim();
                       const date_actuel = pensee?.date;
                       const year = date_actuel?.getFullYear() ?? 99;
-                      const month = date_actuel?.getMonth() ?? 99;
-                      const day = date_actuel?.getDate() ?? 99;
+                      const month = date_actuel?.getMonth() ?? 0;
+                      const day = date_actuel?.getDate() ?? 1;
 
                       //Traitements
                       setHeures(hourStringInput);
@@ -387,8 +387,8 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                 onPress={async () => {
                     const currentDate = pensee?.date;
                     const isToday = isSameCivilDay(currentDate ?? new Date(), getDateFromLocaleDate());
-                    const newDate = new Date(currentDate?.getFullYear() ?? 99, currentDate?.getMonth() ?? 99, currentDate?.getDate() ?? 99);
-                    
+                    const newDate = new Date(currentDate?.getFullYear() ?? 99, currentDate?.getMonth() ?? 0, currentDate?.getDate() ?? 1);
+
                     //Créer un nouvel objet avec la même date
                     const new_pensee : PenseeData = {
                       id : 0, 
@@ -428,7 +428,7 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                     const isToday = isSameCivilDay(currentDate ?? new Date(), getDateFromLocaleDate());
 
                     //Create a new date with only the year, month, and day
-                    currentDate = isToday ? getDateFromLocaleDate() : new Date(currentDate?.getFullYear() ?? 99, currentDate?.getMonth() ?? 99, currentDate?.getDate() ?? 99);
+                    currentDate = isToday ? getDateFromLocaleDate() : new Date(currentDate?.getFullYear() ?? 99, currentDate?.getMonth() ?? 0, currentDate?.getDate() ?? 1);
                     //Supprimer la pensée dans la base de données
                     await deletePenseeById(currentId);
 
