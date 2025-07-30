@@ -46,7 +46,10 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
     pensees_same_date.push(pensee);
   }
 
+    pensees_same_date.sort(function(a, b){return a.id - b.id});
+
   //Affichages/Sorties
+  console.log(`PENSÉES TROUVÉES POUR ${p_date.toLocaleDateString()}:`, pensees_same_date);
   return pensees_same_date;
 };
 
