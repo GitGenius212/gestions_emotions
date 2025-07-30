@@ -121,18 +121,8 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
     function getTimePensee(p_date : Date | undefined) {
                   if (!p_date) return "";
                   
-                  // Vérifier si c'est aujourd'hui
-                  const today = getDateFromLocaleDate();
-                  console.log(`Date d'aujourd'hui: ${today}`);
-                  const isToday = isSameCivilDay(p_date, today);
+                  return p_date.toTimeString().slice(0,8);
                   
-                  if (isToday) {
-                    // Si c'est aujourd'hui, retourner l'heure locale actuelle
-                    return today.toTimeString().slice(0,8);
-                  } else {
-                    // Sinon, retourner l'heure de la pensée
-                    return p_date.toTimeString().slice(0,8);
-                  }
     }
     
   
@@ -400,6 +390,7 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                     const isToday = isSameCivilDay(currentDate ?? new Date(), getDateFromLocaleDate());
                     const newDate = new Date(currentDate?.getFullYear() ?? 99, currentDate?.getMonth() ?? 99, currentDate?.getDate() ?? 99);
                     console.log("currentDate=> ", currentDate, "\nnewDate=> ", newDate);
+                    
                     //Créer un nouvel objet avec la même date
                     const new_pensee : PenseeData = {
                       id : 0, 
@@ -412,6 +403,7 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                     };
 
                     //Ajouter la pensee dans la base de données
+                    console.log("new_pensee to add Formulaire: ", new_pensee);
                     await addPensee(new_pensee);
 
                     //GetPenseesWithSameDate

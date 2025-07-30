@@ -12,7 +12,6 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
   
   console.log(`=== RECHERCHE PENSÉES POUR ${p_date.toLocaleDateString()} ===`);
   console.log(`Date de recherche complète: ${p_date.toString()}`);
-  console.log(`Date de recherche UTC: ${p_date.toISOString()}`);
   
   //Traitements
   for(let key of keys) {
@@ -189,6 +188,7 @@ export async function clearPenseesEmpty() {
 
 //POST
 export const addPensee = async (p_pensee: PenseeData) : Promise<PenseeData> => {
+
   //Déclaration de variables
   let new_id = 0;
   let new_pensee : PenseeData = undefined as any;
@@ -202,7 +202,7 @@ export const addPensee = async (p_pensee: PenseeData) : Promise<PenseeData> => {
       p_pensee.id = new_id;
       const jsonValue = JSON.stringify(p_pensee);
       new_pensee = JSON.parse(jsonValue);
-
+      console.log("addPensee() - new_pensee: ", new_pensee);
     await AsyncStorage.setItem(`Pensée#${p_pensee.id}`, jsonValue);
   } catch (e) {
       console.error("addPensee => ", e);
