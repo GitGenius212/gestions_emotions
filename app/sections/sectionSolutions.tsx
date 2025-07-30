@@ -4,10 +4,10 @@ import { FlatList, Keyboard, Pressable, Text, TextInput, TouchableHighlight, Tou
 import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
-import {solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
+import { getAllSolutions, putSolution, removeSolution, storeSolution } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
+import { solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
 import SolutionData from '../Domaine/Classes/SolutionData';
 import SolutionProps from '../Domaine/props/SolutionProps';
-import { getAllSolutions, removeSolution, storeSolution, putSolution } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
 
 
 const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem, setIsFocused}: SolutionProps) => (
@@ -15,8 +15,14 @@ const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putIte
   <View style={styles.description_solution}>
     <Text style={{opacity:0.4}}>{new Date(item.createdAt?.toString() ?? "").toDateString()} 
       - {new Date(item.createdAt?.toString() ?? "").toLocaleTimeString()}</Text>
-    <TextInput multiline onFocus={() => setIsFocused(true)} onEndEditing={() => setIsFocused(false)} onChangeText={(text) =>  putItem(text, item)} 
-    style={[{color: textColor}, styles.description_solution_text]}>{item.description}</TextInput>
+    <TextInput 
+      multiline 
+      onFocus={() => setIsFocused(true)} 
+      onEndEditing={() => setIsFocused(false)} 
+      onChangeText={(text) => putItem(text, item)} 
+      style={[{color: textColor}, styles.description_solution_text]}
+      value={item.description}
+    />
   </View>
 
   <View>

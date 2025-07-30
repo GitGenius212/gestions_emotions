@@ -1,17 +1,16 @@
+import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
+import PenseeData from '@/app/Domaine/Classes/PenseeData';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 import PenseeProps from '@/app/Domaine/props/PenseeProps';
+import { getDateFromLocaleDate, isSameCivilDay } from '@/app/functions';
 import styles from '@/app/styles';
 import { icons } from '@/constants/icons';
 import React, { useState } from 'react';
-import { Text, TouchableHighlight, View } from 'react-native';
+import { Text, TextInput, TouchableHighlight, View } from 'react-native';
 import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
-import PenseeData from '@/app/Domaine/Classes/PenseeData';
-import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } from '@/app/AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
-import { getDateFromLocaleDate } from '@/app/functions';
 
 const Formulaire = ({pensee, position, getPensees} : PenseeProps) => {
-
   //Déclaration de variables
     //Selection des émotions aux débuts, avant
 const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Peur") != undefined);
@@ -43,6 +42,7 @@ const [contre_pensee_negative, setContre_pensee_negative] = useState(pensee?.con
 const [listEmotions_avant, setListEmotions_avant] = useState(pensee?.emotions_avant);
 const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_apres);
 
+const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sélection de l'item dans la liste
 
 //Functions
 
@@ -118,38 +118,60 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
     }
 
     function getTimePensee(p_date : Date | undefined) {
-      
-      //Déclaration de variables
-      const isTimeHasOnly0 = p_date?.toISOString().split('T')[1].startsWith("00:00:00");
-      const isToday = p_date?.toISOString().split('T')[0] == getDateFromLocaleDate().toISOString().split('T')[0];
-      const new_date_today = getDateFromLocaleDate();
-      
-      //Traitements
-      if(!isTimeHasOnly0) { //Si le temps commence par 00:00:00
-        return p_date?.toTimeString().slice(0,9);
-      }
-        
-      //Sinon si le temps commence par 00:00:00 et en plus c'est aujourd'hui
-      else if(isTimeHasOnly0 && isToday) {
-        //alors retourne une nouvelle date
-        putPensee({p_date: new_date_today});
-        return new_date_today.toTimeString().slice(0,9);
-
-      } else {
-        //Sinon retourne la date commence par 00:00:00
-        return ''
-      }
-        
+                  if (!p_date) return "";
+                  
+                  return p_date.toTimeString().slice(0,8);
+                  
     }
     
   
   return (
     <View style={{marginBottom:10}}>
-            <Text style={{marginBottom:10}}>
+      <View style={{flexDirection:'row'}}>
               <Text style={[styles.h1, {textDecorationLine:"underline"}]}>Pensée #{position} </Text>
               <Text style={styles.h1}>:</Text>
-              <Text style={{fontSize:24, color:"rgba(255,255,255, 1.0)",}}> {getTimePensee(pensee?.date)}</Text>
-            </Text>
+              <TextInput 
+              style={{
+                fontSize:24, 
+                paddingTop:0, 
+                width:110, 
+                color:"rgba(255,255,255, 1.0)",
+                }}
+                value={heures}
+                onChangeText={
+                  (text : string) => {
+                      //Déclaration de variables
+                      let hourStringInput = text.trim();
+                      const date_actuel = pensee?.date;
+                      const year = date_actuel?.getFullYear() ?? 99;
+                      const month = date_actuel?.getMonth() ?? 99;
+                      const day = date_actuel?.getDate() ?? 99;
+
+                      //Traitements
+                      setHeures(hourStringInput);
+
+                      if(hourStringInput.length === 5 || hourStringInput.length === 8) {
+                            // Regex pour valider le format HH:MM ou HH:MM:SS
+                            // Heures: 00-23, Minutes: 00-59, Secondes: 00-59 (optionnelles)
+                            const timeRegex = /^([01]?\d|2[0-3]):([0-5]\d)(:([0-5]\d))?$/;
+                            
+                            if(timeRegex.test(hourStringInput)) {
+                              hourStringInput = (hourStringInput.length === 5) ? hourStringInput + ":00" : hourStringInput;
+                              const hours = parseInt(hourStringInput.split(':')[0]);
+                              const minutes = parseInt(hourStringInput.split(':')[1]);
+                              const seconds = parseInt(hourStringInput.split(':')[2]);
+                              
+                              // CORRECTION : Plus besoin de logique complexe timezone, création directe de date locale
+                              const newDate = new Date(year, month, day, hours, minutes, seconds);
+                              putPensee({p_date: newDate});
+
+                            }
+                      }
+                    }
+                  }
+              />
+      </View>
+            
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
               <TextArea placeholder='Élément déclencheur'
@@ -364,15 +386,15 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
               <TouchableHighlight 
                 onPress={async () => {
                     const currentDate = pensee?.date;
-                    const isToday = currentDate?.toISOString().split('T')[0] == getDateFromLocaleDate().toISOString().split('T')[0];
-                
-                
+                    const isToday = isSameCivilDay(currentDate ?? new Date(), getDateFromLocaleDate());
+                    const newDate = new Date(currentDate?.getFullYear() ?? 99, currentDate?.getMonth() ?? 99, currentDate?.getDate() ?? 99);
+                    
                     //Créer un nouvel objet avec la même date
                     const new_pensee : PenseeData = {
                       id : 0, 
                       element_declencheur : "", 
                       interpretation: "", 
-                      date: isToday ? getDateFromLocaleDate() : new Date(currentDate?.toISOString().split('T')[0] ?? getDateFromLocaleDate()), 
+                      date: isToday ? getDateFromLocaleDate() : newDate, 
                       emotions_avant: [], 
                       contre_pensee_negative : "", 
                       emotions_apres : [],
@@ -401,10 +423,13 @@ const [listEmotions_apres, setListEmotions_apres] = useState(pensee?.emotions_ap
             <TouchableHighlight 
                 onPress={async () => {
                     //Déclaration de variables
-                    const currentDate = pensee?.date;
+                    let currentDate = pensee?.date;
                     const currentId = pensee?.id ?? 0;
+                    const isToday = isSameCivilDay(currentDate ?? new Date(), getDateFromLocaleDate());
 
-                    //Supprimer la pensee dans la base de données
+                    //Create a new date with only the year, month, and day
+                    currentDate = isToday ? getDateFromLocaleDate() : new Date(currentDate?.getFullYear() ?? 99, currentDate?.getMonth() ?? 99, currentDate?.getDate() ?? 99);
+                    //Supprimer la pensée dans la base de données
                     await deletePenseeById(currentId);
 
                     //GetPenseesWithSameDate

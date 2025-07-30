@@ -1,7 +1,7 @@
 import PenseeData from '@/app/Domaine/Classes/PenseeData';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
+import { isSameCivilDay } from '@/app/functions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 
 //GET
@@ -9,12 +9,16 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
   //Déclaration de variables
   let pensees_same_date : PenseeData[] = [];
   const keys = await getAllPenseeKeys();
+    
   //Traitements
   for(let key of keys) {
     let pensee = await getPensee(key);
     let date_pensee = new Date(pensee.date);
-    if(date_pensee.toISOString().split('T')[0] == p_date.toISOString().split('T')[0]) {
+    
+    // NOUVELLE MÉTHODE : Comparer seulement les jours civils
+    if(isSameCivilDay(date_pensee, p_date)) {
       pensees_same_date.push(pensee);
+
     }
   }
 
@@ -31,10 +35,11 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
     };
 
     pensee = await addPensee(pensee);
-    
 
     pensees_same_date.push(pensee);
   }
+
+    pensees_same_date.sort(function(a, b){return a.id - b.id});
 
   //Affichages/Sorties
   return pensees_same_date;
@@ -49,7 +54,7 @@ const getPensee = async (p_myKey: string) : Promise<PenseeData> => {
     pensee = (jsonValue != null) ? JSON.parse(jsonValue) : null;
 
   } catch(e) {
-    console.log("getPensee() => ", e);
+    console.error("getPensee() => ", e);
   }
 
   //Affichages/Sorties
@@ -178,6 +183,7 @@ export async function clearPenseesEmpty() {
 
 //POST
 export const addPensee = async (p_pensee: PenseeData) : Promise<PenseeData> => {
+
   //Déclaration de variables
   let new_id = 0;
   let new_pensee : PenseeData = undefined as any;
@@ -191,7 +197,7 @@ export const addPensee = async (p_pensee: PenseeData) : Promise<PenseeData> => {
       p_pensee.id = new_id;
       const jsonValue = JSON.stringify(p_pensee);
       new_pensee = JSON.parse(jsonValue);
-
+      
     await AsyncStorage.setItem(`Pensée#${p_pensee.id}`, jsonValue);
   } catch (e) {
       console.error("addPensee => ", e);

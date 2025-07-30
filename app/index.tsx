@@ -29,6 +29,7 @@ export default function Index() {
           //Convert string to date
           for(let p of listPensees) {
             p.date = new Date(p.date);
+            
           }
 
 
@@ -41,7 +42,10 @@ export default function Index() {
 const list_pensee_by_default : PenseeData[] = [];
 const [listPenseesSameDate, setListPenseesSameDate] = useState(list_pensee_by_default);
 
-
+// Effet pour surveiller les changements de la liste des pensées
+React.useEffect(() => {
+  console.log("Liste des pensées mise à jour:", listPenseesSameDate)
+}, [listPenseesSameDate]);
 
 
 
@@ -51,11 +55,19 @@ const [listPenseesSameDate, setListPenseesSameDate] = useState(list_pensee_by_de
 
 //Obtenir la pensée par date
 function getPensees(penseesFoundByDate: PenseeData[]) {
+  // Créer une nouvelle copie de l'array pour forcer la mise à jour du state
+  const newPenseesList = [...penseesFoundByDate];
+  
   //Convert the date in string to Date
-  for(let pensee of penseesFoundByDate) {
+  for(let pensee of newPenseesList) {
     pensee.date = new Date(pensee.date);
   }
-  setListPenseesSameDate(penseesFoundByDate);
+  
+    // Forcer une mise à jour complète du state
+  setListPenseesSameDate([]);
+  setTimeout(() => {
+    setListPenseesSameDate(newPenseesList);
+  }, 0);
   
 }
 
