@@ -9,25 +9,19 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
   //Déclaration de variables
   let pensees_same_date : PenseeData[] = [];
   const keys = await getAllPenseeKeys();
-  
-  console.log(`=== RECHERCHE PENSÉES POUR ${p_date.toLocaleDateString()} ===`);
-  console.log(`Date de recherche complète: ${p_date.toString()}`);
-  
+    
   //Traitements
   for(let key of keys) {
     let pensee = await getPensee(key);
     let date_pensee = new Date(pensee.date);
     
-    console.log(`Test pensée ID ${pensee.id}: ${date_pensee.toLocaleDateString()} vs ${p_date.toLocaleDateString()}`);
-    
     // NOUVELLE MÉTHODE : Comparer seulement les jours civils
     if(isSameCivilDay(date_pensee, p_date)) {
       pensees_same_date.push(pensee);
-      console.log(`✅ Pensée trouvée !`);
+
     }
   }
 
-  console.log(`RÉSULTAT: ${pensees_same_date.length} pensée(s) trouvée(s)`);
 
   if(pensees_same_date.length == 0) {
     let pensee : PenseeData = {
@@ -41,7 +35,6 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
     };
 
     pensee = await addPensee(pensee);
-    console.log(`Aucune pensée trouvée pour la date ${p_date}`);
 
     pensees_same_date.push(pensee);
   }
@@ -49,7 +42,6 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
     pensees_same_date.sort(function(a, b){return a.id - b.id});
 
   //Affichages/Sorties
-  console.log(`PENSÉES TROUVÉES POUR ${p_date.toLocaleDateString()}:`, pensees_same_date);
   return pensees_same_date;
 };
 
@@ -62,7 +54,7 @@ const getPensee = async (p_myKey: string) : Promise<PenseeData> => {
     pensee = (jsonValue != null) ? JSON.parse(jsonValue) : null;
 
   } catch(e) {
-    console.log("getPensee() => ", e);
+    console.error("getPensee() => ", e);
   }
 
   //Affichages/Sorties
@@ -205,7 +197,7 @@ export const addPensee = async (p_pensee: PenseeData) : Promise<PenseeData> => {
       p_pensee.id = new_id;
       const jsonValue = JSON.stringify(p_pensee);
       new_pensee = JSON.parse(jsonValue);
-      console.log("addPensee() - new_pensee: ", new_pensee);
+      
     await AsyncStorage.setItem(`Pensée#${p_pensee.id}`, jsonValue);
   } catch (e) {
       console.error("addPensee => ", e);

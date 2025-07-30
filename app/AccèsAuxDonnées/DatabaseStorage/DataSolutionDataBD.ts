@@ -163,7 +163,6 @@ export const removeSolution = async (p_id: number) => {
     console.error("removeSolution() => ", e);
   }
 
-  console.log('Done.');
 }
 
 

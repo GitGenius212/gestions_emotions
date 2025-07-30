@@ -109,17 +109,11 @@ LocaleConfig.defaultLocale = 'fr';
   function modificationIsToday(p_date : string) {
     
     fetchDates(p_date);  //For marketDates
-
-    //Déclaration de variables - CORRECTION : Créer une date locale au lieu d'UTC
-    console.log(`modificationIsToday reçoit: ${p_date}`);
     
     // Extraire année, mois, jour de la chaîne YYYY-MM-DD
     const [year, month, day] = p_date.split('-').map(Number);
     // Créer une date locale à minuit (pas de conversion UTC)
     const dateObtained = new Date(year, month - 1, day, 0, 0, 0, 0);
-    
-    console.log(`Date créée localement: ${dateObtained.toString()}`);
-    console.log(`Date locale format: ${dateObtained.toLocaleDateString()}`);
     
     //Traitements
     const todayLocal = getDateFromLocaleDate();
@@ -144,7 +138,6 @@ LocaleConfig.defaultLocale = 'fr';
     
     // CORRECTION : Utiliser une méthode locale au lieu d'UTC
     const localDateString = `${y.getFullYear()}-${String(y.getMonth() + 1).padStart(2, '0')}-${String(y.getDate()).padStart(2, '0')}`;
-    console.log(`gotoYesterday - Date locale: ${localDateString}`);
     modificationIsToday(localDateString);
   }
 
@@ -156,7 +149,6 @@ LocaleConfig.defaultLocale = 'fr';
     
     // CORRECTION : Utiliser une méthode locale au lieu d'UTC
     const localDateString = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
-    console.log(`gotoTomorrow - Date locale: ${localDateString}`);
     modificationIsToday(localDateString);
   }
 

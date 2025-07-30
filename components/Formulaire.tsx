@@ -11,7 +11,6 @@ import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
 
 const Formulaire = ({pensee, position, getPensees} : PenseeProps) => {
-  //console.log("Formulaire.tsx - Pensee: ", pensee);
   //Déclaration de variables
     //Selection des émotions aux débuts, avant
 const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Peur") != undefined);
@@ -389,7 +388,6 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                     const currentDate = pensee?.date;
                     const isToday = isSameCivilDay(currentDate ?? new Date(), getDateFromLocaleDate());
                     const newDate = new Date(currentDate?.getFullYear() ?? 99, currentDate?.getMonth() ?? 99, currentDate?.getDate() ?? 99);
-                    console.log("currentDate=> ", currentDate, "\nnewDate=> ", newDate);
                     
                     //Créer un nouvel objet avec la même date
                     const new_pensee : PenseeData = {
@@ -403,7 +401,6 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                     };
 
                     //Ajouter la pensee dans la base de données
-                    console.log("new_pensee to add Formulaire: ", new_pensee);
                     await addPensee(new_pensee);
 
                     //GetPenseesWithSameDate
