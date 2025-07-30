@@ -29,7 +29,7 @@ export default function Index() {
           //Convert string to date
           for(let p of listPensees) {
             p.date = new Date(p.date);
-            console.log(`Pensee date: ${p.date}`);
+            
           }
 
 
@@ -44,9 +44,7 @@ const [listPenseesSameDate, setListPenseesSameDate] = useState(list_pensee_by_de
 
 // Effet pour surveiller les changements de la liste des pensées
 React.useEffect(() => {
-  console.log("=== listPenseesSameDate a changé ===");
-  console.log("Nouvelle liste:", listPenseesSameDate);
-  console.log("Nombre de pensées:", listPenseesSameDate.length);
+  console.log("Liste des pensées mise à jour:", listPenseesSameDate)
 }, [listPenseesSameDate]);
 
 

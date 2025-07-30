@@ -1,3 +1,4 @@
+import { getDateFromLocaleDate } from '@/app/functions';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, useColorScheme, View } from 'react-native';
@@ -5,7 +6,6 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import { getPenseesFillForm, getPenseesWithSameDate } from '../AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
 import CustomTextProps from '../Domaine/props/CustomTextProps';
 import PenseeProps from '../Domaine/props/PenseeProps';
-import { getDateFromLocaleDate } from '@/app/functions';
 
 
 
@@ -46,7 +46,8 @@ LocaleConfig.defaultLocale = 'fr';
 
 
   useEffect(() => {
-    fetchDates(date.toISOString().split('T')[0]);
+    const localDateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    fetchDates(localDateString);
   }, []);
 
 
@@ -56,7 +57,9 @@ LocaleConfig.defaultLocale = 'fr';
       
       for(let p of listFetchedDates) {
         let converted_date = new Date(p.date);
-        markedDatesObject[converted_date.toISOString().split('T')[0]] = {
+        // CORRECTION : Utiliser une méthode locale au lieu d'UTC
+        const localDateString = `${converted_date.getFullYear()}-${String(converted_date.getMonth() + 1).padStart(2, '0')}-${String(converted_date.getDate()).padStart(2, '0')}`;
+        markedDatesObject[localDateString] = {
           marked: true, 
           dotColor: '#94DDBC'
         };
@@ -107,12 +110,22 @@ LocaleConfig.defaultLocale = 'fr';
     
     fetchDates(p_date);  //For marketDates
 
-    //Déclaration de variables
-    let dateObtained = JSON.parse(JSON.stringify(p_date));
-    dateObtained = new Date(dateObtained);
+    //Déclaration de variables - CORRECTION : Créer une date locale au lieu d'UTC
+    console.log(`modificationIsToday reçoit: ${p_date}`);
+    
+    // Extraire année, mois, jour de la chaîne YYYY-MM-DD
+    const [year, month, day] = p_date.split('-').map(Number);
+    // Créer une date locale à minuit (pas de conversion UTC)
+    const dateObtained = new Date(year, month - 1, day, 0, 0, 0, 0);
+    
+    console.log(`Date créée localement: ${dateObtained.toString()}`);
+    console.log(`Date locale format: ${dateObtained.toLocaleDateString()}`);
     
     //Traitements
-    if(getDateFromLocaleDate().toISOString().split('T')[0] == p_date) {
+    const todayLocal = getDateFromLocaleDate();
+    const todayString = `${todayLocal.getFullYear()}-${String(todayLocal.getMonth() + 1).padStart(2, '0')}-${String(todayLocal.getDate()).padStart(2, '0')}`;
+    
+    if(todayString == p_date) {
         setIsToday(true);
     } else {
         setIsToday(false);
@@ -128,7 +141,11 @@ LocaleConfig.defaultLocale = 'fr';
     y = new Date(y);
     y.setDate(y.getDate() -1);
     setDate(y);
-    modificationIsToday(y.toISOString().split('T')[0]);
+    
+    // CORRECTION : Utiliser une méthode locale au lieu d'UTC
+    const localDateString = `${y.getFullYear()}-${String(y.getMonth() + 1).padStart(2, '0')}-${String(y.getDate()).padStart(2, '0')}`;
+    console.log(`gotoYesterday - Date locale: ${localDateString}`);
+    modificationIsToday(localDateString);
   }
 
   const gotoTomorrow = () => {
@@ -136,7 +153,11 @@ LocaleConfig.defaultLocale = 'fr';
     t = new Date(t);
     t.setDate(t.getDate() + 1);
     setDate(t);
-    modificationIsToday(t.toISOString().split('T')[0]);
+    
+    // CORRECTION : Utiliser une méthode locale au lieu d'UTC
+    const localDateString = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+    console.log(`gotoTomorrow - Date locale: ${localDateString}`);
+    modificationIsToday(localDateString);
   }
 
   function setBackgroundIcon() : string {
@@ -175,7 +196,7 @@ LocaleConfig.defaultLocale = 'fr';
       <Calendar  
       key={colorScheme}
       style={{marginTop:15, display:isPressedCalendar ? 'flex' : 'none', backgroundColor:(colorScheme === 'dark') ? '#1D3D47' : 'white'}}
-          initialDate={date.toISOString().split('T')[0]}
+          initialDate={`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`}
           theme={{
             arrowColor:(colorScheme === 'dark') ? '#606b8c' : '#03045E',
             textMonthFontSize:24,  
@@ -196,7 +217,10 @@ LocaleConfig.defaultLocale = 'fr';
           
           enableSwipeMonths={true}
             onDayPress={day => {
-              setDate(new Date(day.dateString));
+              // CORRECTION : Créer une date locale au lieu d'UTC
+              const [year, month, dayNum] = day.dateString.split('-').map(Number);
+              const localDate = new Date(year, month - 1, dayNum, 0, 0, 0, 0);
+              setDate(localDate);
               modificationIsToday(day.dateString);
               
               
@@ -220,7 +244,7 @@ LocaleConfig.defaultLocale = 'fr';
 
             <Text style={{fontSize: 24, fontWeight: "bold", marginTop: 10, color:(colorScheme === 'dark') ? 'white' : ''}}>Date</Text>
 
-            <Text style={{fontSize: 18, marginBottom: isToday? 5 : 15, color:(colorScheme === 'dark') ? 'white' : ''}}>{date.toISOString().split('T')[0]}</Text>
+            <Text style={{fontSize: 18, marginBottom: isToday? 5 : 15, color:(colorScheme === 'dark') ? 'white' : ''}}>{`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`}</Text>
 
             <CustomText 
             style_aujourdhui={style.aujourdhui}

@@ -1,7 +1,7 @@
 import PenseeData from '@/app/Domaine/Classes/PenseeData';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
+import { isSameCivilDay } from '@/app/functions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 
 //GET
@@ -9,15 +9,26 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
   //Déclaration de variables
   let pensees_same_date : PenseeData[] = [];
   const keys = await getAllPenseeKeys();
+  
+  console.log(`=== RECHERCHE PENSÉES POUR ${p_date.toLocaleDateString()} ===`);
+  console.log(`Date de recherche complète: ${p_date.toString()}`);
+  console.log(`Date de recherche UTC: ${p_date.toISOString()}`);
+  
   //Traitements
   for(let key of keys) {
     let pensee = await getPensee(key);
     let date_pensee = new Date(pensee.date);
-    if(date_pensee.toISOString().split('T')[0] == p_date.toISOString().split('T')[0]) {
+    
+    console.log(`Test pensée ID ${pensee.id}: ${date_pensee.toLocaleDateString()} vs ${p_date.toLocaleDateString()}`);
+    
+    // NOUVELLE MÉTHODE : Comparer seulement les jours civils
+    if(isSameCivilDay(date_pensee, p_date)) {
       pensees_same_date.push(pensee);
+      console.log(`✅ Pensée trouvée !`);
     }
   }
 
+  console.log(`RÉSULTAT: ${pensees_same_date.length} pensée(s) trouvée(s)`);
 
   if(pensees_same_date.length == 0) {
     let pensee : PenseeData = {

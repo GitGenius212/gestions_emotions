@@ -2,7 +2,7 @@ import { addPensee, deletePenseeById, getPenseesWithSameDate, updatePensee } fro
 import PenseeData from '@/app/Domaine/Classes/PenseeData';
 import PenseeDataOptions from '@/app/Domaine/Classes/PenseeDataOptions';
 import PenseeProps from '@/app/Domaine/props/PenseeProps';
-import { getDateFromLocaleDate } from '@/app/functions';
+import { getDateFromLocaleDate, isSameCivilDay } from '@/app/functions';
 import styles from '@/app/styles';
 import { icons } from '@/constants/icons';
 import React, { useState } from 'react';
@@ -11,7 +11,7 @@ import CustomCheckbox from './CustomCheckbox';
 import TextArea from './TextArea';
 
 const Formulaire = ({pensee, position, getPensees} : PenseeProps) => {
-  console.log("Formulaire.tsx - Pensee: ", pensee);
+  //console.log("Formulaire.tsx - Pensee: ", pensee);
   //Déclaration de variables
     //Selection des émotions aux débuts, avant
 const [isSelected_peur_avant, setIsSelected_peur_avant] = useState(pensee?.emotions_avant.find((e:string) => e == "Peur") != undefined);
@@ -119,9 +119,20 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
     }
 
     function getTimePensee(p_date : Date | undefined) {
-                  return p_date?.toTimeString().slice(0,9);
-
-        
+                  if (!p_date) return "";
+                  
+                  // Vérifier si c'est aujourd'hui
+                  const today = getDateFromLocaleDate();
+                  console.log(`Date d'aujourd'hui: ${today}`);
+                  const isToday = isSameCivilDay(p_date, today);
+                  
+                  if (isToday) {
+                    // Si c'est aujourd'hui, retourner l'heure locale actuelle
+                    return today.toTimeString().slice(0,8);
+                  } else {
+                    // Sinon, retourner l'heure de la pensée
+                    return p_date.toTimeString().slice(0,8);
+                  }
     }
     
   
@@ -145,9 +156,7 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                       const date_actuel = pensee?.date;
                       const year = date_actuel?.getFullYear() ?? 99;
                       const month = date_actuel?.getMonth() ?? 99;
-                      let day = date_actuel?.getDate() ?? 99;
-                      const actualHour = date_actuel?.getHours() ?? 99;
-
+                      const day = date_actuel?.getDate() ?? 99;
 
                       //Traitements
                       setHeures(hourStringInput);
@@ -160,33 +169,13 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                             if(timeRegex.test(hourStringInput)) {
                               hourStringInput = (hourStringInput.length === 5) ? hourStringInput + ":00" : hourStringInput;
                               const hours = parseInt(hourStringInput.split(':')[0]);
-                              //To adapt the date for UTC converter in javascript
-                              //04:00 
-                              //si l'heure modifié est inférieur à 20h et l'heure de la date actuel est supérieur à 20h
-                              if(hours < 20 && actualHour > 20) {
-                                day += 1;
-                              } 
-                              //Sinon si l'heure actuel est inférieur à 20 et l'heure modifié est inférieur à 20
-                              else if(hours < 20 && actualHour < 20) {
-                                console.log("Fais rien");
-                              }
-                              //Sinon si l'heure actuel est inférieur à 20 et l'heure modifié est supérieur à 20
-                              //alors diminue le day de 1
-                              else if(hours >= 20 && actualHour < 20) {
-                                day -= 1;
-                              //Sinon si l'heure actuel est supérieur à 20 et l'heure modifié est supérieur à 20
-                              } else if(actualHour >= 20 && hours >= 20) {
-                                  console.log("Fais rien");
-                              }
                               const minutes = parseInt(hourStringInput.split(':')[1]);
                               const seconds = parseInt(hourStringInput.split(':')[2]);
+                              
+                              // CORRECTION : Plus besoin de logique complexe timezone, création directe de date locale
                               const newDate = new Date(year, month, day, hours, minutes, seconds);
-                              console.log("Heures valides:", hourStringInput);
-                              console.log("New date to send => ", newDate);
                               putPensee({p_date: newDate});
 
-                            } else {
-                              console.error("Format d'heure invalide:", hourStringInput);
                             }
                       }
                     }
@@ -408,15 +397,15 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
               <TouchableHighlight 
                 onPress={async () => {
                     const currentDate = pensee?.date;
-                    const isToday = currentDate?.toISOString().split('T')[0] == getDateFromLocaleDate().toISOString().split('T')[0];
-                
-                
+                    const isToday = isSameCivilDay(currentDate ?? new Date(), getDateFromLocaleDate());
+                    const newDate = new Date(currentDate?.getFullYear() ?? 99, currentDate?.getMonth() ?? 99, currentDate?.getDate() ?? 99);
+                    console.log("currentDate=> ", currentDate, "\nnewDate=> ", newDate);
                     //Créer un nouvel objet avec la même date
                     const new_pensee : PenseeData = {
                       id : 0, 
                       element_declencheur : "", 
                       interpretation: "", 
-                      date: isToday ? getDateFromLocaleDate() : new Date(currentDate?.toISOString().split('T')[0] ?? getDateFromLocaleDate()), 
+                      date: isToday ? getDateFromLocaleDate() : newDate, 
                       emotions_avant: [], 
                       contre_pensee_negative : "", 
                       emotions_apres : [],
