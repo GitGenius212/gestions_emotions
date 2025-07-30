@@ -425,7 +425,10 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                     //Déclaration de variables
                     let currentDate = pensee?.date;
                     const currentId = pensee?.id ?? 0;
+                    const isToday = isSameCivilDay(currentDate ?? new Date(), getDateFromLocaleDate());
 
+                    //Create a new date with only the year, month, and day
+                    currentDate = isToday ? getDateFromLocaleDate() : new Date(currentDate?.getFullYear() ?? 99, currentDate?.getMonth() ?? 99, currentDate?.getDate() ?? 99);
                     //Supprimer la pensée dans la base de données
                     await deletePenseeById(currentId);
 
