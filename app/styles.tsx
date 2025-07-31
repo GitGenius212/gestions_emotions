@@ -44,15 +44,11 @@ const styles = StyleSheet.create({
     fontSize:16
   }, 
 
-  item_solution: {
+  title_solution: {
     flexDirection:'row',  
-    justifyContent:'space-between'
-  },
-  description_solution: {
-    paddingLeft: 15, 
-    paddingTop: 15, 
-    paddingBottom:5, 
-    width: '87%'
+    justifyContent:'space-between', 
+    paddingLeft: 10,
+  
   },
 
   close_button : {  
@@ -64,7 +60,8 @@ const styles = StyleSheet.create({
   }, 
 
   description_solution_text : {
-    fontSize : 18
+    fontSize : 19, 
+    paddingLeft:10
       
   }
   
