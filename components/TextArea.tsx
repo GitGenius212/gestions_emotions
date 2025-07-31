@@ -24,17 +24,7 @@ const TextArea = ({placeholder, onPress, icons, padding_left, description, onCha
         
     }}
     >
-      <View style={{
-        position: 'absolute',
-        top:9, 
-        left: 5, 
-        zIndex: -1,
-        paddingBottom: 10,
-      
-      }}>
-        {icons}
-      </View>
-      
+      {icons}
 
       <TextInput 
         onPress={onPress}
@@ -44,16 +34,16 @@ const TextArea = ({placeholder, onPress, icons, padding_left, description, onCha
         onChangeText={onChangeDescription}
         multiline
         numberOfLines={4}
-      style={{
-        color: '#000000', // corrected color for text
-        fontSize: 16,
-        height: 150,
-        paddingTop: 10,
-        textIndent: '25px',
-        width: '100%',
-        borderRadius: 10,
-        paddingLeft:10,
-      }}
+        style={{
+          color: '#000000', // corrected color for text
+          fontSize: 16,
+          height: 150,
+          textAlignVertical: 'top', // ensures placeholder/text start at the top
+          paddingTop: 10,
+          width: '100%',
+          borderRadius: 10,
+          paddingLeft:padding_left,
+        }}
       />
     </View>
   )
