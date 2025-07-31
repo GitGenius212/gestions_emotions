@@ -3,9 +3,9 @@ import { LogBox, ScrollView } from "react-native";
 
 
 //Sections
+import { getDateFromLocaleDate } from '@/app/functions';
 import { clearPenseesEmpty, getPenseesWithSameDate } from './AccèsAuxDonnées/DatabaseStorage/DatatPenseesDataBD';
 import PenseeData from './Domaine/Classes/PenseeData';
-import { getDateFromLocaleDate } from '@/app/functions';
 import SectionDate from "./sections/sectionDate";
 import SectionPensees from "./sections/sectionPensees";
 import SectionSolutions from "./sections/sectionSolutions";
@@ -41,11 +41,7 @@ export default function Index() {
 //Déclaration de variables==========================================================================
 const list_pensee_by_default : PenseeData[] = [];
 const [listPenseesSameDate, setListPenseesSameDate] = useState(list_pensee_by_default);
-
-// Effet pour surveiller les changements de la liste des pensées
-React.useEffect(() => {
-  console.log("Liste des pensées mise à jour:", listPenseesSameDate)
-}, [listPenseesSameDate]);
+const [refreshKey, setRefreshKey] = useState(0); // Pour forcer les mises à jour
 
 //Functions====================================================================================================
 //Setting the states of the variables
@@ -61,7 +57,8 @@ function getPensees(penseesFoundByDate: PenseeData[]) {
     pensee.date = new Date(pensee.date);
   }
   
-    setListPenseesSameDate(newPenseesList);
+  setListPenseesSameDate(newPenseesList);
+  setRefreshKey(prev => prev + 1); // Incrémente la clé de refresh
   
 }
 
@@ -82,6 +79,7 @@ function getPensees(penseesFoundByDate: PenseeData[]) {
 
       {/*Section des pensées*/}
       <SectionPensees 
+      key={refreshKey} // Force le re-render du composant
       listPenseesSameDate={listPenseesSameDate}
       getPensees={getPensees}
       
