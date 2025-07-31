@@ -42,6 +42,10 @@ export default function Index() {
 const list_pensee_by_default : PenseeData[] = [];
 const [listPenseesSameDate, setListPenseesSameDate] = useState(list_pensee_by_default);
 
+// Effet pour surveiller les changements de la liste des pensées
+React.useEffect(() => {
+  console.log("Liste des pensées mise à jour:", listPenseesSameDate)
+}, [listPenseesSameDate]);
 
 //Functions====================================================================================================
 //Setting the states of the variables
