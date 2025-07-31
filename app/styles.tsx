@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
 
   description_solution_text : {
     fontSize : 19, 
-    paddingLeft:10
+    paddingLeft:10, 
+    marginTop:-5
       
   }
   
