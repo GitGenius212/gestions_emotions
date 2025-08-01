@@ -24,7 +24,6 @@ const TextArea = ({placeholder, onPress, icons, padding_left, description, onCha
         
     }}
     >
-      {icons}
 
       <TextInput 
         onPress={onPress}
@@ -42,7 +41,7 @@ const TextArea = ({placeholder, onPress, icons, padding_left, description, onCha
           paddingTop: 10,
           width: '100%',
           borderRadius: 10,
-          paddingLeft:padding_left,
+          paddingLeft:10,
         }}
       />
     </View>
