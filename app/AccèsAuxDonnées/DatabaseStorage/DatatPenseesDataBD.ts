@@ -39,7 +39,11 @@ export const getPenseesWithSameDate = async (p_date: Date) : Promise<PenseeData[
     pensees_same_date.push(pensee);
   }
 
-    pensees_same_date.sort(function(a, b){return a.id - b.id});
+    pensees_same_date.sort(function(a, b){
+      let b_miliseconds = new Date(b.date).getTime();
+      let a_miliseconds = new Date(a.date).getTime();
+      return (a_miliseconds - b_miliseconds);
+    });
 
   //Affichages/Sorties
   return pensees_same_date;
