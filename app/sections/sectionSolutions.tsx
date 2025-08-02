@@ -248,7 +248,6 @@ const SectionSolutions = () => {
                   onChangeDescription={setDescriptionSolution}
                   placeholder='Solutions'
                   icons={icons.lightBulb_on}
-                  padding_left={40}
             />
 
 

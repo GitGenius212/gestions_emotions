@@ -7,10 +7,10 @@ interface Props {
   icons?: any;
   description: string;
   onChangeDescription : any;
-  padding_left: number
+  
 }
 
-const TextArea = ({placeholder, onPress, icons, padding_left, description, onChangeDescription}: Props) => {
+const TextArea = ({placeholder, onPress, icons, description, onChangeDescription}: Props) => {
   return (
     <View 
     style={{

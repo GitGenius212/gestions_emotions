@@ -175,7 +175,6 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
             <View style={{backgroundColor: "#ffffff", borderRadius: 10, marginBottom:20, padding:20}}>
 
               <TextArea placeholder='Élément déclencheur'
-              padding_left={32} 
               description={element_dec ?? ""}
               onChangeDescription={ (text : string) => {
                 putPensee({p_element_dec_text: text});
@@ -187,7 +186,6 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
 
                 <TextArea 
                 placeholder='Pensée négative'
-                padding_left={43}
                 description={interprétation ?? ""}
                 onChangeDescription={ (text:string) => {
                   putPensee({p_interprétation_text: text});
@@ -287,7 +285,6 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
 
                 <TextArea 
                 placeholder='Contre-Pensée négative'
-                padding_left={43}
                 description={contre_pensee_negative ?? ""}
                 onChangeDescription={ (text: string) => {
                   putPensee({p_contre_pensee_negative_text: text});
