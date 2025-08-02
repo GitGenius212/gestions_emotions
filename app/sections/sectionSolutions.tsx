@@ -11,11 +11,17 @@ import SolutionProps from '../Domaine/props/SolutionProps';
 
 
 const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem, setIsFocused}: SolutionProps) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item_solution, {backgroundColor}]}>
-  <View style={styles.description_solution}>
-    <Text style={{opacity:0.4}}>{new Date(item.createdAt?.toString() ?? "").toDateString()} 
+  <TouchableOpacity onPress={onPress} style={{backgroundColor}}>
+
+  <View style={styles.title_solution}>
+      <Text style={{opacity:0.4,paddingTop:8}}>{new Date(item.createdAt?.toString() ?? "").toDateString()} 
       - {new Date(item.createdAt?.toString() ?? "").toLocaleTimeString()}</Text>
-    <TextInput 
+	  
+	  <Text onPress={() =>  removeItem(item.id ?? 0)} style={[{ color: 'white' }, styles.close_button]}>X</Text>
+  </View>
+  
+  <View>
+      <TextInput 
       multiline 
       onFocus={() => setIsFocused(true)} 
       onEndEditing={() => setIsFocused(false)} 
@@ -23,10 +29,6 @@ const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putIte
       style={[{color: textColor}, styles.description_solution_text]}
       value={item.description}
     />
-  </View>
-
-  <View>
-      <Text onPress={() =>  removeItem(item.id ?? 0)} style={[{ color: 'white' }, styles.close_button]}>X</Text>
   </View>
     
   </TouchableOpacity>
@@ -246,7 +248,6 @@ const SectionSolutions = () => {
                   onChangeDescription={setDescriptionSolution}
                   placeholder='Solutions'
                   icons={icons.lightBulb_on}
-                  padding_left={40}
             />
 
 
