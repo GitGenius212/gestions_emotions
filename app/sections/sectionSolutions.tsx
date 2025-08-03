@@ -5,12 +5,14 @@ import styles from '../styles';
 
 import TextArea from "@/components/TextArea";
 import { getAllSolutions, putSolution, removeSolution, storeSolution } from '../AccèsAuxDonnées/DatabaseStorage/DataSolutionDataBD';
-import { solutions_datas } from '../AccèsAuxDonnées/DataBidons/DataBidonSolutionData';
 import SolutionData from '../Domaine/Classes/SolutionData';
 import SolutionProps from '../Domaine/props/SolutionProps';
 
 
-const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem, setIsFocused}: SolutionProps) => (
+const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putItem, setIsFocused}: SolutionProps) => {
+  
+  const [itemDescription, setItemDescription] = useState(item.description);
+  return (
   <TouchableOpacity onPress={onPress} style={{backgroundColor}}>
 
   <View style={styles.title_solution}>
@@ -24,23 +26,29 @@ const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putIte
       <TextInput 
       multiline 
       onFocus={() => setIsFocused(true)} 
-      onEndEditing={() => setIsFocused(false)} 
-      onChangeText={(text) => putItem(text, item)} 
+      onEndEditing={ () => {
+        setIsFocused(false);
+        putItem(itemDescription, item);
+        
+      }} 
+      onChangeText={setItemDescription} 
       style={[{color: textColor}, styles.description_solution_text]}
-      value={item.description}
+      value={itemDescription}
     />
   </View>
     
   </TouchableOpacity>
   );
+}
+
 
 const SectionSolutions = () => {
     
-    
+    const solutionsData : SolutionData[] = []
 
     const [selectedId_solution, setSelectedId_solution] = useState<number[]>();
     const [descriptionSolution, setDescriptionSolution] = React.useState('');
-    const [solutions, setSolutions] = useState(solutions_datas);
+    const [solutions, setSolutions] = useState(solutionsData);
     const [isInputFocused, setIsInputFocused] = useState(false);
     let colorScheme = useColorScheme();
       
@@ -160,7 +168,7 @@ const SectionSolutions = () => {
        let updated_solution : SolutionData = {
           description: text, 
           id: item.id, 
-          createdAt: item.createdAt, 
+          createdAt: new Date(), 
           isSelected: isSelectedSol ?? (selectedId_solution?.includes(item.id ?? 0))
         
         }
