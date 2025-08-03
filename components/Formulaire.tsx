@@ -138,37 +138,41 @@ const [heures, setHeures] = useState(getTimePensee(pensee?.date)); //Pour la sé
                 color:"rgba(255,255,255, 1.0)",
                 }}
                 value={heures}
-                onChangeText={
-                  (text : string) => {
-                      //Déclaration de variables
-                      let hourStringInput = text.trim();
-                      const date_actuel = pensee?.date;
-                      const year = date_actuel?.getFullYear() ?? 99;
-                      const month = date_actuel?.getMonth() ?? 0;
-                      const day = date_actuel?.getDate() ?? 1;
+                onChangeText={setHeures}
+                onEndEditing={async () => {
+                  //Déclaration de variables
+                  let hourStringInput = heures.trim();
+                  const date_actuel = pensee?.date;
+                  const year = date_actuel?.getFullYear() ?? 99;
+                  const month = date_actuel?.getMonth() ?? 0;
+                  const day = date_actuel?.getDate() ?? 1;
 
-                      //Traitements
-                      setHeures(hourStringInput);
+                  //Traitements
+                  if(hourStringInput.length === 5 || hourStringInput.length === 8) {
+                        // Regex pour valider le format HH:MM ou HH:MM:SS
+                        // Heures: 00-23, Minutes: 00-59, Secondes: 00-59 (optionnelles)
+                        const timeRegex = /^([01]?\d|2[0-3]):([0-5]\d)(:([0-5]\d))?$/;
+                        
+                        if(timeRegex.test(hourStringInput)) {
+                          hourStringInput = (hourStringInput.length === 5) ? hourStringInput + ":00" : hourStringInput;
+                          const hours = parseInt(hourStringInput.split(':')[0]);
+                          const minutes = parseInt(hourStringInput.split(':')[1]);
+                          const seconds = parseInt(hourStringInput.split(':')[2]);
+                          
+                          // CORRECTION : Plus besoin de logique complexe timezone, création directe de date locale
+                          const newDate = new Date(year, month, day, hours, minutes, seconds);
+                          await putPensee({p_date: newDate});
 
-                      if(hourStringInput.length === 5 || hourStringInput.length === 8) {
-                            // Regex pour valider le format HH:MM ou HH:MM:SS
-                            // Heures: 00-23, Minutes: 00-59, Secondes: 00-59 (optionnelles)
-                            const timeRegex = /^([01]?\d|2[0-3]):([0-5]\d)(:([0-5]\d))?$/;
-                            
-                            if(timeRegex.test(hourStringInput)) {
-                              hourStringInput = (hourStringInput.length === 5) ? hourStringInput + ":00" : hourStringInput;
-                              const hours = parseInt(hourStringInput.split(':')[0]);
-                              const minutes = parseInt(hourStringInput.split(':')[1]);
-                              const seconds = parseInt(hourStringInput.split(':')[2]);
-                              
-                              // CORRECTION : Plus besoin de logique complexe timezone, création directe de date locale
-                              const newDate = new Date(year, month, day, hours, minutes, seconds);
-                              putPensee({p_date: newDate});
-
-                            }
-                      }
-                    }
+                          //GetPenseesWithSameDate
+                          const updated_list_pensees_same_date = await getPenseesWithSameDate(pensee?.date ?? getDateFromLocaleDate());
+                          
+                          //Mettre à jour la liste des pensées contenant la même date
+                          if(getPensees != undefined) {
+                            getPensees(updated_list_pensees_same_date);
+                          }
+                        }
                   }
+                }}
               />
       </View>
             
