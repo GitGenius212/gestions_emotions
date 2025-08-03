@@ -70,7 +70,11 @@ export async function getAllSolutions() : Promise<SolutionData[]> {
   }
 
   if(solutions_datas_bd.length > 0) {
-    solutions_datas_bd.sort(function(a, b){return (b.id?? 0) - (a.id ?? 0) });
+    solutions_datas_bd.sort(function(a, b){
+      let b_miliseconds = new Date(b.createdAt ?? 0).getTime();
+      let a_miliseconds = new Date(a.createdAt ?? 0).getTime();
+      return (b_miliseconds - a_miliseconds);
+    });
   }
 
   //Affichages/Sorties
