@@ -162,7 +162,7 @@ const SectionSolutions = () => {
          
       }
 
-      const putItem = (text: string, item: SolutionData, isSelectedSol?: boolean) => {
+      const putItem = async (text: string, item: SolutionData, isSelectedSol?: boolean) => {
        
        //Déclaration de variables
        let updated_solution : SolutionData = {
@@ -178,7 +178,20 @@ const SectionSolutions = () => {
         //Traitements
         const updated_list_solutions = solutions.toSpliced(indexItem, 1, updated_solution);
         setSolutions(updated_list_solutions);
-        putSolution(updated_solution);
+        await putSolution(updated_solution);
+        const result = await getAllSolutions();
+
+        const listSolutions = result;
+        const solutionIdsSelected  : number[]= [];
+        for(let s of listSolutions) {
+          if(s.isSelected) {
+            solutionIdsSelected.push(s.id ?? 0);
+          }
+
+        }
+        setSelectedId_solution(solutionIdsSelected);
+        setSolutions(listSolutions);
+      
       }
     
       const renderItem = ({item}: {item: SolutionData}) => {
