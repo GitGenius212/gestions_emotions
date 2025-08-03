@@ -168,7 +168,7 @@ const SectionSolutions = () => {
        let updated_solution : SolutionData = {
           description: text, 
           id: item.id, 
-          createdAt: new Date(), 
+          createdAt: item.createdAt, // Conserver la date originale
           isSelected: isSelectedSol ?? (selectedId_solution?.includes(item.id ?? 0))
         
         }
@@ -194,23 +194,23 @@ const SectionSolutions = () => {
       
       }
     
-      const renderItem = ({item}: {item: SolutionData}) => {
+      const renderItem = ({item, index}: {item: SolutionData, index: number}) => {
         
         let backgroundColor = '';
         let color = '';
-        if(item.id != null) {
-            if (item.id % 2 === 0) {
-            backgroundColor = '#e3e3e3';  //gray
-            color = '#C84630'; //orange
-          }  else {
-            backgroundColor = '#D4A0A7'; //pink
-            color = '#C84630';  //orange
-          }
+        
+        // Utiliser l'index de position au lieu de l'ID
+        if (index % 2 === 0) {
+          backgroundColor = '#e3e3e3';  //gray
+          color = '#C84630'; //orange
+        } else {
+          backgroundColor = '#D4A0A7'; //pink
+          color = '#C84630';  //orange
+        }
       
-          if(selectedId_solution?.includes(item.id)) {
-            backgroundColor = '#898989';  //full gray
-            color = 'white';
-          }
+        if(selectedId_solution?.includes(item.id ?? 0)) {
+          backgroundColor = '#898989';  //full gray
+          color = 'white';
         }
         
     
