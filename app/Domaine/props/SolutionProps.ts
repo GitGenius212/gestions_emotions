@@ -6,7 +6,7 @@ type SolutionProps = {
   backgroundColor: string;
   textColor: string;
   removeItem : (id:number) => void;
-  putItem : (text:string, item: SolutionData) => void;
+  putItem : (text:string, item: SolutionData, isSelectedSol?: boolean, shouldUpdateDate?:boolean) => void;
   setIsFocused: (p:boolean) => any;
 };
 

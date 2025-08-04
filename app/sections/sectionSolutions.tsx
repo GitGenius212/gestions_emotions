@@ -28,7 +28,8 @@ const Solution = ({item, onPress, backgroundColor, textColor, removeItem, putIte
       onFocus={() => setIsFocused(true)} 
       onEndEditing={ () => {
         setIsFocused(false);
-        putItem(itemDescription, item);
+        const hasChanged = itemDescription !== item.description;
+        putItem(itemDescription, item, undefined, hasChanged);
         
       }} 
       onChangeText={setItemDescription} 
@@ -162,13 +163,13 @@ const SectionSolutions = () => {
          
       }
 
-      const putItem = async (text: string, item: SolutionData, isSelectedSol?: boolean) => {
+      const putItem = async (text: string, item: SolutionData, isSelectedSol?: boolean, shouldUpdateDate?:boolean) => {
        
        //Déclaration de variables
        let updated_solution : SolutionData = {
           description: text, 
           id: item.id, 
-          createdAt: item.createdAt, // Conserver la date originale
+          createdAt: shouldUpdateDate ? new Date() :item.createdAt,
           isSelected: isSelectedSol ?? (selectedId_solution?.includes(item.id ?? 0))
         
         }
@@ -225,13 +226,13 @@ const SectionSolutions = () => {
                   //Delete the id from the list 
                   const list = selectedId_solution.filter((id:number) => id != item.id);
                   setSelectedId_solution(list);
-                  putItem(item.description, item, !selectedId_solution?.includes(item.id ?? 0));
+                  putItem(item.description, item, !selectedId_solution?.includes(item.id ?? 0), false);
 
           } else {
             //Add the id in the selectedId_solution list
             const list = selectedId_solution?.toSpliced(0, 0, item.id ?? 0);
             setSelectedId_solution(list);
-            putItem(item.description, item, !selectedId_solution?.includes(item.id ?? 0));
+            putItem(item.description, item, !selectedId_solution?.includes(item.id ?? 0), false);
 
             
           }
