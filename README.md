@@ -8,8 +8,11 @@ Création d'une application pour aider les gens à mieux comprendre et gérer le
 - **Carnet de solutions** : l'utilisateur enregistre des solutions utiles et peut mettre en évidence les plus importantes.
 - **Mode sombre / mode clair** : l'application s'adapte aux préférences du téléphone.
 
+## 🧪 Tests
+Tests unitaires avec **Jest** pour vérifier que chaque petite partie du programme fonctionne correctement (comme tester chaque pièce d'un jeu de construction avant de l'assembler).
+
 ## 🛠️ Technologies
-`React Native` · `TypeScript` · `Async Storage / SQLite`
+`React Native` · `TypeScript` · `Async Storage / SQLite` · `Jest`
 
 ## ✅ Résultat
-Une application mobile complète et fonctionnelle, qui garde toutes les informations sauvegardées directement sur l'appareil de l'utilisateur.
+Une application mobile complète et fonctionnelle, testée et fiable, qui garde toutes les informations sauvegardées directement sur l'appareil de l'utilisateur.
