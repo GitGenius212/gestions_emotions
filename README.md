@@ -9,7 +9,7 @@ Création d'une application pour aider les gens à mieux comprendre et gérer le
 - **Mode sombre / mode clair** : l'application s'adapte aux préférences du téléphone.
 
 ## 🧪 Tests
-Tests unitaires avec **Jest** pour vérifier que chaque petite partie du programme fonctionne correctement (comme tester chaque pièce d'un jeu de construction avant de l'assembler).
+Tests unitaires avec **Jest** pour vérifier que chaque petite partie du programme fonctionne correctement.
 
 ## 🛠️ Technologies
 `React Native` · `TypeScript` · `Async Storage / SQLite` · `Jest`
